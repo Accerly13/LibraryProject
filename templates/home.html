@@ -3,8 +3,10 @@
 <div class="Ateneo_name">Ateneo de Naga University</div>
 <div class="login-block">
     <h1>Welcome Admin!</h1>
-    <input type="text" value="" placeholder="Username" id="username" />
-    <input type="password" value="" placeholder="Password" id="password" />
+    <div class="Username">USERNAME</div>
+    <input type="text" value="" id="username" />
+    <div class="password">PASSWORD</div>
+    <input type="password" value="" id="password" />
     <button>LOGIN</button>
 </div>
 
@@ -15,9 +17,25 @@
     font-family: Montserrat;
 }
 
+.password{
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.7rem;
+    color: rgb(7, 7, 7);
+    font-family: Libre Caslon;
+}
+
+.Username{
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.7rem;
+    color: rgb(7, 7, 7);
+    font-family: Libre Caslon;
+}
+
 .Ateneo_library{
     text-align: center;
-    margin-top: 5rem;
+    margin-top: 2rem;
     font-weight: bold;
     font-size: 2rem;
     color: white;
@@ -45,7 +63,7 @@
 .login-block {
     width: 320px;
     padding: 20px;
-    background: #fcfcfd;
+    background: #fcfcfd0c;
     border-radius: 5px;
     border-left-color: #7210f3;
     border-top: 5px solid #7210f3;
