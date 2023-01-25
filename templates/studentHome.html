@@ -1,6 +1,17 @@
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 {% load static %}
 <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
+
+<header id="header" class="navbar navbar-fixed-top" style='background:#369; border-bottom: 1px solid rgb(255, 153, 51);'>
+    <div class="container" style="margin-left: 0;">
+        <div class="navbar-header" style='background:#369; '>
+            <a class="navbar-brand" style="width:100%; border-bottom: 2px solid rgb(255, 153, 51);" >
+                <h4 style="color:#fff; margin-left: 0; font-size: 28px; font-family: 'Times New Roman', Times, serif;" class="font-alt">JOBL Userstat</h4>
+            </a>
+        </div>
+    </div>
+</header> 
+
 <div class="Ateneo_library">James J. O'Brien, S. J. Library</div>
 <div class="Ateneo_name">Ateneo de Naga University</div>
 <div class="login-block">
@@ -14,7 +25,7 @@
 
 <style>
 body {
-    background-image: url("{% static 'img/background.png' %}");
+    /* background-image: url("{% static 'img/background.png' %}"); */
     background-size: cover;
     font-family: Montserrat;
     width: 100%;
