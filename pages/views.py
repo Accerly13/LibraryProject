@@ -13,7 +13,7 @@ class DashBoardAdmin(TemplateView):
     template_name = 'dashboard.html'
 
 class DashBoardStudent(TemplateView):
-    template_name = 'studentdashboard.html'
+    template_name = 'stat.html'
 
 class HomePageViewStudent(TemplateView):
     template_name = 'studenthome.html'
