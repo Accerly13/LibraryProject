@@ -17,3 +17,6 @@ class DashBoardStudent(TemplateView):
 
 class HomePageViewStudent(TemplateView):
     template_name = 'studenthome.html'
+
+class Sidebar(TemplateView):
+    template_name = 'sidebar.html'
