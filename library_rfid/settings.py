@@ -73,6 +73,8 @@ TEMPLATES = [
 ]
 
 
+
+
 WSGI_APPLICATION = 'library_rfid.wsgi.application'
 
 
