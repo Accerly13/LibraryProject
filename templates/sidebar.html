@@ -2,7 +2,7 @@
 <style type="text/css">
     .sidenav {
         height:100%;
-        width:160px;
+        width:260px;
         position: fixed;
         z-index:1;
         top:0;
@@ -21,7 +21,7 @@
     }
 
     .sidenav a:hover{
-        color:#f1f1f1;
+        color:#fafafd;
     }	
 
     .main{
@@ -30,12 +30,24 @@
     }
 
 </style>
- 
+
 <body>
 	<div class="sidenav">
-		<a href="/">Home</a>
-		<a href="/create">Create</a>
-		<a href="/2">View</a>
+        <div style="text-align: center; font-size: 20px; color: white; margin-top: 2rem; margin-bottom: 2rem;">System Administrator</div>
+		<a style="font-weight: bold; color: white;"href="/stat">Home</a>
+            <hr style="width:90%;text-align:center;  color:gray;background-color:gray">
+		<a style="font-weight: bold; color: white;">Manage Records</a>
+            <hr style="width:90%;text-align:center;  color:gray;background-color:gray">
+        <ul style="list-style-type:circle; font-size: 1.5rem; color: white;">
+            <li style="color: #818181;">Search Records</li>
+                <hr style="width:80%;text-align:center; color:gray;background-color:gray; margin-left: 0;">
+            <li style="color: #818181;">Update Records</li>
+                <hr style="width:80%;text-align:center; color:gray;background-color:gray; margin-left: 0;">
+            <li style="color: #818181;">Delete Records</li>
+                <hr style="width:80%;text-align:center;  color:gray;background-color:gray; margin-left: 0;">
+        </ul> 
+		<a style="font-weight: bold; color: white;" href="/2">Manage Reports</a>
+        <hr style="width:90%;text-align:center;  color:gray;background-color:gray">
 	</div>
  
 	{% block content %}
