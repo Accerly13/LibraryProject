@@ -20,3 +20,15 @@ class HomePageViewStudent(TemplateView):
 
 class Sidebar(TemplateView):
     template_name = 'sidebar.html'
+
+class SearchRecord(TemplateView):
+    template_name = 'searchRecord.html'
+
+class UpdateRecord(TemplateView):
+    template_name = 'updateRecord.html'
+
+class DeleteRecord(TemplateView):
+    template_name = 'deleteRecord.html'
+
+class ManageReport(TemplateView):
+    template_name = 'manageReport.html'
