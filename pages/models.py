@@ -7,6 +7,10 @@ from django.utils import timezone
 now = timezone.now()
 
 class Admins(models.Model):
-    admins = models.CharField(max_length=50, verbose_name='User Name')
+    admin_id = models.PositiveIntegerField(primary_key=True)
+    admin_username = models.CharField(max_length=50, verbose_name='User Name')
+    admin_password = models.CharField(max_length=50, verbose_name='Password')
 
-   
+    class Meta:
+        db_table = "admins"
+
