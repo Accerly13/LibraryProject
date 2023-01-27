@@ -117,3 +117,9 @@
 .login-block button:hover {
     background: #7210f3;
 }
+
+.logo {
+    background-image: url("{% static 'img/Ateneo_de_Naga_University_logo.png' %}");
+    background-size: auto;
+    font-family: Montserrat;
+}
