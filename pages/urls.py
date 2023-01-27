@@ -10,6 +10,6 @@ urlpatterns = [
    path('admin/dashboard/updaterecord', views.UpdateRecord.as_view(), name='updaterecord'),
    path('admin/dashboard/deleterecord', views.DeleteRecord.as_view(), name='deleterecord'),
    path('admin/dashboard/managereport', views.ManageReport.as_view(), name='managereport'),
-   path('', views.HomePageViewStudent.as_view(), name='home'),
-   path('stat/', views.DashBoardStudent.as_view(), name='stat')
+   path('1/', views.HomePageViewStudent.as_view(), name='home'),
+   path('', views.DashBoardStudent.as_view(), name='stat')
 ]
