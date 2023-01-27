@@ -35,21 +35,9 @@ function navigateTo() {
     // });
     // });
 
-    let username = document.getElementById("username").value
-    let password = document.getElementById("password").value
-
-    function value_id(username) {
-        const value = username
-        
-        const endpoint = "{% url '' %}"
-        fetch(endpoint + "?coach_id=" + value)
-        .then(res => res.json())
-        .then(response => { 
-            alert("hey")
-        })
-    }
-    // alert(username1)
-    // window.location.href = window.location.href + "dashboard"
+    let username1 =  document.getElementById("username").value
+    alert(username1)
+    window.location.href = window.location.href + "dashboard"
 
 }
 
