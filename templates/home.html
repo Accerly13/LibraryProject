@@ -1,8 +1,9 @@
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 {% load static %}
 <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
 <div class="grid-container-1 min-h-screen">
-    <div class="grid-2-column-2 h-[100%]" id="wrapper">
+    <div id="wrapper">
         <section>
                 <div class="Ateneo_library">James J. O'Brien, S. J. Library</div>
                 <div class="Ateneo_name">Ateneo de Naga University</div>
@@ -38,10 +39,9 @@ body {
     background-image: url("{% static 'img/background1.png' %}");
     background-size: cover;
     font-family: Montserrat;
-    width: 100%;
-    height: auto;
-    background-position: center center;
+    height: 100vh;
     background-attachment: fixed;
+    background-image:fullscreen;
 }
 
 img{
@@ -52,10 +52,11 @@ img{
 
 #wrapper {
     border-radius: 4px;
-    width: 600px;
-    height: 550px;
+    width: 550px;
+    height: 530px;
     border-style: double;
-    position: absolute;
-    left: 28%;
+    position: relative;
+    left: 30%;
 }
+
 </style>
