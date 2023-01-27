@@ -1,7 +1,14 @@
-{% include "header.html" %}
+
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 {% load static %}
 <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <style type="text/css">
 
@@ -17,13 +24,13 @@ hr.solid {
     .sidenav {
         height:100%;
         width: 230px;
-        position: fixed;
         z-index:1;
         top:0;
         left:0;
         background-color:#303030;
         overflow-x: hidden;
         padding-top:20px;
+        float: left;
     }
 
     .sidenav a {
@@ -78,20 +85,20 @@ hr.solid {
 	<div class="sidenav">
         <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" width="150" height="150">
         <div style="font-family:Arial; text-align: center; font-size: 15px; color: white; margin-top: 2rem; margin-bottom: 2rem;">System Administrator</div>
-		<a style="font-family:Arial; font-weight: bold; font-size: 15px; color: white;"href="/admin/dashboard">Home</a>
+        <a style="font-family:Arial; font-weight: bold; font-size: 15px; color: white;"href="/admin/dashboard"> &nbsp;&nbsp;<i class="fa fa-home" style="color:white"></i> &nbsp;&nbsp;Home</a>
             <hr class="solid" style="width:90%;text-align:center;  color:black;background-color:black">
-		<a style="font-family:Arial; font-weight: bold; font-size: 15px; color: white;">Manage Records</a>
-            <hr style="width:90%;text-align:center;  color:gray;background-color:gray">
-        <ul style="list-style-type:circle; font-size: 1.5rem; color: white;">
+		<a style="font-family:Arial; font-weight: bold; font-size: 15px; color: white;"> &nbsp;&nbsp;<i class="fa fa-folder" style="color:white"></i>  &nbsp;&nbsp;Manage Records</a>
+            <hr class="solid" style="width:90%;text-align:center;  color:black;background-color:black">
+        <ul style="list-style-type:circle; font-size: 1.5rem; color: white; margin-top: 1rem;">
             <li style="font-family:Arial; color: #818181;"><a style="font-size: 15px;" href="/admin/dashboard/searchrecord">Search Records</a></li>
-                <hr style="width:80%;text-align:center; color:gray;background-color:gray; margin-left: 0;">
+                <hr class="solid" style="width:80%;text-align:center;  color:black;background-color:black">
             <li style="font-family:Arial; color: #818181;"><a style="font-size: 15px;" href="/admin/dashboard/updaterecord">Update Records</a></li>
-                <hr style="width:80%;text-align:center; color:gray;background-color:gray; margin-left: 0;">
+                <hr class="solid" style="width:80%;text-align:center;  color:black;background-color:black">
             <li style="font-family:Arial; color: #818181;"><a style="font-size: 15px;" href="/admin/dashboard/deleterecord">Delete Records</a></li>
-                <hr style="width:80%;text-align:center;  color:gray;background-color:gray; margin-left: 0;">
+                <hr class="solid" style="width:80%;text-align:center;  color:black;background-color:black">
         </ul> 
-		<a style="font-family:Arial; font-weight: bold; font-size: 15px; color: white;" href="/admin/dashboard/managereport">Manage Reports</a>
-            <hr style="width:90%;text-align:center;  color:gray;background-color:gray">
+		<a style="font-family:Arial; font-weight: bold; font-size: 15px; color: white;" href="/admin/dashboard/managereport"> &nbsp;&nbsp;<i class="fa fa-file-text" style="color:white"></i>  &nbsp;&nbsp;Manage Reports</a>
+            <hr class="solid" style="width:90%;text-align:center;  color:black;background-color:black">
             {% block content %}
             {% endblock %}
 	</div>
