@@ -11,7 +11,7 @@ from django.http import HttpResponse
 class HomePageView(TemplateView):
     template_name = 'home.html'
     admin_username = Admins.objects.all()
-    pag.alert(admin_username[0].admin_username)
+    # pag.alert(admin_username[0].admin_username)
     
         
 class DashBoardAdmin(TemplateView):

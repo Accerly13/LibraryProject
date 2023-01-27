@@ -1,29 +1,21 @@
+<html>
+<head>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style type="text/css">
 
-.btn {
-  background-color: #336699; /* Blue background */
-  border: none; /* Remove borders */
-  color: white; /* White text */
-  cursor: pointer; /* Mouse pointer on hover */
-  float: right;
-}
-
-/* Darker background on mouse-over */
-.btn:hover {
-  background-color: #2d5b88;
-}
-
-.topnav {
+.navbar {
   background-color: #336699;
-  overflow: hidden;
   height: 60px;
+  overflow: hidden;
 }
 
 /* Style the links inside the navigation bar */
-.topnav a {
+.navbar a {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -50,6 +42,20 @@
   display: none;
 }
 
+.btn {
+  background-color: #336699; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 16px;
+  cursor: pointer; /* Mouse pointer on hover */
+  float: right;
+}
+
+/* Darker background on mouse-over */
+.btn:hover, .btn:focus {
+  background-color: #2d5b88;
+}
+
 .dropdown {
   display: inline-block;
   position: relative;
@@ -58,38 +64,41 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  width: 100%;
+  background-color: white;
+  min-width: 160px;
   overflow: auto;
   box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+  z-index: 1;
 }
-.dropdown:hover .dropdown-content {
-  display: block;
-}
+
 .dropdown-content a {
   display: block;
   color: #000000;
-  padding: 5px;
+  padding: 12px 16px;
   text-decoration: none;
 }
-.dropdown-content a:hover {
-  color: #FFFFFF;
-  background-color: #00A4BD;
-}
+
+.dropdown a:hover {color: black; background-color: rgb(236, 236, 236);}
+
+.show {display: block;}
 
 </style>
 
-<div class="topnav" id="myTopnav">
-    <h1 style="font-weight: bold; color: white; font-family:Arial; text-align: start; font-size: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;JOBL Userstat
+<div class="navbar">
+  <!-- style="font-weight: bold; color: white; font-family:Arial; text-align: start; font-size: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;JOBL Userstat -->
+    <div>
         <div class="dropdown">
-            <button class="btn">
+            <button onclick="dropDown()" class="btn">
                 <i style="font-size: 18px; color: white; "class="material-icons">settings</i>
                 <i style="font-size: 18px; color: white; "class="material-icons">arrow_drop_down&nbsp;&nbsp;</i>
         </button>
-        <div class="dropdown-content">
-            <a href="http://127.0.0.1:8000/admin">Sign out</a>
+        <div id="SignOutDropDown" class="dropdown-content">
+            <span style="font-family:Arial; color: gray">System Administrator</span>
+            <a style="font-family:Arial; font-weight: normal; color: gray"href="http://127.0.0.1:8000/admin">Sign out</a>
         </div>
     </div>
-</h1>
+    </div>
+</div>
     <!-- <a href="#home" class="active">Home</a>
     <a href="#news">News</a>
     <a href="#contact">Contact</a>
@@ -97,4 +106,28 @@
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a> -->
-  </div>
+</div>
+
+<script>
+
+function dropDown(){
+ document.getElementById("SignOutDropDown").classList.toggle("show");
+}
+
+window.onclick = function(event){
+    if (!event.target.matches('.btn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i=0; i<dropdowns.length;i++) {
+            var openDropDown = dropdowns[i];
+            if (openDropDown.classList.contains('show')) {
+                openDropDown.classList.remove('show');
+            }
+        }
+    }
+}
+
+</script>
+
+</head>
+</html>
