@@ -1,10 +1,25 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style type="text/css">
+
+.btn {
+  background-color: #336699; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  cursor: pointer; /* Mouse pointer on hover */
+  float: right;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: #2d5b88;
+}
 
 .topnav {
   background-color: #336699;
   overflow: hidden;
-  height: 50px;
+  height: 60px;
 }
 
 /* Style the links inside the navigation bar */
@@ -35,14 +50,51 @@
   display: none;
 }
 
+.dropdown {
+  display: inline-block;
+  position: relative;
+  float: right;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  display: block;
+  color: #000000;
+  padding: 5px;
+  text-decoration: none;
+}
+.dropdown-content a:hover {
+  color: #FFFFFF;
+  background-color: #00A4BD;
+}
+
 </style>
 
 <div class="topnav" id="myTopnav">
-    <a href="#home" class="active">Home</a>
+    <h1 style="font-weight: bold; color: white; font-family:Arial; text-align: start; font-size: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;JOBL Userstat
+        <div class="dropdown">
+            <button class="btn">
+                <i style="font-size: 18px; color: white; "class="material-icons">settings</i>
+                <i style="font-size: 18px; color: white; "class="material-icons">arrow_drop_down&nbsp;&nbsp;</i>
+        </button>
+        <div class="dropdown-content">
+            <a href="http://127.0.0.1:8000/admin">Sign out</a>
+        </div>
+    </div>
+</h1>
+    <!-- <a href="#home" class="active">Home</a>
     <a href="#news">News</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
-    </a>
+    </a> -->
   </div>
