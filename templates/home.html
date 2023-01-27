@@ -9,8 +9,51 @@
     <input type="text" value="" id="username" />
     <div class="password">PASSWORD</div>
     <input type="password" value="" id="password" />
-    <a href="dashboard"> <button >LOGIN </button> </a> 
+    <button onclick="navigateTo()">LOGIN </button>
+
 </div>
+
+<script>
+
+function navigateTo() {
+   
+    // var mysql = require('mysql');
+
+    // var con = mysql.createConnection({
+    // host: "localhost",
+    // user: "root",
+    // password: "libraryrfid",
+    // database: "jobluserstat"
+    // });
+
+    // con.connect(function(err) {
+    // if (err) throw err;
+    // //Select all customers and return the result object:
+    // con.query("SELECT * FROM admins", function (err, result, fields) {
+    //     if (err) throw err;
+    //     console.log(result);
+    // });
+    // });
+
+    let username = document.getElementById("username").value
+    let password = document.getElementById("password").value
+
+    function value_id(username) {
+        const value = username
+        
+        const endpoint = "{% url '' %}"
+        fetch(endpoint + "?coach_id=" + value)
+        .then(res => res.json())
+        .then(response => { 
+            alert("hey")
+        })
+    }
+    // alert(username1)
+    // window.location.href = window.location.href + "dashboard"
+
+}
+
+</script>
 
 <style>
 body {
