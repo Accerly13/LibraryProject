@@ -1,19 +1,21 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.views.generic import TemplateView
-import pyautogui as pag
 from .models import Admins
+import pyautogui as pag
 
 # Create your views here.
 
 from django.http import HttpResponse
 
 
+def checkAccount(request): 
+    admin_username = Admins.objects.all()
+    return admin_username[0].admin_username
+
 class HomePageView(TemplateView):
     template_name = 'home.html'
-    admin_username = Admins.objects.all()
-    pag.alert(admin_username[0].admin_username)
-    
-        
+            
 class DashBoardAdmin(TemplateView):
     template_name = 'dashboard.html'
 

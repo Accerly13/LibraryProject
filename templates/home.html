@@ -1,4 +1,6 @@
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% load static %}
 <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
@@ -25,11 +27,22 @@
 
 <script>
 
+$.ajax({
+        url: "{% url 'pages:admin' %}",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error)
+        }
+    });
+
 function navigateTo() {
     let username1 =  document.getElementById("username").value
     alert(username1)
     window.location.href = window.location.href + "dashboard"
-
 }
 
 </script>
