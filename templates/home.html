@@ -1,23 +1,47 @@
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 {% load static %}
 <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
-<div class="Ateneo_library">James J. O'Brien, S. J. Library</div>
-<div class="Ateneo_name">Ateneo de Naga University</div>
-<div class="login-block">
-    <h1>Welcome Admin!</h1>
-    <div class="Username">USERNAME</div>
-    <input type="text" value="" id="username" />
-    <div class="password">PASSWORD</div>
-    <input type="password" value="" id="password" />
-    <a href="dashboard"> <button >LOGIN </button> </a> 
-</div>
 
+<div class="grid-container-1 min-h-screen">
+    <div class="grid-2-column-2 h-[100%]" id="wrapper">
+        <section>
+                <div class="Ateneo_library">James J. O'Brien, S. J. Library</div>
+                <div class="Ateneo_name">Ateneo de Naga University</div>
+                <div class="login-block">
+                    <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" width="100" height="100">
+                    <h1>Welcome Admin!</h1>
+                    <div class="Username">USERNAME</div>
+                    <input type="text" value="" id="username" />
+                    <div class="password">PASSWORD</div>
+                    <input type="password" value="" id="password" />
+                    <a href="dashboard"> <button >LOGIN </button> </a> 
+                </div>
+        </section>
+    </div>
+</div>
 <style>
 body {
-    background-image: url("{% static 'img/background.png' %}");
+    background-image: url("{% static 'img/background1.png' %}");
     background-size: cover;
     font-family: Montserrat;
     width: 100%;
     height: auto;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#wrapper {
+    border-radius: 4px;
+    width: 600px;
+    height: 550px;
+    border-style: double;
+    position: absolute;
+    left: 28%;
 }
 </style>
