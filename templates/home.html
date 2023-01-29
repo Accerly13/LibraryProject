@@ -10,26 +10,33 @@
                 <div class="login-block">
                     <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" width="100" height="100">
                     <h1>Welcome Admin!</h1>
-                    <!-- <form method="get"> -->
-                        <!-- {% csrf_token %} -->
+                    <div id="onenter">
                         <div class="Username">USERNAME</div>
                         <input type="text" value="" id="username" />
                         <div class="password">PASSWORD</div>
                         <input type="password" value="" id="password" />
-                        <a href="dashboard"> <button >LOGIN </button> </a> 
-                    <!-- </form> -->
+                        <p id="error"></p>
+                    </div>
+                        <button onclick="navigateTo('{{data.0.admin_username}}', '{{data.0.admin_password}}')" id="login">LOGIN </button> 
                 </div>
         </section>
     </div>
 </div>
 
 <script>
-
-function navigateTo() {
+var input = document.getElementById("onenter");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("login").click();
+  }
+});
+function navigateTo(username, password) {
     let username1 =  document.getElementById("username").value
-    alert(username1)
-    window.location.href = window.location.href + "dashboard"
-
+    let password1 =  document.getElementById("password").value
+    if (username == username1 && password == password1) 
+        window.location.href = window.location.href + "dashboard"
+    else document.getElementById("error").innerHTML = "Invalid Username or Password!";
 }
 
 </script>
