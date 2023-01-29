@@ -1,10 +1,17 @@
 from django.urls import path
 from . import views
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
+from django.conf import settings
 
 
 app_name = 'pages'
 
 urlpatterns = [
+   path(
+        "favicon.ico",
+        RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
+    ),
    path('admin/', views.HomePageView.as_view(), name='admin'),
    path('admin/dashboard/', views.DashBoardAdmin.as_view(), name='dashboard'),
    path('admin/dashboard/searchrecord/', views.SearchRecord.as_view(), name='searchrecord'),
