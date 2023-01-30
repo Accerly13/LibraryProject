@@ -23,34 +23,8 @@ class HomePageView(TemplateView):
         data = Admins.objects.all()
         return render(request, 'home.html', {'data': data})
 
-class DashBoardAdmin(LoginRequiredMixin, TemplateView):
-    template_name = 'dashboard.html'
-
-class VisitorLoginPage(TemplateView):
-    template_name = 'stat.html'
-
-class Sidebar(TemplateView):
-    template_name = 'sidebar.html'
-
-class SearchRecord(LoginRequiredMixin, TemplateView):
-    template_name = 'searchRecord.html'
-
-class UpdateRecord(LoginRequiredMixin, TemplateView):
-    template_name = 'updateRecord.html'
-
-class DeleteRecord(LoginRequiredMixin, TemplateView):
-    template_name = 'deleteRecord.html'
-
-class ManageReport(LoginRequiredMixin, TemplateView):
-    template_name = 'manageReport.html'
-
-
-
-# class DashBoardAdmin(TemplateView):
+# class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 #     template_name = 'dashboard.html'
-
-#     def tryLang(message):
-#         pag.alert(message)
 
 # class VisitorLoginPage(TemplateView):
 #     template_name = 'stat.html'
@@ -58,15 +32,41 @@ class ManageReport(LoginRequiredMixin, TemplateView):
 # class Sidebar(TemplateView):
 #     template_name = 'sidebar.html'
 
-# class SearchRecord(TemplateView):
+# class SearchRecord(LoginRequiredMixin, TemplateView):
 #     template_name = 'searchRecord.html'
 
-# class UpdateRecord(TemplateView):
+# class UpdateRecord(LoginRequiredMixin, TemplateView):
 #     template_name = 'updateRecord.html'
 
-# class DeleteRecord(TemplateView):
+# class DeleteRecord(LoginRequiredMixin, TemplateView):
 #     template_name = 'deleteRecord.html'
 
-# class ManageReport(TemplateView):
+# class ManageReport(LoginRequiredMixin, TemplateView):
 #     template_name = 'manageReport.html'
+
+
+
+class DashBoardAdmin(TemplateView):
+    template_name = 'dashboard.html'
+
+    def tryLang(message):
+        pag.alert(message)
+
+class VisitorLoginPage(TemplateView):
+    template_name = 'stat.html'
+
+class Sidebar(TemplateView):
+    template_name = 'sidebar.html'
+
+class SearchRecord(TemplateView):
+    template_name = 'searchRecord.html'
+
+class UpdateRecord(TemplateView):
+    template_name = 'updateRecord.html'
+
+class DeleteRecord(TemplateView):
+    template_name = 'deleteRecord.html'
+
+class ManageReport(TemplateView):
+    template_name = 'manageReport.html'
 
