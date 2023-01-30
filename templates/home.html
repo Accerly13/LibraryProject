@@ -12,13 +12,22 @@
                     <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" width="100" height="100">
                     <h1>Welcome Admin!</h1>
                     <div id="onenter">
+                    <form action="" method="post">
+                        {% csrf_token %}
                         <div class="Username">USERNAME</div>
-                        <input type="text" value="" id="username" />
+                        <input type="text" value="" id="username" name="username"/>
                         <div class="password">PASSWORD</div>
-                        <input type="password" value="" id="password" />
-                        <p id="error"></p>
+                        <input type="password" value="" id="password" name="password"/>
+                        {% if messages %}
+                        <p class="messages">
+                            {% for message in messages %}
+                            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+                            {% endfor %}
+                        </p>
+                        {% endif %}
                     </div>
-                        <button onclick="navigateTo('{{data.0.admin_username}}', '{{data.0.admin_password}}')" id="login">LOGIN </button> 
+                        <button id="login">LOGIN </button> 
+                </form>
                 </div>
         </section>
     </div>
@@ -32,15 +41,6 @@ input.addEventListener("keypress", function(event) {
     document.getElementById("login").click();
   }
 });
-function navigateTo(username, password) {
-
-    let username1 =  document.getElementById("username").value
-    let password1 =  document.getElementById("password").value
-    if (username == username1 && password == password1) 
-        window.location.href = window.location.href + "dashboard"
-    else document.getElementById("error").innerHTML = "Invalid Username or Password!";
-}
-
 </script>
 
 <style>
