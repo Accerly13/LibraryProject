@@ -1,13 +1,54 @@
 {% include "header.html" %}
 {% include "sidebar.html" %}
 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
+
+.grid-container-1 {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.grid-2-column-2 {
+    display: grid;
+    grid-template-columns: 0fr 7fr;
+    gap: 0;
+}
+
+.w3-container{
+  background-color: #e0e9ec;
+}
+
+.container-main {
+  background-color: white;
+  margin: 5rem;
+  max-height: 500px;
+  border-radius: 1rem;
+}
+
+.text-style {
+  font-size: 20px;
+  color:rgb(42, 42, 42);
+  margin: 5rem;
+}
 
 </style>
 
+<div class="grid-container-1 min-h-screen">
 <body style="background-color: #ECF0F1;">
 
     <header class="w3-container">
-  <h1 style="color: rgb(120, 120, 120); font-size: 20px; font-weight: bold; text-align: center;">Delete time records</h1>  
+  <h1 style="color: rgb(120, 120, 120); font-size: 20px; text-align: start;">Delete time records</h1>  
     </header>
+
+    <div class="container-main">
+    <section>
+      <h1 class="text-style">Start Date:</h1>
+    </section>
+    <section>
+      <h1 class="text-style">End Date:</h1>
+    </section>
+    </div>
 </body>
+</div>
