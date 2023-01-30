@@ -12,7 +12,6 @@ class HomePageView(TemplateView):
     template_name = 'home.html'
     def get(self, request):
         data = Admins.objects.all()
-        username = data[0].admin_username
         return render(request, 'home.html', {'data': data})
 
 class DashBoardAdmin(TemplateView):

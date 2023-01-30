@@ -2,6 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% load static %}
 <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
+<title>JOBL Userstat</title>
 <div class="grid-container-1 min-h-screen">
     <div id="wrapper">
         <section>
@@ -31,11 +32,18 @@ input.addEventListener("keypress", function(event) {
     document.getElementById("login").click();
   }
 });
+<<<<<<< HEAD
+function navigateTo(username, password, data) {
+=======
 function navigateTo(username, password) {
+    console.log(username)
+    console.log(password)
+>>>>>>> 14f6a6bcc32156c363b94a21eb66bbb08dc86688
     let username1 =  document.getElementById("username").value
     let password1 =  document.getElementById("password").value
     if (username == username1 && password == password1) 
-        window.location.href = window.location.href + "dashboard"
+        // window.location.href = window.location.href + "dashboard"
+        console.log(data)
     else document.getElementById("error").innerHTML = "Invalid Username or Password!";
 }
 
