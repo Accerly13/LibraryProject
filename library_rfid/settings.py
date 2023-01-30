@@ -135,7 +135,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-LOGIN_URL = 'admin/'
+LOGIN_URL = '/admin/'
 
 
 # Default primary key field type
