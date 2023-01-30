@@ -1,13 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
 import pyautogui as pag
 from .models import Admins
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
-from django.shortcuts import redirect
+from django.contrib.auth import logout, authenticate, login
+from django.contrib import messages
 from django.http import HttpResponse
+
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.success(request, ("There Was An Error Logging In, Try Again..."))	
+            return redirect('admin')	
+    else:
+        return render(request, 'home.html', {})
 
 @login_required
 def protected_view(request):
@@ -16,41 +30,15 @@ def protected_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('admin')
+    return redirect('http://127.0.0.1:8000/admin/')
 
 class HomePageView(TemplateView):
     def get(self, request):
         data = Admins.objects.all()
         return render(request, 'home.html', {'data': data})
 
-class DashBoardAdmin(LoginRequiredMixin, TemplateView):
-    template_name = 'dashboard.html'
-
-class VisitorLoginPage(TemplateView):
-    template_name = 'stat.html'
-
-class Sidebar(TemplateView):
-    template_name = 'sidebar.html'
-
-class SearchRecord(LoginRequiredMixin, TemplateView):
-    template_name = 'searchRecord.html'
-
-class UpdateRecord(LoginRequiredMixin, TemplateView):
-    template_name = 'updateRecord.html'
-
-class DeleteRecord(LoginRequiredMixin, TemplateView):
-    template_name = 'deleteRecord.html'
-
-class ManageReport(LoginRequiredMixin, TemplateView):
-    template_name = 'manageReport.html'
-
-
-
-# class DashBoardAdmin(TemplateView):
+# class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 #     template_name = 'dashboard.html'
-
-#     def tryLang(message):
-#         pag.alert(message)
 
 # class VisitorLoginPage(TemplateView):
 #     template_name = 'stat.html'
@@ -58,15 +46,41 @@ class ManageReport(LoginRequiredMixin, TemplateView):
 # class Sidebar(TemplateView):
 #     template_name = 'sidebar.html'
 
-# class SearchRecord(TemplateView):
+# class SearchRecord(LoginRequiredMixin, TemplateView):
 #     template_name = 'searchRecord.html'
 
-# class UpdateRecord(TemplateView):
+# class UpdateRecord(LoginRequiredMixin, TemplateView):
 #     template_name = 'updateRecord.html'
 
-# class DeleteRecord(TemplateView):
+# class DeleteRecord(LoginRequiredMixin, TemplateView):
 #     template_name = 'deleteRecord.html'
 
-# class ManageReport(TemplateView):
+# class ManageReport(LoginRequiredMixin, TemplateView):
 #     template_name = 'manageReport.html'
+
+
+
+class DashBoardAdmin(TemplateView):
+    template_name = 'dashboard.html'
+
+    def tryLang(message):
+        pag.alert(message)
+
+class VisitorLoginPage(TemplateView):
+    template_name = 'stat.html'
+
+class Sidebar(TemplateView):
+    template_name = 'sidebar.html'
+
+class SearchRecord(TemplateView):
+    template_name = 'searchRecord.html'
+
+class UpdateRecord(TemplateView):
+    template_name = 'updateRecord.html'
+
+class DeleteRecord(TemplateView):
+    template_name = 'deleteRecord.html'
+
+class ManageReport(TemplateView):
+    template_name = 'manageReport.html'
 

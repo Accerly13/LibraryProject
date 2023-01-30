@@ -19,4 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admindjango/', admin.site.urls),
     path('', include('pages.urls')),
+    path('admin/', include('django.contrib.auth.urls'),  kwargs={'methods': ['GET', 'POST']}),
+
 ]
