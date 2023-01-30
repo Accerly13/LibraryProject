@@ -32,11 +32,12 @@ input.addEventListener("keypress", function(event) {
     document.getElementById("login").click();
   }
 });
-function navigateTo(username, password) {
+function navigateTo(username, password, data) {
     let username1 =  document.getElementById("username").value
     let password1 =  document.getElementById("password").value
     if (username == username1 && password == password1) 
-        window.location.href = window.location.href + "dashboard"
+        // window.location.href = window.location.href + "dashboard"
+        console.log(data)
     else document.getElementById("error").innerHTML = "Invalid Username or Password!";
 }
 
