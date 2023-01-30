@@ -1,27 +1,177 @@
 {% include "header.html" %}
 {% include "sidebar.html" %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
 
-<div class="grid-container-1 min-h-screen">
+    <title>Search Records</title>
+  </head>
+
+  <div class="grid-container-1 min-h-screen">
     <body style="background-color: #ECF0F1;">
-        <header class="w3-container">
-            <h1 class="text-style">Update Records</h1>  
-              </header>
-    </body>
+      <div class="warpper">
+        <input class="radio" id="one" name="group" type="radio" checked>
+        <input class="radio" id="two" name="group" type="radio">
+        <input class="radio" id="three" name="group" type="radio">
+        <input class="radio" id="four" name="group" type="radio">
+        <input class="radio" id="five" name="group" type="radio">
+        <div class="tabs">
+        <label class="tab" id="one-tab" for="one">Import User</label>
+        <label class="tab" id="two-tab" for="two">Update User</label>
+        <label class="tab" id="three-tab" for="three">Update College</label>
+        <label class="tab" id="four-tab" for="four">Update Department</label>
+        <label class="tab" id="five-tab" for="five">Update User Type</label>
+          </div>
+        <div class="panels">
+          <div class="panel" id="one-panel">
+            <div class="panel-title">Add New Data</div>
+            <hr>
+
+          </div>
+          <div class="panel" id="two-panel">
+            <div class="panel-title">Take-Away Skills</div>
+            <p>You will learn many aspects of styling web pages! You’ll be able to set up the correct file structure, edit text and colors, and create attractive layouts. With these skills, you’ll be able to customize the appearance of your web pages to suit your every need!</p>
+          </div>
+          <div class="panel" id="three-panel">
+            <div class="panel-title">Note on Prerequisites</div>
+            <p>We recommend that you complete Learn HTML before learning CSS.</p>
+          </div>
+          <div class="panel" id="four-panel">
+            <div class="panel-title">Note on Prerequisites</div>
+            <p>We recommend that you complete Learn HTML before learning CSS.</p>
+          </div>
+          <div class="panel" id="five-panel">
+            <div class="panel-title">Note on Prerequisites</div>
+            <p>We recommend that you complete Learn HTML before learning CSS.</p>
+          </div>
+        </div>
+      </div>
+        
+      <!-- Optional JavaScript; choose one of the two! -->
+  
+      <!-- Option 1: Bootstrap Bundle with Popper -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
+      <!-- Option 2: Separate Popper and Bootstrap JS -->
+      <!--
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+      -->
+    <script>
+       
+    </script>
+  
+  </body>
 </div>
+</html>
 
 <style>
 
 .grid-container-1 {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 4fr auto;
 }
-    .w3-container{
-  background-color: #e0e9ec;
-}
-.text-style {
-  font-size: 20px;
-  color: rgb(120, 120, 120);
-  margin: 1rem;
+.grid-2-column-2 {
+    display: grid;
+    grid-template-columns: 0fr 7fr;
+    gap: 0;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Arimo:400,700&display=swap');
+body{
+  background:#ECF0F1;
+  font-family: 'Arimo', sans-serif;
+}
+h2{
+  color:#000;
+  text-align:center;
+  font-size:2em;
+}
+.warpper{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tab{
+  cursor: pointer;
+  padding:10px 20px;
+  margin:0px 2px;
+  background:#000;
+  display:inline-block;
+  color:#fff;
+  border-radius:3px 3px 0px 0px;
+  box-shadow: 0 0.5rem 0.8rem #00000080;
+}
+.panels{
+  background:#fffffff6;
+  box-shadow: 0 2rem 2rem #00000080;
+  min-height:500px;
+  width:100%;
+  max-width:900px;
+  border-radius:3px;
+  overflow:hidden;
+  padding:20px;  
+}
+.panel{
+  display:none;
+  animation: fadein .8s;
+}
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+.panel-title{
+  font-size:1.5em;
+  font-weight:bold
+}
+.radio{
+  display:none;
+}
+#one:checked ~ .panels #one-panel,
+#two:checked ~ .panels #two-panel,
+#three:checked ~ .panels #three-panel,
+#four:checked ~ .panels #four-panel,
+#five:checked ~ .panels #five-panel{
+  display:block
+}
+#one:checked ~ .tabs #one-tab,
+#two:checked ~ .tabs #two-tab,
+#three:checked ~ .tabs #three-tab,
+#four:checked ~ .tabs #four-tab,
+#five:checked ~ .tabs #five-tab{
+  background:#fffffff6;
+  color:#000;
+  border-top: 3px solid #000;
+}
+
+/* medium */
+@media all and (min-width: 768px) {
+
+  .grid-2-column-2 {
+    display: grid;
+    grid-template-columns: 0fr 7fr;
+    gap: 0px;
+  }
+}
+
+.container {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  
+}
 </style>
