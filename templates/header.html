@@ -94,7 +94,7 @@
         </button>
         <div id="SignOutDropDown" class="dropdown-content">
             <span style="font-family:Arial; color: gray">System Administrator</span>
-            <a style="font-family:Arial; font-weight: normal; color: gray"href="http://127.0.0.1:8000/admin">Sign out</a>
+            <a style="font-family:Arial; font-weight: normal; color: gray" id="logout">Sign out</a>
         </div>
     </div>
     </div>
@@ -102,7 +102,9 @@
 </div>
 
 <script>
-
+ document.getElementById("logout").addEventListener("click", function() {
+    fetch('/logout_view/')
+  });
 function dropDown(){
  document.getElementById("SignOutDropDown").classList.toggle("show");
 }

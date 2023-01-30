@@ -20,6 +20,9 @@
 
   <div class="grid-container-1 min-h-screen">
     <body style="background-color: #ECF0F1;">
+      <header class="w3-container">
+        <h1 class="text-style">Search Records</h1>  
+          </header>
       <div class="w3-container-main">
           <div class="w3-row" style="text-align: center">
             <a href="javascript:void(0)" onclick="searchRecord(event, 'View');">
@@ -30,29 +33,32 @@
             </a>
           </div>
         
-          <div id="View" class="w3-container search" style="display:none">
+          <div id="View" class="container-main search" style="display:none">
             <div class="container px-1 px-sm-5 mx-auto">
                 <form autocomplete="off">
                   <div class="flex-row">
                     <div class="col-lg-6 col-11 px-1">
                       <div class="input-group input-daterange">
                         <input type="text" id="start" class="form-control text-left mr-2">
-                        <label class="ml-3 form-control-placeholder" id="start-p" for="start">Start Date</label>
+                        <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)" class="ml-3 form-control-placeholder" id="start-p" for="start">Start Date:</label>
                         <span class="fa fa-calendar" id="fa-1"></span>
                         <input type="text" id="end" class="form-control text-left ml-2">
-                        <label class="ml-3 form-control-placeholder" id="end-p" for="end">End Date</label>
+                        <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)" class="ml-3 form-control-placeholder" id="end-p" for="end">End Date:</label>
                         <span class="fa fa-calendar" id="fa-2"></span>
                       </div>
                     </div>
                   </div>
                 </form>
+                <div class="vertical-center">
+                  <button class="generate" onclick="alert('Search records :3')">Generate</button>
+                  </div>
           </div>
         
           <div id="Search" class="w3-container search" style="display:none">
             <h2>search Visitor</h2>
             <p></p> 
-          </div>
         </div>
+      </div>
         
       <!-- Optional JavaScript; choose one of the two! -->
   
@@ -117,13 +123,22 @@
 
 .w3-container-main {
   margin-top: 3rem;
-  margin-left: 10rem;
-  border-radius: 5rem;
+  margin-left: 15rem;
+  border-radius: 1rem;
+  overflow: hidden;
 }
 
 .w3-container {
-  background-color: white;
+  background-color:#e0e9ec;
+}
 
+.container-main {
+  background-color: white;
+  margin-right: 10rem;
+  margin-top: 1.5rem;
+  max-width: 1000px;
+  max-height: 500px;
+  border-radius: 1rem;
 }
 
 .w3-hover:hover {
@@ -141,6 +156,28 @@ color:white ;background-color:#336699 }
 .w3-bottombar {
   color: #1f466c;
 }
+
+.text-style {
+  font-size: 20px;
+  color: rgb(120, 120, 120);
+  margin: 1rem;
+}
+
+.generate {
+  background-color: #336699;
+  color: white;
+  font-size: 16px;
+  margin: 2px 2px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: .5rem;
+  padding: 10px 32px;
+  display: inline-block;
+}
+
+.generate {background-color: #336699;} 
 
 
 /* medium */
@@ -164,7 +201,7 @@ input {
     border: 1px solid #CFD8DC !important;
     border-radius: 4px !important;
     box-sizing: border-box;
-    background-color: #fff !important;
+    background-color:  rgb(236, 236, 236) !important;
     color: #000 !important;
     font-size: 16px !important;
     letter-spacing: 1px;
@@ -311,11 +348,6 @@ tfoot tr:nth-child(2) th {
 .old-day:hover, .day:hover, .new-day:hover, .month:hover, .year:hover, .decade:hover, .century:hover {
   border-radius: 50% !important;
   background-color: #eee;
-}
-
-.active {
-  background-image: linear-gradient(#1976D2, #1976D2) !important;
-  color: #fff !important;
 }
 
 .range-start, .range-end {
