@@ -100,21 +100,22 @@
           </div>
         </div>
         <div class="panel" id="two-panel">
-          <div class="container px-1 px-sm-5 mx-auto">
-            <form autocomplete="off">
+
               <div class="form-row justify-content-center">
-                <div class="col-lg-6 col-11 px-1">
-                    <form action="/action_page.php">
-                      <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)" for="idnum">Search by ID Number:</label>
-                      <br><br><input type="number" id="idnum" name="idnum"><br><br>
-                      <p>or</p>
-                      <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)" for="name">Search by Name:</label>
-                      <br><br><input type="text" id="name" name="name"><br><br>
-                    </form>
+                <div class="row mb-3">
+                  <label class="text-center" for="idnum">Search by ID Number:</label>
+                  <div class="text-center">
+                    <input class="form-control" type="number" id="idnum" name="idnum">
                   </div>
                 </div>
-              </div>
-            </form>
+                <div class="row mb-3">
+                  <label class="text-center" for="fname">Search by Name:</label>
+                  <div class="text-center">
+                    <input class="form-control" type="text" id="fname" name="fname">
+                  </div>
+                </div>
+                </div>
+
           </div>
         </div>
       </div>
