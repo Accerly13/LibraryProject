@@ -18,7 +18,7 @@
 /* Style the links inside the navigation bar */
 .navbar a {
   float: left;
-  display: block;
+  /* display: block; */
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
@@ -51,7 +51,7 @@
   color: white; /* White text */
   padding: 16px;
   cursor: pointer; /* Mouse pointer on hover */
-  float: right;
+  /* float: right; */
 }
 
 /* Darker background on mouse-over */
@@ -61,8 +61,7 @@
 
 .dropdown {
   display: inline-block;
-  position: relative;
-  float: right;
+  position: absolute;
 }
 .dropdown-content {
   display: none;
@@ -86,13 +85,13 @@
 .show {display: block;}
 
 @media screen and (max-width: 500px) {
-  .header a {
+  .navbar a {
     float: none;
     display: block;
     text-align: left;
   }
   
-  .header-right {
+  .navbar-right {
     float: none;
   }
 }
@@ -103,7 +102,7 @@
   <div style="font-weight: bold; color: white; font-family:Arial; text-align: start; font-size: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;JOBL Userstat</div>
     <div>
         <div class="dropdown">
-        <button class="btn">
+        <button class="btn" onclick="myFunction()">
             <i  onclick="dropDown()" style="font-size: 18px; color: white;" class="material-icons">settings</i>
             <i  onclick="dropDown()" style="font-size: 18px; color: white;" class="material-icons">arrow_drop_down&nbsp;&nbsp;</i>
         </button>
@@ -129,12 +128,12 @@
       }
     });
   });
-function dropDown(){
+function myFunction(){
  document.getElementById("SignOutDropDown").classList.toggle("show");
 }
 
 window.onclick = function(event){
-    if (!event.target.matches('.material-icons')) {
+    if (!event.target.matches('.btn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
         for (i=0; i<dropdowns.length;i++) {
