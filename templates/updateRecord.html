@@ -20,6 +20,9 @@
 
   <div class="grid-container-1 min-h-screen">
     <body style="background-color: #ECF0F1;">
+      <header class="w3-container">
+        <h1 class="text-style">Update Records</h1>  
+          </header>
       <div class="warpper">
         <input class="radio" id="one" name="group" type="radio" checked>
         <input class="radio" id="two" name="group" type="radio">
@@ -37,7 +40,40 @@
           <div class="panel" id="one-panel">
             <div class="panel-title">Add New Data</div>
             <hr>
-
+            <form action="/action_page.php">
+              <label for="idnum">ID Number:</label>
+              <input type="number" id="idnum" name="idnum"><br><br>
+              <label for="fname">First name:</label>
+              <input type="text" id="fname" name="fname"><br><br>
+              <label for="mname">Middle name:</label>
+              <input type="text" id="mname" name="mname"><br><br>
+              <label for="lname">Last name:</label>
+              <input type="text" id="lname" name="lname"><br><br>
+              <label for="gender">Gender:</label>
+              <input type="radio" name="gender" value="male"> Male
+              <input type="radio" name="gender" value="female"> Female
+              <br><br> <label for="department">Department:</label>
+              <select id="department" name="department">
+                <option value=""></option>
+                <option value="Computer Studies">Computer Studies</option>
+                <option value="Digital Arts and Computer Animation">Digital Arts and Computer Animation</option>
+              </select>
+              <br><br> <label for="course">Course:</label>
+              <select id="course" name="course">
+                <option value=""></option>
+                <option value="BS Information Technology">Information Technology</option>
+                <option value="BS Information Systems">Information Systems</option>
+              </select>
+              <br><br> <label for="usertype">User Type:</label>
+              <select id="usertype" name="usertype">
+                <option value=""></option>
+                <option value="Student">Student</option>
+                <option value="Faculty">Faculty</option>
+              </select><br><br>
+              <label for="comment">Comment:</label>
+              <input type="comment" id="comment" name="comment"><br><br>
+              <button class="generate" onclick="alert('Add records :3')">Save</button>
+            </form>
           </div>
           <div class="panel" id="two-panel">
             <div class="panel-title">Take-Away Skills</div>
@@ -88,6 +124,18 @@
     gap: 0;
 }
 
+.center-block {
+  margin: auto;
+  display: block;
+}
+
+.input {
+
+text-align: center;
+background-color: rgb(236, 236, 236);
+
+}
+
 @import url('https://fonts.googleapis.com/css?family=Arimo:400,700&display=swap');
 body{
   background:#ECF0F1;
@@ -107,7 +155,8 @@ h2{
   cursor: pointer;
   padding:10px 20px;
   margin:0px 2px;
-  background:#000;
+  margin-top: 1rem;
+  background:#336699;
   display:inline-block;
   color:#fff;
   border-radius:3px 3px 0px 0px;
@@ -115,7 +164,7 @@ h2{
 }
 .panels{
   background:#fffffff6;
-  box-shadow: 0 2rem 2rem #00000080;
+  box-shadow: 0 1rem 1rem #d6dae0;
   min-height:500px;
   width:100%;
   max-width:900px;
@@ -136,8 +185,9 @@ h2{
     }
 }
 .panel-title{
-  font-size:1.5em;
-  font-weight:bold
+  font-size:1.3em;
+  font-weight:bold;
+  color: rgb(52, 52, 52);
 }
 .radio{
   display:none;
@@ -155,8 +205,8 @@ h2{
 #four:checked ~ .tabs #four-tab,
 #five:checked ~ .tabs #five-tab{
   background:#fffffff6;
-  color:#000;
-  border-top: 3px solid #000;
+  color:#336699;
+  border-top: 3px solid #336699;
 }
 
 /* medium */
@@ -174,4 +224,30 @@ h2{
   padding-bottom: 120px;
   
 }
+
+.w3-container {
+  background-color:#e0e9ec;
+}
+
+.text-style {
+  font-size: 20px;
+  color: rgb(120, 120, 120);
+  margin: 1rem;
+}
+
+.generate {
+  background-color: #336699;
+  color: white;
+  font-size: 16px;
+  margin: 2px 2px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: .5rem;
+  padding: 5px 32px;
+  display: inline-block;
+}
+
+.generate {background-color: #336699;} 
 </style>
