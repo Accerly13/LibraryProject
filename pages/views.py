@@ -1,8 +1,11 @@
+from django.shortcuts import render
+
+# Create your views here.
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
 import pyautogui as pag
-from .models import Admins
+from .models import Admin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -21,7 +24,7 @@ def logout_view(request):
 
 class HomePageView(TemplateView):
     def get(self, request):
-        data = Admins.objects.all()
+        data = Admin.objects.all()
         return render(request, 'home.html', {'data': data})
     def post(self, request):
         username = request.POST['username']
@@ -41,6 +44,7 @@ class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 
 class VisitorLoginPage(TemplateView):
     template_name = 'stat.html'
+    Admin.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
 
 class Sidebar(TemplateView):
     template_name = 'sidebar.html'
@@ -56,30 +60,3 @@ class DeleteRecord(LoginRequiredMixin, TemplateView):
 
 class ManageReport(LoginRequiredMixin, TemplateView):
     template_name = 'manageReport.html'
-
-
-
-# class DashBoardAdmin(TemplateView):
-#     template_name = 'dashboard.html'
-
-#     def tryLang(message):
-#         pag.alert(message)
-
-# class VisitorLoginPage(TemplateView):
-#     template_name = 'stat.html'
-
-# class Sidebar(TemplateView):
-#     template_name = 'sidebar.html'
-
-# class SearchRecord(TemplateView):
-#     template_name = 'searchRecord.html'
-
-# class UpdateRecord(TemplateView):
-#     template_name = 'updateRecord.html'
-
-# class DeleteRecord(TemplateView):
-#     template_name = 'deleteRecord.html'
-
-# class ManageReport(TemplateView):
-#     template_name = 'manageReport.html'
-

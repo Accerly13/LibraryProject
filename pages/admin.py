@@ -1,9 +1,13 @@
 from django.contrib import admin
-from .models import Admins
 
 # Register your models here.
 
-class AdminsAdmin(admin.ModelAdmin):
+from django.contrib import admin
+from .models import Admin
+
+# Register your models here.
+
+class UserAdmin(admin.ModelAdmin):
     list_display = ['admin_username', 'admin_password']
 
-admin.site.register(Admins, AdminsAdmin)
+admin.site.register(Admin, UserAdmin)
