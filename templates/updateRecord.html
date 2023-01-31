@@ -44,9 +44,10 @@
               </div>
             </div>
             <hr>
-            <form action="/action_page.php">
+            <form action="/admin/dashboard/updaterecord/" method="post">
+              {% csrf_token %}
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="idnum">Upload Picture</label>
+                <label class="col-sm-2 col-form-label" for="customFile">Upload Picture</label>
                 <div class="col-sm-10">
                   <input type="file" class="form-control" id="customFile" />
                 </div>
@@ -137,9 +138,9 @@
           <div class="panel" id="two-panel">
             <!-- <div class="panel-title">Take-Away Skills</div> -->
             <div class="row mb-3">
-              <label class="text-center" for="idnum">Search by ID Number:</label>
+              <label class="text-center" for="idnum1">Search by ID Number:</label>
               <div class="text-center">
-                <input class="form-control" type="number" id="idnum" name="idnum">
+                <input class="form-control" type="number" id="idnum1" name="idnum1">
               </div>
             </div>
             <div class="row mb-3">
