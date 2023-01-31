@@ -44,9 +44,9 @@ class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 
 class VisitorLoginPage(TemplateView):
     template_name = 'stat.html'
-    adminId = Admin.objects.get(admin_id=1)
-    if adminId is None:
-        Admin.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
+    # adminId = Admin.objects.get(admin_id=1)
+    # if adminId is None:
+    #     Admin.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
 
 class Sidebar(TemplateView):
     template_name = 'sidebar.html'

@@ -156,7 +156,7 @@
                 <label class="col-sm-2 col-form-label" for="fname">Add a College:</label>
                 <input type="text" class="form-control" placeholder="College of" aria-label="College of" aria-describedby="basic-addon2">
                 <div class="input-group-button">
-                  <button class="btn btn-outline-secondary" type="button">ADD</button>
+                  <button class="btn-update btn-outline-secondary" type="button">Add</button>
                 </div>
               </div>     
             </div>
@@ -176,7 +176,7 @@
                 <label class="col-sm-2 col-form-label" for="fname">New College Name:</label>
                 <input type="text" class="form-control" placeholder="College of" aria-label="College of" aria-describedby="basic-addon2">
                 <div class="input-group-button">
-                  <button class="btn btn-outline-secondary" type="button">update</button>
+                  <button class="btn-update btn-outline-secondary" type="button">Update</button>
                 </div>
               </div>     
             </div>
@@ -190,7 +190,7 @@
                   <option value="3">Three</option>
                 </select>
                 <div class="input-group-button">
-                  <button class="btn btn-outline-secondary" type="button">Delete</button>
+                  <button class="btn-delete btn-outline-secondary" type="button">Delete</button>
                 </div>
               </div>
               </div>
@@ -201,9 +201,9 @@
             <div class="row mb-3">
               <div class="input-group">
                 <label class="col-sm-2 col-form-label" for="fname">Add a Department:</label>
-                <input type="text" class="form-control" placeholder="College of" aria-label="College of" aria-describedby="basic-addon2">
+                <input type="text" class="form-control" placeholder="Department of" aria-label="Department of" aria-describedby="basic-addon2">
                 <div class="input-group-button">
-                  <button class="btn btn-outline-secondary" type="button">ADD</button>
+                  <button class="btn-update btn-outline-secondary" type="button">Add</button>
                 </div>
               </div>     
             </div>
@@ -221,9 +221,9 @@
             <div class="row mb-3">
               <div class="input-group">
                 <label class="col-sm-2 col-form-label" for="fname">New department Name:</label>
-                <input type="text" class="form-control" placeholder="College of" aria-label="College of" aria-describedby="basic-addon2">
+                <input type="text" class="form-control" placeholder="Department of" aria-label="Department of" aria-describedby="basic-addon2">
                 <div class="input-group-button">
-                  <button class="btn btn-outline-secondary" type="button">update</button>
+                  <button class="btn-update btn-outline-secondary" type="button">Update</button>
                 </div>
               </div>     
             </div>
@@ -237,7 +237,7 @@
                   <option value="3">Three</option>
                 </select>
                 <div class="input-group-button">
-                  <button class="btn btn-outline-secondary" type="button">Delete</button>
+                  <button class="btn-delete btn-outline-secondary" type="button">Delete</button>
                 </div>
               </div>
               </div>
@@ -250,7 +250,7 @@
                 <label class="col-sm-2 col-form-label" for="fname">Add User Type</label>
                 <input type="text" class="form-control" placeholder="" aria-label="College of" aria-describedby="basic-addon2">
                 <div class="input-group-button">
-                  <button class="btn btn-outline-secondary" type="button">Add</button>
+                  <button class="btn-update btn-outline-secondary" type="button">Add</button>
                 </div>
               </div>     
             </div>
@@ -415,4 +415,30 @@ h2{
 }
 
 .generate {background-color: #336699;} 
+
+.btn-update {
+  background-color: #336699;
+  color: white;
+  border: none;
+  padding: .45rem;
+  border-radius: 3px;
+}
+
+.btn-update:hover {
+  background-color: #8baed1;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #993333;
+  color: white;
+  border: none;
+  padding: .45rem;
+  border-radius: 3px;
+}
+
+.btn-delete:hover {
+  background-color: #d18b8b;
+  color: white;
+}
 </style>
