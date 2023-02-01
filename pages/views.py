@@ -44,10 +44,16 @@ class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 
 class VisitorLoginPage(TemplateView):
     template_name = 'stat.html'
+<<<<<<< HEAD
     try:
         adminId = Admin.objects.get(admin_id=1)
     except: 
         Admin.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
+=======
+    # adminId = Admin.objects.get(admin_id=1)
+    # if adminId is None:
+    Admin.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
+>>>>>>> bc29fcca5d84fb2e6106566832fd18f200767c75
 
 class Sidebar(TemplateView):
     template_name = 'sidebar.html'
@@ -58,14 +64,14 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
     def post(self, request):
-        idnum1 = request.POST['idnum1']
-        fname = request.POST['fname1']
-        user = Admin.objects.get(idnum=idnum1)
+        idnum = request.POST['idnum']
+        fname = request.POST['fname']
+        user = Admin.objects.get(idnum=idnum)
         if user is not None:
             messages.success(request, ("User already registered!"))	
             return redirect('/admin/dashboard/updaterecord/')	
         else:
-            print(idnum1)
+            print(idnum)
 
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
