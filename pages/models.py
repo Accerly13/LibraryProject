@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
 from datetime import datetime
 from django.utils import timezone
 
@@ -9,10 +8,27 @@ from django.utils import timezone
 
 now = timezone.now()
 
-class Admin(models.Model):
+class UserInfo(models.Model):
+    idnum = models.CharField(primary_key=True, max_length=50, unique=True)
+    fname = models.CharField(max_length=50, verbose_name='f_name')
+    mname = models.CharField(max_length=50, verbose_name='m_name')
+    lname = models.CharField(max_length=50, verbose_name='l_name')
+    gender = models.CharField(max_length=1, verbose_name='gender')
+    course = models.CharField(max_length=50, verbose_name='course')
+    comment = models.CharField(max_length=50, verbose_name='comment')
+    usertype = models.CharField(max_length=50, verbose_name='usertype')
+    dept = models.CharField(max_length=50, verbose_name='dept')
+
+    class Meta:
+        db_table = "users"
+
+class AdminUser(models.Model):
     admin_id = models.PositiveIntegerField(primary_key=True)
     admin_username = models.CharField(max_length=50, verbose_name='User Name')
     admin_password = models.CharField(max_length=50, verbose_name='Password')
 
     class Meta:
-        db_table = "admin"
+        db_table = "adminuser"
+
+
+
