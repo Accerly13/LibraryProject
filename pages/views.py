@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser
+import pyautogui as pag
+from .models import AdminUser, UserInfo, College
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 
 
 @login_required
@@ -45,7 +46,6 @@ class VisitorLoginPage(TemplateView):
         except: 
             AdminUser.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
 
-
 class Sidebar(TemplateView):
     template_name = 'sidebar.html'
 
@@ -54,15 +54,27 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
 
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
+    # def get(self, request):
+    #     college = request.GET['college']
+    #     print(college)
     def post(self, request):
-        idnum = request.POST['idnum']
-        fname = request.POST['fname']
-        user = Admin.objects.get(idnum=idnum)
-        if user is not None:
-            messages.success(request, ("User already registered!"))	
-            return redirect('/admin/dashboard/updaterecord/')	
-        else:
-            print(idnum)
+        college = request.POST['college']
+        colleges = College.objects.all()
+        try: 
+            college_check = College.objects.get(college_name = college)
+            messages.success(request, ("College is Already Registered!"))
+            return HttpResponseRedirect('/admin/dashboard/updaterecord/', )	
+        except:
+             College.objects.create(college_id=colleges.count(), college_name=college)
+             messages.success(request, ("New College is Registered!"))	
+             return redirect('/admin/dashboard/updaterecord/')	
+
+        # user = UserInfo.objects.get(idnum=idnum)
+        # if user is not None:
+        #     messages.success(request, ("User already registered!"))	
+        #     return redirect('/admin/dashboard/updaterecord/')	
+        # else:
+        #     print(idnum)
 
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
