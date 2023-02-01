@@ -80,26 +80,29 @@
         <div class="panels">
           <div class="panel" id="one-panel">
             <div class="container px-1 px-sm-5 mx-auto">
-              <form autocomplete="off">
-                <div class="form-row ">
-                  <div class="col-lg-6 col-11 px-1">
-                    <div class="input-group input-daterange">
+              <form class="flex-parent" autocomplete="off">
+                <div class="flex-child">
+                  <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53); display:block" id="start-p" for="start">Start Date:</label>
                       <input type="text" id="start" class="form-control text-left mr-2">
-                      <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)" class="ml-3 form-control-placeholder" id="start-p" for="start">Start Date:</label>
                       <span class="fa fa-calendar" id="fa-1"></span>
+                    </div>
+                    <div class="flex-child">
+                      <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53); display:block" id="end-p" for="end">End Date:</label>
+                      <!-- class="ml-3 form-control-placeholder" -->
                       <input type="text" id="end" class="form-control text-left ml-2">
-                      <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)" class="ml-3 form-control-placeholder" id="end-p" for="end">End Date:</label>
                       <span class="fa fa-calendar" id="fa-2"></span>
                     </div>
-                  </div>
-                </div>
               </form>
             <div style="padding-bottom: 3rem;"></div>
-              <form action="/action_page.php">
-                <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)"  id="stime" for="stime">Start Time:</label>
+              <form class="flex-parent" action="/action_page.php">
+                <div class="flex-child">
+                <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53); display: block"  id="stime" for="stime">Start Time:</label>
                 <input type="time" id="stime" name="stime">
-                <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)"  id="etime" for="etime">End Time:</label>
+              </div>
+              <div class="flex-child">
+                <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53); display: block"  id="etime" for="etime">End Time:</label>
                 <input type="time" id="etime" name="etime">
+              </div>
               </form>
               <div class="vertical-center">
                 <button class="generate" onclick="alert('Search records :3')">Generate</button>
@@ -592,5 +595,23 @@ input[type=time]::-webkit-clear-button {
 /* Up/Down arrows for incrementing/decrementing the value */
 input[type=time]::-webkit-inner-spin-button {
   display: none;
+}
+
+.flex-parent {
+ display: flex;
+ align-items: center; 
+ flex-wrap: wrap;
+}
+
+.flex-child {
+  padding: 10px;
+  flex: 50%;
+  
+}
+
+@media (max-width: 800px) {
+  .flex-parent, .flex-child {
+    flex: 100%;
+  }
 }
 </style>
