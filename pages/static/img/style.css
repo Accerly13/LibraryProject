@@ -348,6 +348,7 @@ img {
 .grid-2-column {
   display: grid;
   grid-template-columns: auto 1fr;
+  gap: 20px;
 }
 
 .grid-container-1 {
