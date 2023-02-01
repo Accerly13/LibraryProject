@@ -10,14 +10,16 @@
     <input class="radio" id="three" name="group" type="radio">
     <input class="radio" id="four" name="group" type="radio">
     <input class="radio" id="five" name="group" type="radio">
-    <div class="tabs">
-    <label class="tab" id="one-tab" for="one">Import User</label>
-    <label class="tab" id="two-tab" for="two">Update User</label>
-    <label class="tab" id="three-tab" for="three">Update College</label>
-    <label class="tab" id="four-tab" for="four">Update Department</label>
-    <label class="tab" id="five-tab" for="five">Update User Type</label>
-      </div>
-    <div class="panels">
+    <!-- <div class="flex-tab"> -->
+      <div class="tabs flex-tab">
+          <label class="tab" id="one-tab" for="one">Import User</label>
+          <label class="tab" id="two-tab" for="two">Update User</label>
+          <label class="tab" id="three-tab" for="three">Update College</label>
+          <label class="tab" id="four-tab" for="four">Update Department</label>
+          <label class="tab" id="five-tab" for="five">Update User Type</label>
+        </div>
+    <!-- </div> -->
+    <div class="panels panel-relative mx-auto mb-5">
       <div class="panel" id="one-panel">
         <div class="flex justify-between items-center mb-5">
           <div class="panel-title">Add New Data</div>
@@ -26,7 +28,7 @@
           </div>
         </div>
         <hr>
-        <form action="/admin/dashboard/updaterecord/" method="post">
+        <form class="panel-margin" action="/admin/dashboard/updaterecord/" method="post">
           {% csrf_token %}
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="customFile">Upload Picture</label>

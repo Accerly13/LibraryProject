@@ -637,6 +637,11 @@ h2 {
   border-radius: 3px 3px 0px 0px;
   box-shadow: 0 0.5rem 0.8rem #00000080;
 }
+
+.panel-relative {
+  position: relative;
+  z-index: 10;
+}
 .panels {
   background: #fffffff6;
   box-shadow: 0 1rem 1rem #d6dae0;
@@ -786,4 +791,13 @@ input[type="time"]::-webkit-inner-spin-button {
 
 .relative {
   position: relative;
+}
+
+.flex-tab {
+  display: flex;
+  justify-content: center;
+}
+
+.panel-margin {
+  margin: 3rem;
 }
