@@ -57,14 +57,14 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
     def post(self, request):
-        idnum1 = request.POST['idnum1']
-        fname = request.POST['fname1']
-        user = Admin.objects.get(idnum=idnum1)
+        idnum = request.POST['idnum']
+        fname = request.POST['fname']
+        user = Admin.objects.get(idnum=idnum)
         if user is not None:
             messages.success(request, ("User already registered!"))	
             return redirect('/admin/dashboard/updaterecord/')	
         else:
-            print(idnum1)
+            print(idnum)
 
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
