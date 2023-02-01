@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-import pyautogui as pag
 from .models import AdminUser, UserInfo, College
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
