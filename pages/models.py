@@ -30,5 +30,19 @@ class AdminUser(models.Model):
     class Meta:
         db_table = "adminuser"
 
+class Department(models.Model):
+    department_id = models.IntegerField(primary_key=True, unique=True)
+    dept_name = models.CharField(max_length=50, verbose_name='department_name')
+
+    class Meta:
+        db_table = "department"
+
+class College(models.Model):
+    college_id = models.IntegerField(primary_key=True, unique=True)
+    college_name = models.CharField(max_length=50, verbose_name='college_name')
+    class Meta:
+        db_table = "college"
+
+
 
 
