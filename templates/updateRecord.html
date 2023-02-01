@@ -153,15 +153,15 @@
           </div>   
           </form>  
         </div>
+        <form method="post" id="form2">
         <div class="row mb-3">
           <div class="input-group">
           <label class="col-sm-2 col-form-label" for="department">Update a College:</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Choose a College</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+            <select class="form-select" aria-label="Default select example" name="college_name">
+              {% for item in data %}
+                <option value="{{item.college_name}}"> {{ item.college_name }} </option>
+              {% endfor %}
+            </select>
           </div>
         </div>
         <div class="row mb-3">
