@@ -1,617 +1,101 @@
-{% include "header.html" %}
-{% include "sidebar.html" %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+{% extends "layouts/header.html" %}
+<span></span>
+{% block content %}
+<div class="grid-container-1 min-h-screen">
+  <header class="w3-container">
+    <h1 class="text-style">Search Records</h1>
+  </header>
 
-    <title>Search Records</title>
-  </head>
+  <div class="warpper">
+    <input class="radio" id="one" name="group" type="radio" checked />
+    <input class="radio" id="two" name="group" type="radio" />
 
-  <div class="grid-container-1 min-h-screen">
-    <body style="background-color: #ECF0F1;">
-      <header class="w3-container">
-        <h1 class="text-style">Search Records</h1>  
-          </header>
-      <!-- <div class="w3-container-main">
-          <div class="w3-row" style="text-align: center">
-            <a href="javascript:void(0)" onclick="searchRecord(event, 'View');">
-              <div class="w3-third tablink w3-bottombar w3-hover w3-padding">View Visitor</div>
-            </a>
-            <a href="javascript:void(0)" onclick="searchRecord(event, 'Search');">
-              <div class="w3-third tablink w3-bottombar w3-hover w3-padding">Search Visitor</div>
-            </a>
-          </div>
-        
-          <div id="View" class="container-main search" style="display:none">
-            <div class="container px-1 px-sm-5 mx-auto">
-                <form autocomplete="off">
-                  <div class="flex-row">
-                    <div class="col-lg-6 col-11 px-1">
-                      <div class="input-group input-daterange">
-                        <input type="text" id="start" class="form-control text-left mr-2">
-                        <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)" class="ml-3 form-control-placeholder" id="start-p" for="start">Start Date:</label>
-                        <span class="fa fa-calendar" id="fa-1"></span>
-                        <input type="text" id="end" class="form-control text-left ml-2">
-                        <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53)" class="ml-3 form-control-placeholder" id="end-p" for="end">End Date:</label>
-                        <span class="fa fa-calendar" id="fa-2"></span>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-                <div class="vertical-center">
-                  <button class="generate" onclick="alert('Search records :3')">Generate</button>
-                  </div>
-          </div>
-        
-          <div id="Search" class="w3-container search" style="display:none">
-            <h2>search Visitor</h2>
-            <p></p> 
-        </div>
-      </div> -->
-        
-      <!-- Optional JavaScript; choose one of the two! -->
-  
-      <!-- Option 1: Bootstrap Bundle with Popper -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  
-      <!-- Option 2: Separate Popper and Bootstrap JS -->
-      <!--
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-      -->
-      <div class="warpper">
-        <input class="radio" id="one" name="group" type="radio" checked>
-        <input class="radio" id="two" name="group" type="radio">
-        <div class="tabs">
-        <label class="tab" id="one-tab" for="one">View Visitor</label>
-        <label class="tab" id="two-tab" for="two">Search Visitor</label>
-          </div>
-        <div class="panels">
-          <div class="panel" id="one-panel">
-            <div class="container px-1 px-sm-5 mx-auto">
-              <form class="flex-parent" autocomplete="off">
-                <div class="flex-child">
-                  <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53); display:block" id="start-p" for="start">Start Date:</label>
-                      <input type="text" id="start" class="form-control text-left mr-2">
-                      <span class="fa fa-calendar" id="fa-1"></span>
-                    </div>
-                    <div class="flex-child">
-                      <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53); display:block" id="end-p" for="end">End Date:</label>
-                      <!-- class="ml-3 form-control-placeholder" -->
-                      <input type="text" id="end" class="form-control text-left ml-2">
-                      <span class="fa fa-calendar" id="fa-2"></span>
-                    </div>
-              </form>
-            <div style="padding-bottom: 3rem;"></div>
-              <form class="flex-parent" action="/action_page.php">
-                <div class="flex-child">
-                <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53); display: block"  id="stime" for="stime">Start Time:</label>
-                <input type="time" id="stime" name="stime">
+    <div class="tabs">
+      <label class="tab" id="one-tab" for="one">View Visitor</label>
+      <label class="tab" id="two-tab" for="two">Search Visitor</label>
+    </div>
+
+    <div class="panels">
+      <div class="panel" id="one-panel">
+        <div class="container px-1 px-sm-5 mx-auto">
+          <form class="flex-parent" autocomplete="off">
+            <div class="flex-child relative input-daterange">
+              <label style="font-size: 15px; font-weight: bold; color: rgb(53, 53, 53); display: block" id="start-p" for="start">Start Date:</label>
+              <div class="relative">
+                <input type="text" id="start" class="form-control text-left mr-2" />
+                <span class="fa fa-calendar" id="fa-1"></span>
               </div>
-              <div class="flex-child">
-                <label style="font-size: 15px; font-weight:bold; color: rgb(53, 53, 53); display: block"  id="etime" for="etime">End Time:</label>
-                <input type="time" id="etime" name="etime">
-              </div>
-              </form>
-              <div class="vertical-center">
-                <button class="generate" onclick="alert('Search records :3')">Generate</button>
-                </div>
-          </div>
-        </div>
-        <div class="panel" id="two-panel">
+            </div>
 
-              <div class="form-row justify-content-center">
-                <div class="row mb-3">
-                  <label class="text-center" for="idnum">Search by ID Number:</label>
-                  <div class="text-center">
-                    <input class="form-control" type="number" id="idnum" name="idnum">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="text-center" for="fname">Search by Name:</label>
-                  <div class="text-center">
-                    <input class="form-control" type="text" id="fname" name="fname">
-                  </div>
-                </div>
-                </div>
-
+            <div class="flex-child">
+              <label style="font-size: 15px; font-weight: bold; color: rgb(53, 53, 53); display: block" id="end-p" for="end">End Date:</label>
+              <!-- class="ml-3 form-control-placeholder" -->
+              <input type="text" id="end" class="form-control text-left ml-2" />
+              <span class="fa fa-calendar" id="fa-2"></span>
+            </div>
+          </form>
+          <div style="padding-bottom: 3rem"></div>
+          <form class="flex-parent" action="/action_page.php">
+            <div class="flex-child">
+              <label style="font-size: 15px; font-weight: bold; color: rgb(53, 53, 53); display: block" id="stime" for="stime">Start Time:</label>
+              <input type="time" id="stime" name="stime" />
+            </div>
+            <div class="flex-child">
+              <label style="font-size: 15px; font-weight: bold; color: rgb(53, 53, 53); display: block" id="etime" for="etime">End Time:</label>
+              <input type="time" id="etime" name="etime" />
+            </div>
+          </form>
+          <div class="vertical-center">
+            <button class="generate" onclick="alert('Search records :3')">Generate</button>
           </div>
         </div>
       </div>
-    <script>
-        function searchRecord(evt, Search) {
-          
-            var i, x, tablinks;
-            x = document.getElementsByClassName("search");
-            for (i = 0; i < x.length; i++) {
-              x[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < x.length; i++) {
-              tablinks[i].className = tablinks[i].className.replace(" w3-border-blue", "");
-              tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(Search).style.display = "block";
-            evt.currentTarget.firstElementChild.className += " w3-border-blue";
-            evt.currentTarget.firstElementChild.className += " active";
-          }
+      <div class="panel" id="two-panel">
+        <div class="form-row justify-content-center">
+          <div class="row mb-3">
+            <label class="text-center" for="idnum">Search by ID Number:</label>
+            <div class="text-center">
+              <input class="form-control" type="number" id="idnum" name="idnum" />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="text-center" for="fname">Search by Name:</label>
+            <div class="text-center">
+              <input class="form-control" type="text" id="fname" name="fname" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function searchRecord(evt, Search) {
+      var i, x, tablinks;
+      x = document.getElementsByClassName("search");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < x.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" w3-border-blue", "");
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(Search).style.display = "block";
+      evt.currentTarget.firstElementChild.className += " w3-border-blue";
+      evt.currentTarget.firstElementChild.className += " active";
+    }
 
-        $(document).ready(function(){
+    $(document).ready(function () {
+      $(".input-daterange").datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true,
+        calendarWeeks: true,
+        clearBtn: true,
+        disableTouchKeyboard: true,
+      });
+    });
+  </script>
 
-            $('.input-daterange').datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                calendarWeeks : true,
-                clearBtn: true,
-                disableTouchKeyboard: true
-            });
-
-        });
-    </script>
-  
-  </body>
-
-  <main class="grid-2-column-2 h-[100%]">
-
-</main>
+  <main class="grid-2-column-2 h-[100%]"> </main>
 </div>
-</html>
-
-<style>
-
-.grid-container-1 {
-  display: grid;
-  grid-template-rows: auto 4fr auto;
-}
-.grid-2-column-2 {
-    display: grid;
-    grid-template-columns: 0fr 7fr;
-    gap: 0;
-}
-
-.w3-container-main {
-  margin-top: 3rem;
-  margin-left: 15rem;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.w3-container {
-  background-color:#e0e9ec;
-}
-
-.container-main {
-  background-color: white;
-  margin-right: 10rem;
-  margin-top: 1.5rem;
-  max-width: 1000px;
-  max-height: 500px;
-  border-radius: 1rem;
-}
-
-.w3-hover:hover {
-color:white ;background-color:#336699 }
-
-.w3-hover.active {
-color:white ;background-color:#336699 }
-
-.w3-hover {
-  background-color: white;
-  color: rgb(34, 34, 34);
-  border-radius: .5rem;
-}
-
-.w3-bottombar {
-  color: #1f466c;
-}
-
-.text-style {
-  font-size: 20px;
-  color: rgb(120, 120, 120);
-  margin: 1rem;
-}
-
-.generate {
-  background-color: #336699;
-  color: white;
-  font-size: 16px;
-  margin: 2px 2px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  border: none;
-  border-radius: .5rem;
-  padding: 10px 32px;
-  display: inline-block;
-}
-
-.generate {background-color: #336699;} 
-
-
-/* medium */
-@media all and (min-width: 768px) {
-
-  .grid-2-column-2 {
-    display: grid;
-    grid-template-columns: 0fr 7fr;
-    gap: 0px;
-  }
-}
-
-.container {
-  padding-top: 120px;
-  padding-bottom: 120px;
-  align-items: center;
-  
-}
-
-input {
-    padding: 10px 10px !important;
-    border: 1px solid #CFD8DC !important;
-    border-radius: 4px !important;
-    box-sizing: border-box;
-    background-color:  rgb(236, 236, 236) !important;
-    color: #000 !important;
-    font-size: 16px !important;
-    letter-spacing: 1px;
-    position: relative;
-}
-
-input:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #1976D2 !important;
-    outline-width: 0;
-}
-
-.view-input {
-    padding: 22px 15px !important;
-    border: 1px solid #CFD8DC !important;
-    border-radius: 4px !important;
-    box-sizing: border-box;
-    background-color:  rgb(236, 236, 236) !important;
-    color: #000 !important;
-    font-size: 16px !important;
-    letter-spacing: 1px;
-    position: relative;
-}
-
-.view-input:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #1976D2 !important;
-    outline-width: 0;
-}
-
-
-.fa-calendar {
-  position: absolute;
-  top: 9px;
-  font-size: 20px;
-  color: #1976D2;
-  z-index: 1000;
-}
-
-#fa-1 {
-  left: calc(50% - 40px);
-}
-
-#fa-2 {
-  left: calc(100% - 40px);
-}
-
-.form-control-placeholder {
-    position: absolute;
-    top: -10px !important;
-    padding: 12px 2px 0 2px;
-    opacity: 0.5;
-}
-
-#end-p {
-  left: calc(50% + 4px);
-}
-
-.form-control:focus + .form-control-placeholder,
-.form-control:valid + .form-control-placeholder {
-    font-size: 95%;
-    top: 10px;
-    transform: translate3d(0, -100%, 0);
-    opacity: 1;
-}
-
-::placeholder {
-    color: #BDBDBD;
-    opacity: 1;
-}
-
-:-ms-input-placeholder {
-    color: #BDBDBD;
-}
-
-::-ms-input-placeholder {
-    color: #BDBDBD;
-}
-
-button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    outline-width: 0;
-}
-
-.datepicker {
-  background-color: #fff;
-  border-radius: 0 !important;
-  align-content: center !important;
-  padding: 0 !important;
-}
-
-.datepicker-dropdown {
-  top: 180px !important;
-  left: calc(50% - 173.5px) !important;
-  border-right: #1976D2;
-  border-left: #1976D2;
-}
-
-.datepicker-dropdown.datepicker-orient-left:before {
-  left: calc(50% - 6px) !important;
-}
-
-.datepicker-dropdown.datepicker-orient-left:after {
-  left: calc(50% - 5px) !important;
-  border-bottom-color: #1976D2;
-}
-
-.datepicker-dropdown.datepicker-orient-right:after {
-  border-bottom-color: #1976D2;
-}
-
-.datepicker table tr td.today, span.focused {
-  border-radius: 50% !important;
-  background-image: linear-gradient(#FFF3E0, #FFE0B2);
-}
-
-thead tr:nth-child(2) {
-  background-color: #1976D2 !important;
-}
-
-/*Weekday title*/
-thead tr:nth-child(3) th {
-  font-weight: bold !important;
-  padding: 20px 10px !important;
-  color: #BDBDBD !important;
-}
-
-tbody tr td {
-  padding: 10px !important;
-}
-
-tfoot tr:nth-child(2) th {
-  padding: 10px !important;
-  border-top: 1px solid #CFD8DC !important;
-}
-
-.cw {
-  font-size: 14px !important;
-  background-color: #E8EAF6 !important;
-  border-radius: 0px !important;
-  padding: 0px 20px !important;
-  margin-right: 10px solid #fff !important;
-}
-
-.old, .day, .new {
-  width: 40px !important;
-  height: 40px !important;
-  border-radius: 0px !important;
-}
-
-.day.old, .day.new {
-  color: #E0E0E0 !important;
-}
-
-.day.old:hover, .day.new:hover {
-  border-radius: 50% !important;
-}
-
-.old-day:hover, .day:hover, .new-day:hover, .month:hover, .year:hover, .decade:hover, .century:hover {
-  border-radius: 50% !important;
-  background-color: #eee;
-}
-
-.range-start, .range-end {
-  border-radius: 50% !important;
-  background-image: linear-gradient(#1976D2, #1976D2) !important;
-}
-
-.range {
-  background-color: #E3F2FD !important;
-}
-
-.prev, .next, .datepicker-switch {
-  border-radius: 0 !important;
-  padding: 10px 10px 10px 10px !important;
-  font-size: 18px;
-  opacity: 0.7;
-  color: #fff;
-}
-
-.prev:hover, .next:hover, .datepicker-switch:hover {
-  background-color: inherit !important;
-  opacity: 1;
-}
-
-@media screen and (max-width: 726px) {
-  .datepicker-dropdown.datepicker-orient-right:before {
-    right: calc(50% - 6px);
-  }
-
-  .datepicker-dropdown.datepicker-orient-right:after {
-    right: calc(50% - 5px);
-  }
-}
-
-@import url('https://fonts.googleapis.com/css?family=Arimo:400,700&display=swap');
-body{
-  background:#ECF0F1;
-  font-family: 'Arimo', sans-serif;
-}
-h2{
-  color:#000;
-  text-align:center;
-  font-size:2em;
-}
-.warpper{
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-}
-.tab{
-  cursor: pointer;
-  padding:10px 20px;
-  margin:0px 2px;
-  margin-top: 1rem;
-  background:#336699;
-  display:inline-block;
-  color:#fff;
-  border-radius:3px 3px 0px 0px;
-  box-shadow: 0 0.5rem 0.8rem #00000080;
-}
-.panels{
-  background:#fffffff6;
-  box-shadow: 0 1rem 1rem #d6dae0;
-  min-height:500px;
-  width:100%;
-  max-width:900px;
-  border-radius:3px;
-  overflow:hidden;
-  padding:20px;  
-}
-.panel{
-  display:none;
-  animation: fadein .8s;
-}
-@keyframes fadein {
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-.panel-title{
-  font-size:1.3em;
-  font-weight:bold;
-  color: rgb(52, 52, 52);
-}
-.radio{
-  display:none;
-}
-#one:checked ~ .panels #one-panel,
-#two:checked ~ .panels #two-panel,
-#three:checked ~ .panels #three-panel,
-#four:checked ~ .panels #four-panel,
-#five:checked ~ .panels #five-panel{
-  display:block
-}
-#one:checked ~ .tabs #one-tab,
-#two:checked ~ .tabs #two-tab,
-#three:checked ~ .tabs #three-tab,
-#four:checked ~ .tabs #four-tab,
-#five:checked ~ .tabs #five-tab{
-  background:#fffffff6;
-  color:#336699;
-  border-top: 3px solid #336699;
-}
-
-.center-block {
-    display: table;  /* Instead of display:block */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-input[type=time] {
-  border: none;
-  color: #2a2c2d;
-  font-size: 5px;
-  font-family: helvetica;
-  width: 210px;
-}
-
-/* Wrapper around the hour, minute, second, and am/pm fields as well as 
-the up and down buttons and the 'X' button */
-/* input[type=time]::-webkit-datetime-edit-fields-wrapper {
-  display: flex;
-} */
-
-/* The space between the fields - between hour and minute, the minute and 
-second, second and am/pm */
-input[type=time]::-webkit-datetime-edit-text {
-  /* padding: 19px 4px; */
-}
-
-/* The naming convention for the hour, minute, second, and am/pm field is
-`-webkit-datetime-edit-{field}-field` */
-
-/* Hour */
-input[type=time]::-webkit-datetime-edit-hour-field {
-  background-color: #ffffff;
-  border-radius: 50%;
-  padding: 13px 13px;
-}
-
-/* Minute */
-input[type=time]::-webkit-datetime-edit-minute-field {
-  background-color: #ffffff;
-  border-radius: 50%;
-  padding: 13px 13px;
-}
-
-/* AM/PM */
-input[type=time]::-webkit-datetime-edit-ampm-field {
-  background-color: #336699;
-  border-radius: 50%;
-  color: #fff;
-  padding: 13px 13px;
-}
-
-/* 'X' button for resetting/clearing time */
-input[type=time]::-webkit-clear-button {
-  display: none;
-}
-
-/* Up/Down arrows for incrementing/decrementing the value */
-input[type=time]::-webkit-inner-spin-button {
-  display: none;
-}
-
-.flex-parent {
- display: flex;
- align-items: center; 
- flex-wrap: wrap;
-}
-
-.flex-child {
-  padding: 10px;
-  flex: 50%;
-  
-}
-
-@media (max-width: 800px) {
-  .flex-parent, .flex-child {
-    flex: 100%;
-  }
-}
-</style>
+{% endblock content %}
