@@ -21,7 +21,7 @@ def logout_view(request):
 
 class HomePageView(TemplateView):
     def get(self, request):
-        # data = AdminUser.objects.all()
+        data = AdminUser.objects.all()
         return render(request, 'home.html', {'data': data})
     def post(self, request):
         username = request.POST['username']
@@ -33,8 +33,6 @@ class HomePageView(TemplateView):
         else:
             messages.success(request, ("Invalid Username or Password!"))	
             return redirect('/admin/')	
-    def get(request):
-            return render(request, 'home.html', {})
 
 class DashBoardAdmin(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard.html'
@@ -44,12 +42,7 @@ class VisitorLoginPage(TemplateView):
     try:
         adminId = AdminUser.objects.get(admin_id=1)
     except: 
-        Admin.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
-=======
-    # adminId = Admin.objects.get(admin_id=1)
-    # if adminId is None:
-    Admin.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
->>>>>>> bc29fcca5d84fb2e6106566832fd18f200767c75
+        AdminUser.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
 
 class Sidebar(TemplateView):
     template_name = 'sidebar.html'
