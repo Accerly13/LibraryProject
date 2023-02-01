@@ -20,7 +20,7 @@ def logout_view(request):
 
 class HomePageView(TemplateView):
     def get(self, request):
-        # data = AdminUser.objects.all()
+        data = AdminUser.objects.all()
         return render(request, 'home.html', {'data': data})
     def post(self, request):
         username = request.POST['username']
@@ -32,8 +32,6 @@ class HomePageView(TemplateView):
         else:
             messages.success(request, ("Invalid Username or Password!"))	
             return redirect('/admin/')	
-    def get(request):
-            return render(request, 'home.html', {})
 
 class DashBoardAdmin(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard.html'
