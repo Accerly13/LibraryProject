@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 
 
 @login_required
@@ -57,15 +57,20 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
     # def get(self, request):
     #     college = request.GET['college']
     #     print(college)
+    def __init__(self):
+        self.colleges = College.objects.all()
+
+    def get(self, request):
+        return render(request, 'updateRecord.html', {'data': self.colleges})
+
     def post(self, request):
         college = request.POST['college']
-        colleges = College.objects.all()
         try: 
             college_check = College.objects.get(college_name = college)
             messages.success(request, ("College is Already Registered!"))
-            return HttpResponseRedirect('/admin/dashboard/updaterecord/', )	
+            return redirect('/admin/dashboard/updaterecord/')	
         except:
-             College.objects.create(college_id=colleges.count(), college_name=college)
+             College.objects.create(college_id=self.colleges.count(), college_name=college)
              messages.success(request, ("New College is Registered!"))	
              return redirect('/admin/dashboard/updaterecord/')	
 
