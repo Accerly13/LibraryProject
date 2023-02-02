@@ -89,6 +89,8 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             college_name = request.POST['delete_college']
             college_check = College.objects.get(college_name = college_name)
             college_check.delete()
+            messages.success(request, ("Deleted!"))
+            return redirect('/admin/dashboard/updaterecord/')
             
         # user = UserInfo.objects.get(idnum=idnum)
         # if user is not None:
