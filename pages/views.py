@@ -94,12 +94,14 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('dept'):
             dept = request.POST['dept']
+            college_name = request.POST['from_college']
             try: 
                 dept_check = Department.objects.get(dept_name = dept)
                 messages.success(request, ("Department is Already Registered!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
-                Department.objects.create(department_id=self.dept.count(), dept_name=dept)
+                college_check = College.objects.get(college_name = college_name)
+                Department.objects.create(department_id=self.dept.count(), dept_name=dept, college=college_check)
                 messages.success(request, ("New Department is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         

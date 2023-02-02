@@ -208,9 +208,11 @@
           </div>
           <div class="row mb-3">
             <div class="input-group">
-            <label class="col-sm-2 col-form-label" for="department">Fron College of:</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option value=""> </option>
+            <label class="col-sm-2 col-form-label" for="department">From College of:</label>
+                <select class="form-select" aria-label="Default select example" name="from_college">
+                {% for item in data %}
+                  <option value="{{item.college_name}}"> {{ item.college_name }} </option>
+                {% endfor %}
                 </select>
             </div>
           </div>
