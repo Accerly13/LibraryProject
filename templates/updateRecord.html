@@ -196,14 +196,23 @@
       <div class="panel" id="four-panel">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
         <form method="post">
+          {% csrf_token %}
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="dept">Add a Department:</label>
               <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="dept">
               <div class="input-group-button">
-                <button class="btn-update btn-outline-secondary" type="button">Add</button>
+                <button class="btn-update btn-outline-secondary" type="submit">Add</button>
               </div>
             </div>     
+          </div>
+          <div class="row mb-3">
+            <div class="input-group">
+            <label class="col-sm-2 col-form-label" for="department">Fron College of:</label>
+                <select class="form-select" aria-label="Default select example">
+                    <option value=""> </option>
+                </select>
+            </div>
           </div>
         </form>
         <div class="row mb-3">
