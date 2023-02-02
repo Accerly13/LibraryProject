@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College
+from .models import AdminUser, UserInfo, College, Department
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -58,9 +58,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
     #     print(college)
     def __init__(self):
         self.colleges = College.objects.all()
+        self.dept = Department.objects.all()
 
     def get(self, request):
-        return render(request, 'updateRecord.html', {'data': self.colleges})
+        return render(request, 'updateRecord.html', {'data': self.colleges, 'dept': self.dept})
 
     def post(self, request):
         if request.POST.get('college'):
@@ -91,6 +92,17 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             college_check.delete()
             messages.success(request, ("Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
+        elif request.POST.get('dept'):
+            dept = request.POST['dept']
+            try: 
+                dept_check = College.objects.get(dept_name = dept)
+                messages.success(request, ("Department is Already Registered!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+            except:
+                College.objects.create(department_id=self.dept.count(), dept_name=dept)
+                messages.success(request, ("New Department is Registered!"))	
+                return redirect('/admin/dashboard/updaterecord/')	
+        
             
         # user = UserInfo.objects.get(idnum=idnum)
         # if user is not None:
