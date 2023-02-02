@@ -63,16 +63,31 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         return render(request, 'updateRecord.html', {'data': self.colleges})
 
     def post(self, request):
-        college = request.POST['college']
-        try: 
-            college_check = College.objects.get(college_name = college)
-            messages.success(request, ("College is Already Registered!"))
-            return redirect('/admin/dashboard/updaterecord/')	
-        except:
-             College.objects.create(college_id=self.colleges.count(), college_name=college)
-             messages.success(request, ("New College is Registered!"))	
-             return redirect('/admin/dashboard/updaterecord/')	
-
+        if request.POST.get('college'):
+            college = request.POST['college']
+            try: 
+                college_check = College.objects.get(college_name = college)
+                messages.success(request, ("College is Already Registered!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+            except:
+                College.objects.create(college_id=self.colleges.count(), college_name=college)
+                messages.success(request, ("New College is Registered!"))	
+                return redirect('/admin/dashboard/updaterecord/')	
+        elif request.POST.get('new_college_name'):
+            new_college_name = request.POST['new_college_name']
+            college_name = request.POST['college_name']
+            if college_name != new_college_name:
+                college_check = College.objects.get(college_name = college_name)
+                college_check.college_name = new_college_name
+                college_check.save()
+                messages.success(request, ("The College Name is Changed!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+            else:
+                messages.success(request, ("Pareho man lang, inedit mo pa!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+        elif request.POST.get('delete_college'):
+            college_name = request.POST['delete_college']
+            
         # user = UserInfo.objects.get(idnum=idnum)
         # if user is not None:
         #     messages.success(request, ("User already registered!"))	
