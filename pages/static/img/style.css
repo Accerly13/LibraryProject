@@ -163,7 +163,6 @@ h2 {
   background-color: #336699;
   height: 60px;
   overflow: hidden;
-  padding: 20px 10px;
 }
 
 /* Style the links inside the navigation bar */
@@ -209,6 +208,7 @@ h2 {
 .btn:hover,
 .btn:focus {
   background-color: #2d5b88;
+  color:white;
 }
 
 .dropdown {
