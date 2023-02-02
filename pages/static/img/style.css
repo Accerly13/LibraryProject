@@ -800,3 +800,46 @@ input[type="time"]::-webkit-inner-spin-button {
 .panel-margin {
   margin: 3rem;
 }
+
+.show-in-laptop {
+  display: none;
+}
+
+.sidenav-tablet {
+  width: max-content;
+  padding: 0;
+}
+
+@media all and (min-width: 1024px) {
+  .show-in-laptop {
+    display: block;
+  }
+
+  .sidenav-tablet {
+    display: none;
+  }
+}
+
+.ateneo-logo {
+  width: 50px;
+  display: block;
+  margin: 0.5rem;
+}
+
+.admin {
+  text-align: center;
+  color: #ffffff;
+}
+
+.nav-icon {
+  padding: 0 !important;
+  margin: auto;
+  width: 100%;
+  border-bottom: 1px solid black;
+  text-align: center;
+  padding: 0.5em !important;
+}
+
+.clr-white {
+  color: #ffffff;
+}
