@@ -159,13 +159,23 @@ h2 {
   color: white;
 }
 
-.navbar {
+.navbar-1 {
   background-color: #336699;
   height: 60px;
   overflow: hidden;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
 }
 
-
+.navbar::before,
+.navbar::after {
+  content: "";
+}
 
 /* Style the links inside the navigation bar */
 .navbar a {
@@ -209,7 +219,7 @@ h2 {
 .btn:hover,
 .btn:focus {
   background-color: #2d5b88;
-  color:white;
+  color: white;
 }
 
 .dropdown {
@@ -613,7 +623,7 @@ tfoot tr:nth-child(2) th {
 
 @import url("https://fonts.googleapis.com/css?family=Arimo:400,700&display=swap");
 body {
-  background: #ecf0f1;
+  background: #6c888f;
   font-family: "Arimo", sans-serif;
 }
 h2 {
