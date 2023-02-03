@@ -35,12 +35,6 @@
             <div class="mb-3">
               <input type="password" class="form-control" id="password" placeholder="Password" name="password">
             </div>
-            <div class="w-50 text-left">
-                <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-                <input type="checkbox" checked="">
-                <span class="checkmark"></span>
-                </label>
-            </div>
             {% if messages %}
             <p class="messages">
                 {% for message in messages %}
@@ -86,26 +80,11 @@
 body {
         background-image: url("{% static 'img/background.png' %}");
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: cover;
+        height: 500px;
+        width: 100%;
     }
 
-    @media (max-width: 767px) {
-        body {
-          background-image: none;
-        }
-      }
-
-      @media (min-width: 1200px) {
-        body {
-          background-image: url("{% static 'img/background.png' %}");
-        }
-      }
-
-      @media (min-width: 1024px) {
-        body {
-          background-image: url("{% static 'img/background.png' %}");
-        }
-      }
 
 .card-body{
     height: 500px;
