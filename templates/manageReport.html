@@ -19,19 +19,250 @@
     <!-- </div> -->
     <div class="panels panel-relative mx-auto mb-5">
       <div class="panel" id="one-panel">
-        
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-date">Start Date:</label>
+                <input type="text" class="form-control" id="start-date" placeholder="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-date">End Date:</label>
+                <input type="text" class="form-control" id="end-date" placeholder="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-time">Start Time:</label>
+                <input type="text" class="form-control" id="start-time" placeholder="hh:mm">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-time1">End Time:</label>
+                <input type="text" class="form-control" id="end-time1" placeholder="hh:mm">
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary">Generate</button>
+          </div>
       </div>
       <div class="panel" id="two-panel">
-        
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-date1">Start Date:</label>
+                <input type="text" class="form-control" id="start-date1" placeholder="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-date1">End Date:</label>
+                <input type="text" class="form-control" id="end-date1" placeholder="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-time">Start Time:</label>
+                <input type="text" class="form-control" id="start-time" placeholder="hh:mm">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-time">End Time:</label>
+                <input type="text" class="form-control" id="end-time" placeholder="hh:mm">
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary">Generate</button>
+          </div>
       </div>
       <div class="panel" id="three-panel">
-        
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-date3">Start Date:</label>
+                <input type="text" class="form-control" id="start-date3" placeholder="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-date2">End Date:</label>
+                <input type="text" class="form-control" id="end-date2" placeholder="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-time">Start Time:</label>
+                <input type="text" class="form-control" id="start-time" placeholder="hh:mm">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-time">End Time:</label>
+                <input type="text" class="form-control" id="end-time" placeholder="hh:mm">
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary">Generate</button>
+          </div>
       </div>
          
       <div class="panel" id="four-panel">
-        
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-date4">Start Date:</label>
+                <input type="text" class="form-control" id="start-date4" placeholder="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-date3">End Date:</label>
+                <input type="text" class="form-control" id="end-date3" placeholder="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-time">Start Time:</label>
+                <input type="text" class="form-control" id="start-time" placeholder="hh:mm">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-time">End Time:</label>
+                <input type="text" class="form-control" id="end-time" placeholder="hh:mm">
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary">Generate</button>
+          </div>
       </div>
       </div>
+      <script>
+        $(document).ready(function() {
+        $('#start-date').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#start-date1').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#start-date2').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#start-date3').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#start-date4').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#end-date').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#end-date1').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#end-date2').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#end-date3').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        $('#end-date4').datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: '01/01/2010',
+            endDate: '12/31/2022'
+        });
+        });
+
+        $(document).ready(function() {
+        $('#start-time').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 60,
+            minTime: '00:00',
+            maxTime: '23:59',
+            startTime: '00:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        $('#end-time').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 60,
+            minTime: '00:00',
+            maxTime: '23:59',
+            startTime: '00:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        });
+      </script>
     </div>
 </div>
 {% endblock content %}
