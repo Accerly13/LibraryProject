@@ -143,13 +143,6 @@
             <div class="input-group-button">
               <button class="btn-update btn-outline-secondary" type="submit">Add</button>
             </div>
-            {% if messages %}
-            <p class="messages">
-                {% for message in messages %}
-                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
-                {% endfor %}
-            </p>
-            {% endif %}
           </div>   
           </form>  
         </div>
@@ -191,6 +184,13 @@
             </div>
           </form>
           </div>
+          {% if messages %}
+          <p class="messages">
+              {% for message in messages %}
+              <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+              {% endfor %}
+          </p>
+          {% endif %}
         </div>
    
       <div class="panel" id="four-panel">
