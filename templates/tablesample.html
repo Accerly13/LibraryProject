@@ -1,0 +1,104 @@
+{% extends "layouts/header.html" %}
+<span></span>
+<html>
+<head>
+<style>
+tr {
+  border-bottom: 1px solid #ddd;
+}
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
+
+tr:hover {background-color: #D6EEEE;}
+</style>
+</head>
+{% block content %}
+<div class="grid-container-1 min-h-screen">
+  <header class="w3-container">
+    <h1 class="text-style">Search Records</h1>
+  </header>
+
+  <div class="warpper">
+    <input class="radio" id="one" name="group" type="radio" checked />
+    <input class="radio" id="two" name="group" type="radio" />
+
+    <div class="tabs">
+      <label class="tab" id="one-tab" for="one">View Visitor</label>
+      <label class="tab" id="two-tab" for="two">Search Visitor</label>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <table class="table table-striped ">
+          <thead class="thead-dark">
+            <tr class="text-center">
+              <th>ID Number</th>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Date</th>
+              <th>Time visited</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>201910167</td>
+              <td>Regina Mae Bulawan</td>
+              <td>Computer Studies</td>
+              <td>1/23/23</td>
+              <td>8:00am-10:00am</td>
+            </tr>
+            <tr>
+              <td>201910167</td>
+              <td>Regina Mae Bulawan</td>
+              <td>Computer Studies</td>
+              <td>1/23/23</td>
+              <td>8:00am-10:00am</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>     
+      
+    <script>
+      $(document).ready(function() {
+      $('#start-date').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: '01/01/2010',
+          endDate: '12/31/2022'
+      });
+      $('#end-date').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: '01/01/2010',
+          endDate: '12/31/2022'
+      });
+      });
+  
+      $(document).ready(function() {
+      $('#start-time').timepicker({
+          timeFormat: 'HH:mm',
+          interval: 60,
+          minTime: '00:00',
+          maxTime: '23:59',
+          startTime: '00:00',
+          dynamic: false,
+          dropdown: true,
+          scrollbar: true
+      });
+      $('#end-time').timepicker({
+          timeFormat: 'HH:mm',
+          interval: 60,
+          minTime: '00:00',
+          maxTime: '23:59',
+          startTime: '00:00',
+          dynamic: false,
+          dropdown: true,
+          scrollbar: true
+      });
+      });
+    </script>
+  <!-- </div>
+  <main class="grid-2-column-2 h-[100%]"> </main>
+</div> -->
+</html>
+{% endblock content %}

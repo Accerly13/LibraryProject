@@ -9,47 +9,40 @@
 
 <style>
 
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Lato", sans-serif;
-  background: #272727;
-  color: #ffd868;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
 .display-date {
   text-align: center;
   margin-bottom: 10px;
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 
 .display-time {
   display: flex;
-  font-size: 5rem;
+  justify-content: center;
+  font-size: 3rem;
   font-weight: bold;
-  border: 2px solid #ffd868;
+  border: 2px solid #336699;
   padding: 10px 20px;
+  margin-bottom: 4rem;
   border-radius: 5px;
-  transition: ease-in-out 0.1s;
-  transition-property: background, box-shadow, color;
-  -webkit-box-reflect: below 2px
-    linear-gradient(transparent, rgba(255, 255, 255, 0.05));
+  width: 50%;
 }
 
-.display-time:hover {
-  background: #ffd868;
-  box-shadow: 0 0 30px#ffd868;
-  color: #272727;
-  cursor: pointer;
+.student-container {
+    display: flex;
+    justify-content: center;
+}
+
+.student-input {
+    display: flex;
+    justify-content: center;
 }
 
 </style>
@@ -62,15 +55,28 @@ body {
       <span id="month">month</span>
       <span id="year">0000</span>
     </div>
+    <div style="display:flex; justify-content: center;">
     <div class="display-time"></div>
+    </div>
+    <div class="row student-container">
+        <div class="col-md-6 offset-md">
+          <div class="form-group">
+            <label for="idnumber" style="font-size: 2rem; display: flex; justify-content: center;">ID NUMBER:</label>
+            <div class="student-input">
+            <input type="number" class="form-control" placeholder="ex. CO2019-1-1190">
+            </div>
+          </div>
+        </div>
   </div>
 </body>
   <script>
     const displayTime = document.querySelector(".display-time");
+
+    
 // Time
 function showTime() {
   let time = new Date();
-  displayTime.innerText = time.toLocaleTimeString("en-US", { hour12: false });
+  displayTime.innerText = time.toLocaleTimeString("en-US", { hour12: true });
   setTimeout(showTime, 1000);
 }
 

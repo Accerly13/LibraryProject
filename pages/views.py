@@ -174,3 +174,6 @@ class DeleteRecord(LoginRequiredMixin, TemplateView):
 
 class ManageReport(LoginRequiredMixin, TemplateView):
     template_name = 'manageReport.html'
+
+class TableSample(LoginRequiredMixin, TemplateView):
+    template_name = 'tablesample.html'
