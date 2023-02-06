@@ -36,6 +36,9 @@ class HomePageView(TemplateView):
 class DashBoardAdmin(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard.html'
 
+class StudentDashboard(LoginRequiredMixin, TemplateView):
+    template_name = 'studentdashboard.html'
+
 class VisitorLoginPage(TemplateView):
     template_name = 'stat.html'
     

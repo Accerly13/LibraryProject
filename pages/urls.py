@@ -18,6 +18,7 @@ urlpatterns = [
    path('admin/dashboard/updaterecord/', views.UpdateRecord.as_view(), name='updaterecord'),
    path('admin/dashboard/deleterecord/', views.DeleteRecord.as_view(), name='deleterecord'),
    path('admin/dashboard/managereport/', views.ManageReport.as_view(), name='managereport'),
+   path('dashboard/', views.StudentDashboard.as_view(), name='studentdashboard'),
    path('', views.VisitorLoginPage.as_view(), name='stat'),
    path('logout_view/', views.logout_view, name='logout_view'),
 ]
