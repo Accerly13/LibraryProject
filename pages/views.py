@@ -140,15 +140,25 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 UserType.objects.create(usertype_id=self.usertype.count()+1, usertype_name=usertype)
                 messages.success(request, ("New Usertype is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
-        elif request.POST.get('users'):
-            college = request.POST['users']
+        elif request.POST.get('idnum'):
+            idnum = request.POST['idnum']
+            fname = request.POST['fname']
+            mname = request.POST['mname']
+            lname = request.POST['lname']
+            gender = request.POST['gender']
+            dept_select = request.POST['department_select']
+            course = request.POST['courses']
+            usertype = request.POST['usertype_select']
+            comments = request.POST['comments']
             try: 
-                college_check = College.objects.get(college_name = college)
-                messages.success(request, ("College is Already Registered!"))
+                user_check = UserInfo.objects.get(idnum = idnum)
+                messages.success(request, ("User is Already Registered!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
-                College.objects.create(college_id=self.colleges.count(), college_name=college)
-                messages.success(request, ("New College is Registered!"))	
+                course_check = Course.objects.get(course_name = course)
+                dept_check = College.objects.get(dept_name = dept_select)
+                UserInfo.objects.create(idnum=idnum, fname=fname, mname=mname, lname=lname, gender=gender, comment=comments, course=course_check, dept=dept_check)
+                messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         
             
