@@ -112,12 +112,6 @@ h2 {
   background-color: #e0e9ec;
 }
 
-.text-style {
-  font-size: 20px;
-  color: rgb(120, 120, 120);
-  margin: 1rem;
-}
-
 .generate {
   background-color: #336699;
   color: white;
@@ -414,7 +408,7 @@ img {
 }
 
 .text-style {
-  font-size: 20px;
+  font-size: 15px;
   color: rgb(120, 120, 120);
   margin: 1rem;
 }
@@ -663,6 +657,7 @@ h2 {
   border-radius: 3px;
   overflow: hidden;
   padding: 20px;
+  padding-top: 50px;
 }
 .panel {
   display: none;
