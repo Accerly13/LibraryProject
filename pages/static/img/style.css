@@ -32,6 +32,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #ECF0F1;
 }
 .tab {
   cursor: pointer;
@@ -101,9 +102,10 @@ h2 {
   }
 }
 
-.container {
-  padding-top: 120px;
-  padding-bottom: 120px;
+.container-home {
+  padding-top: 50px;
+  padding-bottom: 100px;
+  align-items: center;
 }
 
 .w3-container {
@@ -622,20 +624,20 @@ tfoot tr:nth-child(2) th {
 }
 
 @import url("https://fonts.googleapis.com/css?family=Arimo:400,700&display=swap");
-body {
+/* body {
   background: #6c888f;
   font-family: "Arimo", sans-serif;
-}
+} */
 h2 {
   color: #000;
   text-align: center;
   font-size: 2em;
 }
-.warpper {
+/* .warpper {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 .tab {
   cursor: pointer;
   padding: 10px 20px;
@@ -853,4 +855,8 @@ input[type="time"]::-webkit-inner-spin-button {
 
 .clr-white {
   color: #ffffff;
+}
+
+.thead-dark {
+  background-color: blue;
 }
