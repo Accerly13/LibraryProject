@@ -32,6 +32,14 @@ class Department(models.Model):
     class Meta:
         db_table = "department"
 
+class Course(models.Model):
+    course_id = models.IntegerField(primary_key=True, unique=True)
+    course_name = models.CharField(max_length=50, verbose_name='course_name')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
+
+    class Meta:
+        db_table = "course"
+
 class UserType(models.Model):
     usertype_id = models.IntegerField(primary_key=True, unique=True)
     usertype_name = models.CharField(max_length=50, verbose_name='usertype_name')
@@ -45,7 +53,7 @@ class UserInfo(models.Model):
     mname = models.CharField(max_length=50, verbose_name='m_name')
     lname = models.CharField(max_length=50, verbose_name='l_name')
     gender = models.CharField(max_length=1, verbose_name='gender')
-    course = models.CharField(max_length=50, verbose_name='course')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, default='')
     comment = models.CharField(max_length=50, verbose_name='comment')
     usertype = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
     dept = models.ForeignKey(Department, on_delete=models.CASCADE, default='')

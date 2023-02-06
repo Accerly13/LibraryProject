@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College, Department, UserType
+from .models import AdminUser, UserInfo, College, Department, UserType, Course
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -60,6 +60,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         self.colleges = College.objects.all()
         self.dept = Department.objects.all()
         self.usertype = UserType.objects.all()
+        self.course = Course.objects.all()
         if (self.usertype.count() == 0): 
             UserType.objects.create(usertype_id=1, usertype_name="Student")
             UserType.objects.create(usertype_id=2, usertype_name="Faculty")
@@ -67,7 +68,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             UserType.objects.create(usertype_id=4, usertype_name="Visitor")
 
     def get(self, request):
-        return render(request, 'updateRecord.html', {'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype})
+        return render(request, 'updateRecord.html', {'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype, 'course': self.course})
 
     def post(self, request):
         if request.POST.get('college'):
