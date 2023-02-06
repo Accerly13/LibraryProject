@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College, Department
+from .models import AdminUser, UserInfo, College, Department, UserType
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -53,15 +53,18 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
 
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
-    # def get(self, request):
-    #     college = request.GET['college']
-    #     print(college)
     def __init__(self):
         self.colleges = College.objects.all()
         self.dept = Department.objects.all()
+        self.usertype = UserType.objects.all()
+        if (self.usertype.count() == 0): 
+            UserType.objects.create(usertype_id=1, usertype_name="Student")
+            UserType.objects.create(usertype_id=2, usertype_name="Faculty")
+            UserType.objects.create(usertype_id=3, usertype_name="Personnel")
+            UserType.objects.create(usertype_id=4, usertype_name="Visitor")
 
     def get(self, request):
-        return render(request, 'updateRecord.html', {'data': self.colleges, 'dept': self.dept})
+        return render(request, 'updateRecord.html', {'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype})
 
     def post(self, request):
         if request.POST.get('college'):
@@ -103,6 +106,35 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 college_check = College.objects.get(college_name = college_name)
                 Department.objects.create(department_id=self.dept.count(), dept_name=dept, college=college_check)
                 messages.success(request, ("New Department is Registered!"))	
+                return redirect('/admin/dashboard/updaterecord/')	
+        elif request.POST.get('new_dept_name'):
+            new_dept_name = request.POST['new_dept_name']
+            dept_name = request.POST['update_dept_form']
+            if dept_name != new_dept_name:
+                dept_check = Department.objects.get(dept_name = dept_name)
+                dept_check.dept_name = new_dept_name
+                dept_check.save()
+                messages.success(request, ("The Department Name is Changed!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+            else:
+                messages.success(request, ("Pareho man lang, inedit mo pa!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+
+        elif request.POST.get('delete_dept'):
+            dept_name = request.POST['delete_dept']
+            dept_check = Department.objects.get(dept_name = dept_name)
+            dept_check.delete()
+            messages.success(request, ("Deleted!"))
+            return redirect('/admin/dashboard/updaterecord/')
+        elif request.POST.get('usertype'):
+            usertype = request.POST['usertype']
+            try: 
+                usertype_check = UserType.objects.get(usertype_name = usertype)
+                messages.success(request, ("Usertype is Already Registered!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+            except:
+                UserType.objects.create(usertype_id=self.usertype.count()+1, usertype_name=usertype)
+                messages.success(request, ("New Usertype is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         
             

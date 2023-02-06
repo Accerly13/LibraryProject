@@ -224,10 +224,12 @@
             </div>
           </div>
         </form>
+        <form method="post"> 
+          {% csrf_token %}
         <div class="row mb-3">
           <div class="input-group">
           <label class="col-sm-2 col-form-label" for="department">Update a Department:</label>
-              <select class="form-select" aria-label="Default select example">
+              <select class="form-select" aria-label="Default select example" name="update_dept_form">
                 {% for item in dept %}
                   <option value="{{item.dept_name}}"> {{ item.dept_name }} </option>
                 {% endfor %}
@@ -237,39 +239,45 @@
         <div class="row mb-3">
           <div class="input-group">
             <label class="col-sm-2 col-form-label" for="fname">New department Name:</label>
-            <input type="text" class="form-control" placeholder="Department of" aria-label="Department of" aria-describedby="basic-addon2">
+            <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="new_dept_name">
             <div class="input-group-button">
-              <button class="btn-update btn-outline-secondary" type="button">Update</button>
+              <button class="btn-update btn-outline-secondary" type="submit">Update</button>
             </div>
           </div>     
         </div>
+      </form>
+      <form method="post">
+        {% csrf_token %}
         <div class="row mb-3">
           <div class="input-group">
-            <label class="col-sm-2 col-form-label" for="fname">Delete a Department:</label>
-            <select class="custom-select" id="inputGroupSelect04">
-              <option selected>Department of</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <label class="col-sm-2 col-form-label" for="delete_dept">Delete a Department:</label>
+            <select class="custom-select" id="inputGroupSelect04" name="delete_dept">
+              {% for item in dept %}
+                <option value="{{item.dept_name}}"> {{ item.dept_name }} </option>
+              {% endfor %}
             </select>
             <div class="input-group-button">
-              <button class="btn-delete btn-outline-secondary" type="button">Delete</button>
+              <button class="btn-delete btn-outline-secondary" type="submit">Delete</button>
             </div>
           </div>
           </div>
+        </form>
         </div>
       
       <div class="panel" id="five-panel">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
-        <div class="row mb-3">
-          <div class="input-group">
-            <label class="col-sm-2 col-form-label" for="fname">Add User Type</label>
-            <input type="text" class="form-control" placeholder="" aria-label="College of" aria-describedby="basic-addon2">
-            <div class="input-group-button">
-              <button class="btn-update btn-outline-secondary" type="button">Add</button>
-            </div>
-          </div>     
-        </div>
+        <form method="post">
+        {% csrf_token %}
+          <div class="row mb-3">
+            <div class="input-group">
+              <label class="col-sm-2 col-form-label" for="fname">Add User Type</label>
+              <input type="text" class="form-control" placeholder="" aria-label="College of" aria-describedby="basic-addon2" name="usertype">
+              <div class="input-group-button">
+                <button class="btn-update btn-outline-secondary" type="submit">Add</button>
+              </div>
+            </div>     
+          </div>
+        </form>
         <div class="d-flex justify-content-center">
           <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
@@ -279,22 +287,12 @@
               </tr>
             </thead>
             <tbody>
+              {% for item in usertype %}
               <tr>
-                <td>1</td>
-                <td>Student</td>
+                <td>{{item.usertype_id}}</td>
+                <td>{{item.usertype_name}}</td>
               </tr>
-              <tr>
-                <td>2</td>
-                <td>Faculty</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Personnel</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Visitor</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>        

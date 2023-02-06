@@ -8,20 +8,6 @@ from django.utils import timezone
 
 now = timezone.now()
 
-class UserInfo(models.Model):
-    idnum = models.CharField(primary_key=True, max_length=50, unique=True)
-    fname = models.CharField(max_length=50, verbose_name='f_name')
-    mname = models.CharField(max_length=50, verbose_name='m_name')
-    lname = models.CharField(max_length=50, verbose_name='l_name')
-    gender = models.CharField(max_length=1, verbose_name='gender')
-    course = models.CharField(max_length=50, verbose_name='course')
-    comment = models.CharField(max_length=50, verbose_name='comment')
-    usertype = models.CharField(max_length=50, verbose_name='usertype')
-    dept = models.CharField(max_length=50, verbose_name='dept')
-
-    class Meta:
-        db_table = "users"
-
 class AdminUser(models.Model):
     admin_id = models.PositiveIntegerField(primary_key=True)
     admin_username = models.CharField(max_length=50, verbose_name='User Name')
@@ -45,6 +31,27 @@ class Department(models.Model):
 
     class Meta:
         db_table = "department"
+
+class UserType(models.Model):
+    usertype_id = models.IntegerField(primary_key=True, unique=True)
+    usertype_name = models.CharField(max_length=50, verbose_name='usertype_name')
+
+    class Meta:
+        db_table = "usertype"
+
+class UserInfo(models.Model):
+    idnum = models.CharField(primary_key=True, max_length=50, unique=True)
+    fname = models.CharField(max_length=50, verbose_name='f_name')
+    mname = models.CharField(max_length=50, verbose_name='m_name')
+    lname = models.CharField(max_length=50, verbose_name='l_name')
+    gender = models.CharField(max_length=1, verbose_name='gender')
+    course = models.CharField(max_length=50, verbose_name='course')
+    comment = models.CharField(max_length=50, verbose_name='comment')
+    usertype = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
+    dept = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
+
+    class Meta:
+        db_table = "users"
 
 
 
