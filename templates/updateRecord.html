@@ -100,10 +100,9 @@
               <label class="col-sm-2 col-form-label" for="department">User Type:</label>
                 <div class="col-sm-10">
                   <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">Student</option>
-                    <option value="2">Faculty</option>
-                    <option value="3">Personnel</option>
+                    {% for item in usertype %}
+                      <option value="{{item.usertype_name}}"> {{ item.usertype_name }} </option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
