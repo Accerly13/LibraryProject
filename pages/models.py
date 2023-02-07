@@ -17,7 +17,7 @@ class AdminUser(models.Model):
         db_table = "adminuser"
 
 class College(models.Model):
-    college_id = models.IntegerField(primary_key=True, unique=True)
+    college_id = models.AutoField(primary_key=True, unique=True)
     college_name = models.CharField(max_length=50, verbose_name='college_name')
 
     class Meta:
