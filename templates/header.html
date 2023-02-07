@@ -56,28 +56,12 @@
     .then(function (response) {
       if (response.ok) {
         // Logout was successful, redirect the user
-        window.location.href = '/admin';
+        window.location.href = '/';
       } else {
         // Logout was not successful, handle the error
         console.error('Error logging out:', response);
       }
     });
   });
-function myFunction(){
- document.getElementById("SignOutDropDown").classList.toggle("show");
-}
-
-window.onclick = function(event){
-    if (!event.target.matches('.btn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i=0; i<dropdowns.length;i++) {
-            var openDropDown = dropdowns[i];
-            if (openDropDown.classList.contains('show')) {
-                openDropDown.classList.remove('show');
-            }
-        }
-    }
-}
 
 </script>
