@@ -211,6 +211,21 @@ h2 {
   /* float: right; */
 }
 
+.btn-cancel {
+  background-color: #9f9f9f; /* Blue background */
+  border:#9f9f9f solid 1px; /* Remove borders */
+  color: white; /* White text */
+  cursor: pointer; /* Mouse pointer on hover */
+  /* width: 50%; */
+  /* float: right; */
+}
+
+.btn-cancel:hover,
+.btn-cancel:focus {
+  background-color: #afafaf;
+  color: white;
+}
+
 /* Darker background on mouse-over */
 .btn:hover,
 .btn:focus {
