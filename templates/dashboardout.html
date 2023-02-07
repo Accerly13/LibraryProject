@@ -29,10 +29,10 @@
   font-size: 3rem;
   font-weight: bold;
   border: 2px solid #336699;
-  padding: 10px 20px;
-  margin-bottom: 4rem;
+  padding: 20px 30px;
+  margin-bottom: 3rem;
   border-radius: 5px;
-  width: 50%;
+  width: 100%;
 }
 
 .student-container {
@@ -59,34 +59,53 @@
 }
 </style>
 {% block content %}
-<body>
-    
+<body>  
     <div class="text-center mb-3 mt-3">
             <div class="row justify-content-center">
               <div class="col-md-8">
                 <div class="card">
-                  <div style="font-size: 3rem; display: flex; justify-content: center; color: red; font-weight: bold;" class="card-header">TIME OUT</div>
+                  <div style="font-size: 2.5rem; display: flex; justify-content: center; color: red; font-weight: bold;" class="card-header">TIME OUT</div>
                   <div class="card-body">
-                    <div class="display-date">
-                        <span id="day">day</span>,
-                        <span id="daynum">00</span>
-                        <span id="month">month</span>
-                        <span id="year">0000</span>
-                      </div>
-
-                    <div style="display:flex; justify-content: center;">
-                        <div class="display-time"></div>
-                    </div>
-                    <form method="post">
-                        {% csrf_token %}
-                      <div class="form-group">
-                        <label style="font-size: 2rem; display: flex; justify-content: center;" for="studentID">Student ID</label>
-                        <div class="student-input">
-                            <input id="studentID" class="form-control big-text-field" placeholder="ex. CO2019-1-1190">
+                    <div class="container-fluid justify-content-center ">
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="card ml-3">
+                              <div class="card-header">
+                                Video Ads
+                              </div>
+                              <div class="card-body">
+                                <!-- Add the video code here -->
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="card">
+                              <div class="card-body">
+                                <div class="display-date">
+                                    <span id="day">day</span>,
+                                    <span id="daynum">00</span>
+                                    <span id="month">month</span>
+                                    <span id="year">0000</span>
+                                  </div>
+            
+                                <div style="display:flex; justify-content: center;">
+                                    <div class="display-time"></div>
+                                </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                  <div class="form-group">
+                                    <label style="font-size: 2rem; display: flex; justify-content: center;" for="studentID">Student ID</label>
+                                    <div class="student-input">
+                                        <input id="studentID" class="form-control big-text-field" placeholder="ex. CO2019-1-1190">
+                                    </div>
+                                  </div>
+                                  <input type="submit" hidden />
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <input type="submit" hidden />
-                    </form>
                   </div>
                 </div>
               </div>
@@ -94,14 +113,6 @@
     </div>
 </body>
   <script>
-$(document).ready(function() {
-  $('form').submit(function(e) {
-    e.preventDefault();
-    var studentID = $('#studentID').val();
-    alert("Time in submitted for: " + studentName + " with ID: " + studentID);
-  });
-});
-
 
 const displayTime = document.querySelector(".display-time");
 // Time
