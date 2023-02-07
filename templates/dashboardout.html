@@ -1,0 +1,134 @@
+{% include "header.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://fonts.googleapis.com/css2?family=Lato&display=swap"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+</html>
+
+<style>
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.display-date {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.display-time {
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+  border: 2px solid #336699;
+  padding: 10px 20px;
+  margin-bottom: 4rem;
+  border-radius: 5px;
+  width: 50%;
+}
+
+.student-container {
+    display: flex;
+    justify-content: center;
+}
+
+.student-input {
+    display: flex;
+    justify-content: center;
+}
+
+</style>
+{% block content %}
+<body>
+<div class="container">
+    <div class="display-date">
+      <span id="day">day</span>,
+      <span id="daynum">00</span>
+      <span id="month">month</span>
+      <span id="year">0000</span>
+    </div>
+    <div style="display:flex; justify-content: center;">
+    <div class="display-time"></div>
+    </div>
+    <div class="row student-container">
+        <div class="col-md-6 offset-md">
+          <div class="form-group">
+          <form method="post">
+            {% csrf_token %}
+            <label for="idnumber" style="font-size: 2rem; display: flex; justify-content: center;">ID NUMBER:</label>
+            <div class="student-input">
+            <input class="form-control" placeholder="ex. CO2019-1-1190">
+            </div>
+            <input type="submit" hidden />
+          </form>
+          </div>
+        </div>
+  </div>
+</body>
+  <script>
+    const displayTime = document.querySelector(".display-time");
+
+    
+// Time
+function showTime() {
+  let time = new Date();
+  displayTime.innerText = time.toLocaleTimeString("en-US", { hour12: true });
+  setTimeout(showTime, 1000);
+}
+
+showTime();
+
+// Date
+function updateDate() {
+  let today = new Date();
+
+  // return number
+  let dayName = today.getDay(),
+    dayNum = today.getDate(),
+    month = today.getMonth(),
+    year = today.getFullYear();
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const dayWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  // value -> ID of the html element
+  const IDCollection = ["day", "daynum", "month", "year"];
+  // return value array with number as a index
+  const val = [dayWeek[dayName], dayNum, months[month], year];
+  for (let i = 0; i < IDCollection.length; i++) {
+    document.getElementById(IDCollection[i]).firstChild.nodeValue = val[i];
+  }
+}
+
+updateDate();
+
+</script>
+{% endblock content %} x
