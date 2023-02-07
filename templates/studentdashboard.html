@@ -65,11 +65,18 @@
             {% csrf_token %}
             <label for="idnumber" style="font-size: 2rem; display: flex; justify-content: center;">ID NUMBER:</label>
             <div class="student-input">
-            <input class="form-control" placeholder="ex. CO2019-1-1190">
+            <input class="form-control" placeholder="ex. CO2019-1-1190" name="student_id">
             </div>
             <input type="submit" hidden />
           </form>
           </div>
+          {% if messages %}
+          <p class="messages">
+              {% for message in messages %}
+              <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+              {% endfor %}
+          </p>
+          {% endif %}
         </div>
   </div>
 </body>

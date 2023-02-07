@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College, Department, UserType, Course
+from .models import AdminUser, UserInfo, College, Department, UserType, Course, DatesLogin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.http import HttpResponse
+from datetime import datetime
 
 
 @login_required
@@ -38,6 +39,27 @@ class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 
 class StudentDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'studentdashboard.html'
+
+    def post(self, request):
+        student_id = request.POST['student_id']
+        try:
+            userinfo = UserInfo.objects.get(idnum = student_id)
+            now = datetime.now()
+            DatesLogin.objects.create(dates=now.date(), time_in=now.time(), time_out=None, user=userinfo)
+            messages.success(request, ("Succesfully Recorded!"))
+            return redirect('/dashboard/')	
+        except:
+            messages.success(request, ("Intruder Alert!"))
+            return redirect('/dashboard/')	
+
+        # try: 
+        #     college_check = College.objects.get(college_name = college)
+        #     messages.success(request, ("College is Already Registered!"))
+        #     return redirect('/admin/dashboard/updaterecord/')	
+        # except:
+        #     College.objects.create(college_id=self.colleges.count(), college_name=college)
+        #     messages.success(request, ("New College is Registered!"))	
+        #     return redirect('/admin/dashboard/updaterecord/')	
 
 class VisitorDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'visitordashboard.html'
