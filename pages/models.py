@@ -61,6 +61,11 @@ class UserInfo(models.Model):
     class Meta:
         db_table = "users"
 
+class DatesLogin(models.Model):
+    dates = models.DateField()
+    time_in = models.TimeField()
+    time_out = models.TimeField(null=True, blank=True)
+    user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, default='')
 
-
-
+    class Meta:
+        db_table = "dates_login"

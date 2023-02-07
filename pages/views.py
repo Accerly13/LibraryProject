@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College, Department, UserType, Course
+from .models import AdminUser, UserInfo, College, Department, UserType, Course, DatesLogin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.http import HttpResponse
+from datetime import datetime
 
 
 @login_required
@@ -41,6 +42,27 @@ class StudentDashboardOut(LoginRequiredMixin, TemplateView):
 
 class StudentDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'studentdashboard.html'
+
+    def post(self, request):
+        student_id = request.POST['student_id']
+        try:
+            userinfo = UserInfo.objects.get(idnum = student_id)
+            now = datetime.now()
+            DatesLogin.objects.create(dates=now.date(), time_in=now.time(), time_out=None, user=userinfo)
+            messages.success(request, ("Succesfully Recorded!"))
+            return redirect('/dashboard/')	
+        except:
+            messages.success(request, ("Intruder Alert!"))
+            return redirect('/dashboard/')	
+
+        # try: 
+        #     college_check = College.objects.get(college_name = college)
+        #     messages.success(request, ("College is Already Registered!"))
+        #     return redirect('/admin/dashboard/updaterecord/')	
+        # except:
+        #     College.objects.create(college_id=self.colleges.count(), college_name=college)
+        #     messages.success(request, ("New College is Registered!"))	
+        #     return redirect('/admin/dashboard/updaterecord/')	
 
 class VisitorDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'visitordashboard.html'
@@ -182,7 +204,17 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     course_check = Course.objects.get(course_name = course)
                 UserInfo.objects.create(idnum=idnum, fname=fname, mname=mname, lname=lname, gender=gender, comment=comments, course=course_check, dept=dept_check, usertype=usertype)
                 messages.success(request, ("New User is Registered!"))	
-                return redirect('/admin/dashboard/updaterecord/')	            
+                return redirect('/admin/dashboard/updaterecord/')	       
+        elif request.POST.get('user_update'):
+            usertype = request.POST['user_update']
+            print(usertype)
+            try: 
+                usertype_check = UserType.objects.get(usertype_name = usertype)
+                messages.success(request, ("Usertype is Already Registered!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+            except:
+                messages.success(request, ("New Usertype is Registered!"))	
+                return redirect('/admin/dashboard/updaterecord/')	     
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'

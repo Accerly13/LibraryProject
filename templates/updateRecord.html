@@ -124,10 +124,13 @@
       <div class="panel" id="two-panel">
         <div class="row">
           <div class="col-md-6 offset-md-3">
-            <div class="form-group">
-              <label for="start-date">Search user: (By ID Number or Last Name)</label>
-              <input type="text" class="form-control" placeholder="ex. CO2019-1-1190">
-            </div>
+            <form method="post" id="update_user">
+              {% csrf_token %} 
+              <div class="form-group">
+                <label for="start-date">Search user: (By ID Number or Last Name)</label>
+                <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update">
+              </div>
+            </form>
           </div>
         </div>
 
@@ -415,6 +418,9 @@
 
 
 <script>
+document.addEventListener("keydown", function(event) {
+      document.getElementById("update_user").submit();
+  });
   function checkAndAddOption(selectElement) {
       if (selectElement.value === "") {
         var div1=document.getElementById("inputnew");
@@ -425,6 +431,7 @@
         div1.innerHTML="";
       }
   }
-  </script>
+  
+</script>
 </div>
 {% endblock content %}
