@@ -20,6 +20,7 @@
         <div class="card my-5">
           <div id="onenter">
           <form class="card-body cardbody-color p-lg-5 shadow-lg p-3 bg-white rounded" action="" method="post">
+            {% csrf_token %}
             <div class="text-center">
               <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" class="img-fluid logo img-thumbnail rounded-circle my-3 hover-shadow"
                 width="200px" alt="profile">

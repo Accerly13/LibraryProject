@@ -49,6 +49,16 @@ class VisitorLoginPage(TemplateView):
             self.adminId = AdminUser.objects.get(admin_id=1)
         except: 
             AdminUser.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard/')
+        else:
+            messages.success(request, ("Invalid Username or Password!"))	
+            return redirect('/')
 
 class Sidebar(TemplateView):
     template_name = 'sidebar.html'
