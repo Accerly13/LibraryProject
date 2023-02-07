@@ -461,6 +461,11 @@ img {
   align-items: center;
 }
 
+.container-timeout {
+  align-items: center;
+}
+
+
 input {
   padding: 10px 10px !important;
   border: 1px solid #cfd8dc !important;

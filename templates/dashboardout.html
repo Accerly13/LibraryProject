@@ -45,38 +45,67 @@
     justify-content: center;
 }
 
+.modern-border {
+  border: 2px solid #5e72e4;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px #5e72e4;
+}
+
+.big-text-field {
+  width: 500px;
+  height: 50px;
+  font-size: 20px;
+}
 </style>
 {% block content %}
 <body>
-<div class="container">
-    <div class="display-date">
-      <span id="day">day</span>,
-      <span id="daynum">00</span>
-      <span id="month">month</span>
-      <span id="year">0000</span>
-    </div>
-    <div style="display:flex; justify-content: center;">
-    <div class="display-time"></div>
-    </div>
-    <div class="row student-container">
-        <div class="col-md-6 offset-md">
-          <div class="form-group">
-          <form method="post">
-            {% csrf_token %}
-            <label for="idnumber" style="font-size: 2rem; display: flex; justify-content: center;">ID NUMBER:</label>
-            <div class="student-input">
-            <input class="form-control" placeholder="ex. CO2019-1-1190">
+    
+    <div class="text-center mb-3 mt-3">
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <div class="card">
+                  <div style="font-size: 3rem; display: flex; justify-content: center; color: red; font-weight: bold;" class="card-header">TIME OUT</div>
+                  <div class="card-body">
+                    <div class="display-date">
+                        <span id="day">day</span>,
+                        <span id="daynum">00</span>
+                        <span id="month">month</span>
+                        <span id="year">0000</span>
+                      </div>
+
+                    <div style="display:flex; justify-content: center;">
+                        <div class="display-time"></div>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                      <div class="form-group">
+                        <label style="font-size: 2rem; display: flex; justify-content: center;" for="studentID">Student ID</label>
+                        <div class="student-input">
+                            <input id="studentID" class="form-control big-text-field" placeholder="ex. CO2019-1-1190">
+                        </div>
+                      </div>
+                      <input type="submit" hidden />
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
-            <input type="submit" hidden />
-          </form>
-          </div>
-        </div>
-  </div>
+    </div>
 </body>
   <script>
-    const displayTime = document.querySelector(".display-time");
+$(document).ready(function() {
+  $('form').submit(function(e) {
+    e.preventDefault();
+    var studentName = $('#studentName').val();
+    var studentID = $('#studentID').val();
+    // Add code to submit the form data to your server here
+    alert("Time in submitted for: " + studentName + " with ID: " + studentID);
+  });
+});
 
-    
+
+const displayTime = document.querySelector(".display-time");
 // Time
 function showTime() {
   let time = new Date();
