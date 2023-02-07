@@ -147,8 +147,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             fname = request.POST['fname']
             mname = request.POST['mname']
             lname = request.POST['lname']
-            # gender = request.POST.get('gender')
-            # print(gender)
+            gender = request.POST['gender']
             dept_select = request.POST['department_select']
             course = request.POST['courses']
             if course == "":
@@ -168,11 +167,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 except:
                     Course.objects.create(course_id=self.course.count(), course_name=course, department=dept_check)
                     course_check = Course.objects.get(course_name = course)
-                UserInfo.objects.create(idnum=idnum, fname=fname, mname=mname, lname=lname, gender='M', comment=comments, course=course_check, dept=dept_check, usertype=usertype)
+                UserInfo.objects.create(idnum=idnum, fname=fname, mname=mname, lname=lname, gender=gender, comment=comments, course=course_check, dept=dept_check, usertype=usertype)
                 messages.success(request, ("New User is Registered!"))	
-                return redirect('/admin/dashboard/updaterecord/')	
+                return redirect('/admin/dashboard/updaterecord/')	            
         
-
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
 

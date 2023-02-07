@@ -31,7 +31,7 @@
           </div>
         </div>
         <hr>
-        <form class="panel-margin" action="/admin/dashboard/updaterecord/" method="post">
+        <form class="panel-margin" method="post">
           {% csrf_token %}
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="customFile">Upload Picture</label>
@@ -67,10 +67,10 @@
           <label class="col-sm-2 col-form-label" for="gender">Gender:</label>
             <div class="col-sm-10">
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" name="gender" autocomplete="off" value="M">
+                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M">
                 <label class="btn btn-outline-primary" for="btnradio1">Male</label>
               
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" name="gender" autocomplete="off" value="F">
+                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F">
                 <label class="btn btn-outline-primary" for="btnradio2">Female</label>
               </div>
             </div>
