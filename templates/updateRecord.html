@@ -128,7 +128,7 @@
               {% csrf_token %} 
               <div class="form-group">
                 <label for="start-date">Search user: (By ID Number or Last Name)</label>
-                <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update">
+                <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update" id="user_input">
               </div>
             </form>
           </div>
@@ -419,7 +419,9 @@
 
 <script>
 document.addEventListener("keydown", function(event) {
+    if (document.getElementById("user_input").value != "") {
       document.getElementById("update_user").submit();
+    }
   });
   function checkAndAddOption(selectElement) {
       if (selectElement.value === "") {
