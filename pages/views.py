@@ -204,9 +204,8 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 return redirect('/admin/dashboard/updaterecord/')	       
         elif request.POST.get('user_update'):
             usertype = request.POST['user_update']
-            print(usertype)
             try: 
-                usertype_check = UserType.objects.get(usertype_name = usertype)
+                users = UserInfo.objects.filter(idnum__startswith=usertype)
                 messages.success(request, ("Usertype is Already Registered!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
