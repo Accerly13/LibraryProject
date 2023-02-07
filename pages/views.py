@@ -147,29 +147,31 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             fname = request.POST['fname']
             mname = request.POST['mname']
             lname = request.POST['lname']
-            gender = request.POST['gender']
+            # gender = request.POST.get('gender')
+            # print(gender)
             dept_select = request.POST['department_select']
             course = request.POST['courses']
+            if course == "":
+                course = request.POST['courses1']
             usertype = request.POST['usertype_select']
             comments = request.POST['comments']
+            
             try: 
                 user_check = UserInfo.objects.get(idnum = idnum)
                 messages.success(request, ("User is Already Registered!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
-                course_check = Course.objects.get(course_name = course)
-                dept_check = College.objects.get(dept_name = dept_select)
-                UserInfo.objects.create(idnum=idnum, fname=fname, mname=mname, lname=lname, gender=gender, comment=comments, course=course_check, dept=dept_check)
+                dept_check = Department.objects.get(dept_name = dept_select)
+                usertype = UserType.objects.get(usertype_name = usertype)
+                try:
+                    course_check = Course.objects.get(course_name = course)
+                except:
+                    Course.objects.create(course_id=self.course.count(), course_name=course, department=dept_check)
+                    course_check = Course.objects.get(course_name = course)
+                UserInfo.objects.create(idnum=idnum, fname=fname, mname=mname, lname=lname, gender='M', comment=comments, course=course_check, dept=dept_check, usertype=usertype)
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         
-            
-        # user = UserInfo.objects.get(idnum=idnum)
-        # if user is not None:
-        #     messages.success(request, ("User already registered!"))	
-        #     return redirect('/admin/dashboard/updaterecord/')	
-        # else:
-        #     print(idnum)
 
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'

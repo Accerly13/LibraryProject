@@ -67,10 +67,10 @@
           <label class="col-sm-2 col-form-label" for="gender">Gender:</label>
             <div class="col-sm-10">
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" name="gender" autocomplete="off">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" name="gender" autocomplete="off" value="M">
                 <label class="btn btn-outline-primary" for="btnradio1">Male</label>
               
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" name="gender" autocomplete="off">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" name="gender" autocomplete="off" value="F">
                 <label class="btn btn-outline-primary" for="btnradio2">Female</label>
               </div>
             </div>
@@ -95,7 +95,7 @@
                   <option value="">Add New </option>
                 </select>
               </div>
-            <div id="inputnew" name="courses"></div> 
+            <div id="inputnew"></div> 
             </div>
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="department">User Type:</label>
@@ -306,7 +306,7 @@
   function checkAndAddOption(selectElement) {
       if (selectElement.value === "") {
         var div1=document.getElementById("inputnew");
-        div1.innerHTML="<input type='text'/>";
+        div1.innerHTML="<input type='text' name='courses1'/>";
       }
       else {
         var div1=document.getElementById("inputnew");
