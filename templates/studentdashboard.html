@@ -61,10 +61,14 @@
     <div class="row student-container">
         <div class="col-md-6 offset-md">
           <div class="form-group">
+          <form method="post">
+            {% csrf_token %}
             <label for="idnumber" style="font-size: 2rem; display: flex; justify-content: center;">ID NUMBER:</label>
             <div class="student-input">
             <input class="form-control" placeholder="ex. CO2019-1-1190">
             </div>
+            <input type="submit" hidden />
+          </form>
           </div>
         </div>
   </div>
