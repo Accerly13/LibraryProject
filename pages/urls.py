@@ -19,6 +19,7 @@ urlpatterns = [
    path('admin/dashboard/deleterecord/', views.DeleteRecord.as_view(), name='deleterecord'),
    path('admin/dashboard/managereport/', views.ManageReport.as_view(), name='managereport'),
    path('dashboard/', views.StudentDashboard.as_view(), name='studentdashboard'),
+   path('dashboardout/', views.StudentDashboardOut.as_view(), name='studentdashboardout'),
    path('tablesample/', views.TableSample.as_view(), name='tablesample'),
    path('visitor/', views.VisitorDashboard.as_view(), name='visitordashboard'),
    path('', views.VisitorLoginPage.as_view(), name='stat'),
