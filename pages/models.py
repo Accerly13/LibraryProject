@@ -40,7 +40,7 @@ class UserType(models.Model):
         db_table = "usertype"
 
 class Course(models.Model):
-    course_id = models.IntegerField(primary_key=True, unique=True)
+    course_user_id = models.IntegerField(primary_key=True, unique=True)
     course_name = models.CharField(max_length=50, verbose_name='course_name')
     department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
 
@@ -56,7 +56,8 @@ class UserInfo(models.Model):
     comment = models.CharField(max_length=50, verbose_name='comment')
     type = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
     department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, default='', related_name='users')
+    course = models.CharField(max_length=50)
+    course_user = models.ForeignKey(Course, on_delete=models.CASCADE, default='', related_name='users')
 
     class Meta:
         db_table = "users"

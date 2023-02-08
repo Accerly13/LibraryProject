@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College, Department, UserType, Course
+from .models import AdminUser, UserInfo, College, Department, UserType, DatesLogin, Course
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -45,8 +45,9 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
 
     def post(self, request):
         student_id = request.POST['student_id']
+        print(student_id)
         try:
-            userinfo = UserInfo.objects.get(idnum = student_id)
+            userinfo = UserInfo.objects.get(user_idno = student_id)
             now = datetime.now()
             DatesLogin.objects.create(dates=now.date(), time_in=now.time(), time_out=None, user=userinfo)
             messages.success(request, ("Succesfully Recorded!"))
@@ -181,7 +182,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             course = request.POST['courses']
             usertype = request.POST['usertype_select']
             comments = request.POST['comments']
-            
+            print(course)
             try: 
                 user_check = UserInfo.objects.get(user_idno = idnum)
                 messages.success(request, ("User is Already Registered!"))
@@ -194,7 +195,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 except:
                     Course.objects.create(course_id=self.course.count(), course_name=course, department=dept_check)
                     course_check = Course.objects.get(course_name = course)
-                UserInfo.objects.create(user_idno=idnum, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course_check, department=dept_check, type=usertype)
+                UserInfo.objects.create(user_idno=idnum, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course_user=course_check, course="", department=dept_check, type=usertype)
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	       
         elif request.POST.get('user_update'):

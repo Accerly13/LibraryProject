@@ -94,7 +94,7 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="department">Course:</label>
               <div class="col-sm-10">
-                {% if course.length == 0 %}
+                {% if course %}
                 <select class="form-select" aria-label="Default select example" name="courses" onclick="checkAndAddOption(this)"> 
                   {% for item in course %}
                     <option value="{{item.course_name}}"> {{ item.course_name }} </option> -->
