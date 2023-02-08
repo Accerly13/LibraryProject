@@ -164,11 +164,11 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         elif request.POST.get('usertype'):
             usertype = request.POST['usertype']
             try: 
-                usertype_check = UserType.objects.get(usertype_name = usertype)
+                usertype_check = UserType.objects.get(type_name = usertype)
                 messages.success(request, ("Usertype is Already Registered!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
-                UserType.objects.create(type_id=self.usertype.count()+1, usertype_name=usertype)
+                UserType.objects.create(type_id=self.usertype.count()+1, type_name=usertype)
                 messages.success(request, ("New Usertype is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('idnum'):
@@ -190,7 +190,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
                 dept_check = Department.objects.get(department_name = dept_select)
-                usertype = UserType.objects.get(usertype_name = usertype)
+                usertype = UserType.objects.get(type_name = usertype)
                 try:
                     course_check = Course.objects.get(course_name = course)
                 except:
