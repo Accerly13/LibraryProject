@@ -14,7 +14,7 @@ class AdminUser(models.Model):
     admin_password = models.CharField(max_length=50, verbose_name='Password')
 
     class Meta:
-        db_table = "adminuser"
+        db_table = "admin"
 
 class College(models.Model):
     college_id = models.AutoField(primary_key=True, unique=True)
@@ -26,11 +26,18 @@ class College(models.Model):
 
 class Department(models.Model):
     department_id = models.AutoField(primary_key=True, unique=True)
-    dept_name = models.CharField(max_length=50, verbose_name='department_name')
+    department_name = models.CharField(max_length=50, verbose_name='department_name')
     college = models.ForeignKey(College, on_delete=models.CASCADE, default='')
 
     class Meta:
-        db_table = "department"
+        db_table = "departments"
+
+class UserType(models.Model):
+    type_id = models.IntegerField(primary_key=True, unique=True)
+    type_name = models.CharField(max_length=50, verbose_name='usertype_name')
+
+    class Meta:
+        db_table = "usertype"
 
 class Course(models.Model):
     course_id = models.IntegerField(primary_key=True, unique=True)
@@ -40,23 +47,16 @@ class Course(models.Model):
     class Meta:
         db_table = "course"
 
-class UserType(models.Model):
-    usertype_id = models.IntegerField(primary_key=True, unique=True)
-    usertype_name = models.CharField(max_length=50, verbose_name='usertype_name')
-
-    class Meta:
-        db_table = "usertype"
-
 class UserInfo(models.Model):
-    user_idno = models.CharField(primary_key=True, max_length=50, unique=True)
+    user_idno = models.CharField(primary_key=True, max_length=15, unique=True)
     first_name = models.CharField(max_length=50, verbose_name='f_name')
     middle_name = models.CharField(max_length=50, verbose_name='m_name')
     last_name = models.CharField(max_length=50, verbose_name='l_name')
     gender = models.CharField(max_length=1, verbose_name='gender')
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, default='')
     comment = models.CharField(max_length=50, verbose_name='comment')
     usertype = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
     department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, default='', related_name='users')
 
     class Meta:
         db_table = "users"
@@ -69,3 +69,4 @@ class DatesLogin(models.Model):
 
     class Meta:
         db_table = "dates_login"
+
