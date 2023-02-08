@@ -61,8 +61,8 @@
 .display-date {
   text-align: center;
   /* margin-bottom: 10px; */
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 3rem;
+  font-weight: bold;
 }
 
 .display-time {
@@ -106,7 +106,6 @@
   }
 
   .card-body {
-    padding: 1.5rem;
     min-width: 100%;
   }
 
@@ -116,6 +115,21 @@
     font-size: 100px;
   }
 
+  .profile{
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
+}
+
+.info{
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.infoName{
+  font-weight: bold;
+  font-size: 1.5em;
+}
 </style>
 {% block content %}
 <body>  
@@ -157,10 +171,26 @@
                               </div>
                             </div>
                           </div>
+                      
                           <div class="col-4 d-flex align-items-center justify-content-center flex-column">
+                            <div class="card-body">
+                              <div class="container-fluid">
+                                <div class="text-center">
+                                  <div class="row">
+                                    <div class="row-sm-6">
+                                      <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" class="img-fluid profile img-thumbnail rounded-circle my-3 hover-shadow"
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <p class="card-text mb-2">
+                                <div class="infoName">Kurt Anjelo Morallo Sereno</div>
+                                <div class="info">Department of Computer Studies</div>
+                                <div class="info">BS in Information technology</div>
+                              </p>
+                            </div>
                             <div class="card">
-
-
                               <form method="post">
                                 {% csrf_token %}
                               <div class="form-group">
@@ -172,8 +202,7 @@
                               <input type="submit" hidden />
                             </form>
 
-                            </div>
-
+                            </div>                 
                           </div>
                         </div>
                       </div>
