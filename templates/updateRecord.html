@@ -86,7 +86,7 @@
             <div class="col-sm-10">
               <select class="form-select" aria-label="Default select example" name="department_select">
                 {% for item in dept %}
-                  <option value="{{item.dept_name}}"> {{ item.dept_name }} </option>
+                  <option value="{{item.department_name}}"> {{ item.department_name }} </option>
                 {% endfor %}
               </select>
             </div>
@@ -94,21 +94,25 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="department">Course:</label>
               <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example" name="courses" onclick="checkAndAddOption(this)">
+                {% if course.length == 0 %}
+                <select class="form-select" aria-label="Default select example" name="courses" onclick="checkAndAddOption(this)"> 
                   {% for item in course %}
-                    <option value="{{item.course_name}}"> {{ item.course_name }} </option>
+                    <option value="{{item.course_name}}"> {{ item.course_name }} </option> -->
                   {% endfor %}
-                  <option value="">Add New </option>
                 </select>
+                {% else %}
+                  <div id="inputnew">
+                    <input class="form-control" type="text" id="course" name="courses">
+                  </div> 
+                {% endif %}
               </div>
-            <div id="inputnew"></div> 
             </div>
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="department">User Type:</label>
                 <div class="col-sm-10">
                   <select class="form-select" aria-label="Default select example" name="usertype_select">
                     {% for item in usertype %}
-                      <option value="{{item.usertype_name}}"> {{ item.usertype_name }} </option>
+                      <option value="{{item.type_name}}"> {{ item.type_name }} </option>
                     {% endfor %}
                   </select>
                 </div>
@@ -438,7 +442,8 @@ document.addEventListener("keydown", function(event) {
   function checkAndAddOption(selectElement) {
       if (selectElement.value === "") {
         var div1=document.getElementById("inputnew");
-        div1.innerHTML="<input type='text' name='courses1'/>";
+        div1.innerHTML="<input type='text' name='courses1' id='courses1'/>";
+        
       }
       else {
         var div1=document.getElementById("inputnew");
