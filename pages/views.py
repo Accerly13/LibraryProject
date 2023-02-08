@@ -179,30 +179,28 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             gender = request.POST['gender']
             dept_select = request.POST['department_select']
             course = request.POST['courses']
-            if course == "":
-                course = request.POST['courses1']
             usertype = request.POST['usertype_select']
             comments = request.POST['comments']
             
             try: 
-                user_check = UserInfo.objects.get(idnum = idnum)
+                user_check = UserInfo.objects.get(user_idno = idnum)
                 messages.success(request, ("User is Already Registered!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
                 dept_check = Department.objects.get(department_name = dept_select)
-                usertype = UserType.objects.get(type_name = usertype)
+                usertype = UserType.objects.get(type_id = usertype)
                 try:
                     course_check = Course.objects.get(course_name = course)
                 except:
                     Course.objects.create(course_id=self.course.count(), course_name=course, department=dept_check)
                     course_check = Course.objects.get(course_name = course)
-                UserInfo.objects.create(idnum=idnum, fname=fname, mname=mname, lname=lname, gender=gender, comment=comments, course=course_check, dept=dept_check, usertype=usertype)
+                UserInfo.objects.create(user_idno=idnum, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course_check, department=dept_check, type=usertype)
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	       
         elif request.POST.get('user_update'):
             usertype = request.POST['user_update']
             try: 
-                users = UserInfo.objects.filter(idnum__startswith=usertype)
+                users = UserInfo.objects.filter(user_idno__startswith=usertype)
                 messages.success(request, ("Usertype is Already Registered!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             except:

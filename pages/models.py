@@ -54,10 +54,9 @@ class UserInfo(models.Model):
     last_name = models.CharField(max_length=50, verbose_name='l_name')
     gender = models.CharField(max_length=1, verbose_name='gender')
     comment = models.CharField(max_length=50, verbose_name='comment')
-    usertype = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
+    type = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
     department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, default='', related_name='users')
-    
 
     class Meta:
         db_table = "users"
