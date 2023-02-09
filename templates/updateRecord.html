@@ -138,21 +138,12 @@ option:hover,  .active{
           </div>
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="department">Department:</label>
-            <!-- <div class="col-sm-10">
-              <select class="form-select" aria-label="Default select example" name="department_select">
-                {% for item in dept %}
-                  <option value="{{item.department_name}}"> {{ item.department_name }} </option>
-                {% endfor %}
-              </select>
-            </div> -->
-
             <div class="col-sm-10">
               <fieldset>
                 <input class="form-select" style="width: 100%;" autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department">
                 <datalist id="department_select" role="listbox" style="z-index: 9999;">
-                  <option value="Internet Explorer"></option>
                   {% for item in dept %}
-                  <option value="{{item.department_name}}"> {{ item.department_name }} </option>  
+                    <option value="{{item.department_name}}"> {{ item.department_name }} </option>  
                   {% endfor %}  
                   </datalist>    
               </fieldset>
@@ -203,12 +194,15 @@ option:hover,  .active{
       </div>
       <div class="panel" id="two-panel">
         <div class="row">
-          <div class="col-md-6 offset-md-3">
-              <div class="form-group">
-                <label for="start-date">Search user: (By ID Number or Last Name)</label>
-                <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update" id="user_input">
-              </div>
-          </div>
+          <form method="post"> 
+            {% csrf_token %}
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                  <label for="start-date">Search user: (By ID Number or Last Name)</label>
+                  <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update" id="user_input">
+                </div>
+            </div>
+          </form>
         </div>
 
         <div class="d-flex justify-content-center">
@@ -218,14 +212,17 @@ option:hover,  .active{
                 <th>ID Number</th>
                 <th>Name</th>
                 <th>Department</th>
+                <th> {{result}} </th>
               </tr>
             </thead>
             <tbody>
               {% for item in users %}
               <tr>
+                {% if item.user_idno == string_user_id %}
                   <td>{{item.user_idno}}&nbsp<i class="fa fa-eye"></i></td>
                   <td>{{item.first_name}} {{item.middle_name}} {{item.last_name}}</td>
                   <td>{{item.department.department_name}}</td>
+                {% endif %}
               </tr>
               {% endfor %}
             </tbody>
@@ -501,11 +498,21 @@ option:hover,  .active{
 
 
 <script>
-document.addEventListener("keydown", function(event) {
-    if (document.getElementById("user_input").value != "") {
-      document.getElementById("update_user").submit();
-    }
+document.getElementById("user_input").addEventListener("input", function() {
+    document.getElementById("user_input").submit()
+    alert("hi")
   });
+  // document.getElementById("user_input").addEventListener("input", function() {
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open("POST", "/admin/dashboard/updaterecord/");
+  //   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  //   xhr.onreadystatechange = function() {
+  //     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+  //       console.log("The input value has been processed by the server:", xhr.responseText);
+  //     }
+  //   };
+  //   xhr.send(encodeURIComponent(this.value));
+  // });
   function checkAndAddOption(selectElement) {
       if (selectElement.value === "") {
         var div1=document.getElementById("inputnew");
@@ -572,7 +579,6 @@ function addActive(x) {
       x[i].classList.remove("active");
     }
   }
-  
 </script>
 </div>
 {% endblock content %}

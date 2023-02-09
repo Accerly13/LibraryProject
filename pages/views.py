@@ -8,7 +8,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.http import HttpResponse
 from datetime import datetime
-
+from django.http import JsonResponse
 
 @login_required
 def protected_view(request):
@@ -219,14 +219,18 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	       
         elif request.POST.get('user_update'):
-            usertype = request.POST['user_update']
-            try: 
-                users = UserInfo.objects.filter(user_idno__startswith=usertype)
-                messages.success(request, ("Usertype is Already Registered!"))
-                return redirect('/admin/dashboard/updaterecord/')	
-            except:
-                messages.success(request, ("New Usertype is Registered!"))	
-                return redirect('/admin/dashboard/updaterecord/')	     
+            # usertype = request.POST['user_update']
+            # try: 
+            #     users = UserInfo.objects.filter(user_idno__startswith=usertype)
+            #     messages.success(request, ("Usertype is Already Registered!"))
+            #     return redirect('/admin/dashboard/updaterecord/')	
+            # except:
+            #     messages.success(request, ("New Usertype is Registered!"))	
+            #     return redirect('/admin/dashboard/updaterecord/')	     
+        # elif request.POST.get('input_value'):
+            print("hello")
+            input_value = request.POST['user_update']
+            return render('/admin/dashboard/updaterecord/', {'result': input_value})
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
