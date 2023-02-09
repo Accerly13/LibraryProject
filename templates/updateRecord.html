@@ -148,15 +148,15 @@ option:hover,  .active{
 
             <div class="col-sm-10">
               <fieldset>
-                <input class="form-select" autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department">
-                <datalist id="department_select" role="listbox">
-                  <option value="Internet Explorer">Internet Explorer</option>
+                <input class="form-select" style="width: 100%;" autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department">
+                <datalist id="department_select" role="listbox" style="z-index: 9999;">
+                  <option value="Internet Explorer"></option>
                   {% for item in dept %}
                   <option value="{{item.department_name}}"> {{ item.department_name }} </option>  
                   {% endfor %}  
                   </datalist>    
               </fieldset>
-              </div>
+            </div>
 
           </div>
           <div class="row mb-3">
