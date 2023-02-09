@@ -221,13 +221,13 @@ option:hover,  .active{
               </tr>
             </thead>
             <tbody>
+              {% for item in users %}
               <tr>
-                {% for item in users %}
                   <td>{{item.user_idno}}&nbsp<i class="fa fa-eye"></i></td>
                   <td>{{item.first_name}} {{item.middle_name}} {{item.last_name}}</td>
-                  <td>Computer Studies</td>
-                {% endfor %}
+                  <td>{{item.department.department_name}}</td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>  
