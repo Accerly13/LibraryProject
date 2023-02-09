@@ -180,6 +180,8 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             gender = request.POST['gender']
             dept_select = request.POST['department_select']
             course = request.POST['courses']
+            if course == "":
+                course = request.POST['courses1']
             usertype = request.POST['usertype_select']
             comments = request.POST['comments']
             print(course)
