@@ -148,15 +148,15 @@ option:hover,  .active{
 
             <div class="col-sm-10">
               <fieldset>
-                <input class="form-select" style="width: 100%;" autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department">
-                <datalist id="department_select" role="listbox" style="z-index: 9999;">
-                  <option value="Internet Explorer"></option>
+                <input class="form-select" autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department">
+                <datalist id="department_select" role="listbox">
+                  <option value="Internet Explorer">Internet Explorer</option>
                   {% for item in dept %}
                   <option value="{{item.department_name}}"> {{ item.department_name }} </option>  
                   {% endfor %}  
-                </datalist>    
+                  </datalist>    
               </fieldset>
-            </div>
+              </div>
 
           </div>
           <div class="row mb-3">
@@ -204,13 +204,10 @@ option:hover,  .active{
       <div class="panel" id="two-panel">
         <div class="row">
           <div class="col-md-6 offset-md-3">
-            <form method="post" id="update_user">
-              {% csrf_token %} 
               <div class="form-group">
                 <label for="start-date">Search user: (By ID Number or Last Name)</label>
                 <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update" id="user_input">
               </div>
-            </form>
           </div>
         </div>
 
@@ -225,9 +222,11 @@ option:hover,  .active{
             </thead>
             <tbody>
               <tr>
-                <td>201910167&nbsp<i class="fa fa-eye"></i></td>
-                <td>Regina Mae P. Bulawan</td>
-                <td>Computer Studies</td>
+                {% for item in users %}
+                  <td>{{item.user_idno}}&nbsp<i class="fa fa-eye"></i></td>
+                  <td>{{item.first_name}} {{item.middle_name}} {{item.last_name}}</td>
+                  <td>Computer Studies</td>
+                {% endfor %}
               </tr>
             </tbody>
           </table>
