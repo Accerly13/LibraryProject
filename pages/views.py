@@ -40,18 +40,35 @@ class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 class StudentDashboardOut(LoginRequiredMixin, TemplateView):
     template_name = 'dashboardout.html'
 
+    def post(self, request):
+        student_id = request.POST['student_id']
+        try:
+            userinfo = DatesLogin.objects.get(user_id = student_id, time_out=None)
+            now = datetime.now()
+            userinfo.time_out = now.time() 
+            userinfo.save()
+            messages.success(request, ("Have a nice day!"))
+            return redirect('/dashboardout/')	
+        except:
+            messages.success(request, ("You didn't log in!"))
+            return redirect('/dashboardout/')	
+
 class StudentDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'studentdashboard.html'
 
+    def __init__(self):
+        self.dept = Department.objects.all()
+        self.course = Course.objects.all()
+        self.users = UserInfo.objects.all()
+
     def post(self, request):
         student_id = request.POST['student_id']
-        print(student_id)
         try:
             userinfo = UserInfo.objects.get(user_idno = student_id)
             now = datetime.now()
             DatesLogin.objects.create(dates=now.date(), time_in=now.time(), time_out=None, user=userinfo)
             messages.success(request, ("Succesfully Recorded!"))
-            return redirect('/dashboard/')	
+            return render(request, 'studentdashboard.html', {'student_id': student_id, 'users':self.users})
         except:
             messages.success(request, ("Intruder Alert!"))
             return redirect('/dashboard/')	
