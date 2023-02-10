@@ -154,9 +154,9 @@ option:hover,  .active{
                 {% if course %}
                 <select class="form-select" aria-label="Default select example" name="courses" onclick="checkAndAddOption(this)"> 
                   {% for item in course %}
-                    <option value="{{item.course_name}}"> {{ item.course_name }} </option>
-                    <option onclick="checkAndAddOption(this)" value="">Add New </option>
+                    <option value="{{item}}"> {{ item }} </option>
                   {% endfor %}
+                  <option onclick="checkAndAddOption(this)" value="">Add New </option>
                 </select>
                 <div id="inputnew"></div> 
                 {% else %}
@@ -210,7 +210,6 @@ option:hover,  .active{
                 <th>ID Number</th>
                 <th>Name</th>
                 <th>Department</th>
-                <th> {{result}} </th>
               </tr>
             </thead>
             <tbody>
