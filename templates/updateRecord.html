@@ -618,20 +618,10 @@ option:hover,  .active{
   });
 
 document.getElementById("user_input").addEventListener("input", function() {
+  alert(this.value)
     document.getElementById("user_input").submit()
-    alert("hi")
+    
   });
-  // document.getElementById("user_input").addEventListener("input", function() {
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open("POST", "/admin/dashboard/updaterecord/");
-  //   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  //   xhr.onreadystatechange = function() {
-  //     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-  //       console.log("The input value has been processed by the server:", xhr.responseText);
-  //     }
-  //   };
-  //   xhr.send(encodeURIComponent(this.value));
-  // });
   function checkAndAddOption(selectElement) {
       if (selectElement.value === "") {
         var div1=document.getElementById("inputnew");
