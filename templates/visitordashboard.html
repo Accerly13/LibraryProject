@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -13,40 +13,49 @@
   {% load static %}
   <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
   <body>
+    <header>
+      <h2 class=" visitor text-center text-stroke">VISITOR INFORMATION</h2>
+      <nav>
+        <a href="#">Home</a> |
+        <a href="#">About</a> |
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
     <div style="display: flex; justify-content: center;">
-        <div class="wrapper">
+      <div class="wrapper">
                 <div class="form-border mt-3">
                     <div class="text-center">
                         <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" class="img-fluid logo img-thumbnail rounded-circle my-3 hover-shadow"
                         width="200px" alt="profile">
                     </div>
-                    <h2 class="text-center mb-4 text-stroke">VISITOR INFORMATION</h2>
+    
                 <div class="d-flex justify-content-center">
                 <form class="text-center">
                     <div class="row">
                         <div class="col mb-3">
                             <label for="inputEmail">Name of School: </label>
-                            <input type="text" class="form-control class="shadow-textfield"" id="inputSchool" placeholder="Input Name of School">
+                            <input style="font-weight: bold;" type="text" class="form-control class="shadow-textfield"" id="inputSchool" required>
                         </div>
                     </div>
                     <div class="row g-5">
                         <div class="col mb-3">
                             <label for="inputName">Name: </label>
-                            <input type="text" class="form-control class="shadow-textfield"" id="inputName" placeholder="Input your name">
+                            <input style="font-weight: bold;" type="text" class="form-control class="shadow-textfield"" id="inputName" required>
                         </div>
                         <div class="col mb-3">
                             <label for="inputEmail">Email: </label>
-                            <input type="email" class="form-control class="shadow-textfield"" id="inputEmail" placeholder="Input your email">
+                            <input style="font-weight: bold;" type="email" class="form-control class="shadow-textfield"" id="inputEmail" required>
                         </div>
                     </div>
                     <div class="row g-5">
                         <div class="col mb-3">
                             <label for="inputEmail">Phone Number: </label>
-                            <input type="number" class="form-control class="shadow-textfield"" id="inputPhoneNumber" placeholder="Input Phone Number">
+                            <input style="font-weight: bold;" type="number" class="form-control class="shadow-textfield"" id="inputPhoneNumber" required>
                         </div>
                         <div class="col mb-3">
                             <label for="inputEmail">Student ID Number: </label>
-                            <input type="number" class="form-control class="shadow-textfield"" id="inputIDnumber" placeholder="Input ID Number">
+                            <input style="font-weight: bold;"  type="text" class="form-control class="shadow-textfield"" id="inputIDnumber" required>
                         </div>
                     </div>
                     <div class="text-center">
@@ -70,6 +79,15 @@
     -->
 
   <script>
+document.getElementById("about-btn").addEventListener("click", function() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("about").style.display = "block";
+});
+
+document.getElementById("home-btn").addEventListener("click", function() {
+  document.getElementById("home").style.display = "block";
+  document.getElementById("about").style.display = "none";
+});
 
   </script>
 
@@ -77,6 +95,25 @@
 </html>
 
 <style>
+
+#home, #about {
+  padding: 20px;
+}
+
+input{
+  text-align: center;
+}
+
+.visitor{
+  color: aliceblue;
+}
+ header {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
 
 body {
         /* background-image: url("{% static 'img/background.png' %}"); */
@@ -112,7 +149,7 @@ a{
 }
 
 .form-border {
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 10px;
   }
 
