@@ -47,7 +47,7 @@ class StudentDashboardOut(LoginRequiredMixin, TemplateView):
             now = datetime.now()
             userinfo.time_out = now.time() 
             userinfo.save()
-            messages.success(request, ("Have a nice day!"))
+            messages.success(request, ("You have successfully been logged out. Thank you for using our service."))
             return redirect('/dashboardout/')	
         except:
             messages.success(request, ("You didn't log in!"))
