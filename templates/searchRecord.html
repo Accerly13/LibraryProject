@@ -7,19 +7,15 @@
   </header>
 
   <div class="warpper">
-    <input class="radio" id="one" name="group" type="radio" checked />
+    <input class="radio" id="one" name="group" type="radio" />
     <input class="radio" id="two" name="group" type="radio" />
-    <form style="display: none;">
-      {% csrf_token %}
-    </form>
     <div class="tabs">
-      <label class="tab {% if active_tab == 'tab1' %}active{% endif %}" data-tab="tab1" id="one-tab" for="one">View Visitor</label>
-      <label class="tab {% if active_tab == 'tab2' %}active{% endif %}" data-tab="tab2" id="two-tab" for="two">Search Visitor</label>
+      <label class="tab" onclick="switchTab('tab1')" data-tab="tab1" id="one-tab" for="one">View Visitor</label>
+      <label class="tab" onclick="switchTab('tab2')" data-tab="tab2" id="two-tab" for="two">Search Visitor</label>
     </div>
     <div class="panels">
       <div class="tab-content">
-      {% if active_tab == "tab1" %}
-      <div class="panel" id="one-panel">
+      <div class="panels" id="tab1">
         <div class="row">
           <div class="col-md-6 offset-md-3">
             <div class="form-group">
@@ -86,8 +82,7 @@
         </div>  
 
       </div>
-      {% elif active_tab == "tab2" %}
-      <div class="panel" id="two-panel">
+      <div class="panel" id="tab2">
         <div class="row">
           <div class="col-md-6 offset-md-3">
             <div class="form-group">
@@ -141,18 +136,41 @@
         </div>  
 
       </div>
-      {% endif %}
       </div>
     </div>
     </div>
     <script>
-      const csrfToken = document.querySelector("[name='csrfmiddlewaretoken']").value;
-      $('.tab').click(function() {
-        active_tab = $(this).data('tab');
-        $.post('', {active_tab: active_tab, csrfmiddlewaretoken: csrfToken});
-      });
-      
+    var activeTab = localStorage.getItem("activeTab");
 
+    // If there is no active tab, set the first tab as the active tab
+    if (!activeTab) {
+      activeTab = "tab1";
+      document.getElementById("one").checked = true;
+      localStorage.setItem("activeTab", activeTab);
+    }
+    if (activeTab == "tab1") {
+      document.getElementById("one").checked = true;
+    }
+    else {
+      document.getElementById("two").checked = true;
+    }
+
+    // Show the active tab and hide the other tabs
+    document.getElementById(activeTab).style.display = "block";
+    for (var i = 1; i <= 3; i++) {
+      if ("tab" + i != activeTab) {
+        document.getElementById("tab" + i).style.display = "none";
+      }
+    }
+
+    // Function to switch tabs
+    function switchTab(tabId) {
+      document.getElementById(activeTab).style.display = "none";
+      document.getElementById(tabId).style.display = "block";
+      activeTab = tabId;
+      localStorage.setItem("activeTab", activeTab);
+    }
+        
       $(document).ready(function() {
       $('#start-date').datepicker({
           autoclose: true,

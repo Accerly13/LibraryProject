@@ -109,9 +109,10 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
     template_name = 'searchRecord.html'
 
     def post(self, request):
-        active_tab = request.session.get('active_tab')
-        print()
-        return render(request, 'searchRecord.html', {'active_tab': active_tab})
+        active_tab = request.POST.get('active_tab')
+        response = active_tab
+        return HttpResponse(response)
+        # return render(request, 'searchRecord.html', {'active_tab': active_tab})
 
     # def search(request):
     #     active_tab = request.POST.get('active_tab', 'tab2')
