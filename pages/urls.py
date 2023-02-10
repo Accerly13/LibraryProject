@@ -25,4 +25,5 @@ urlpatterns = [
    path('', views.VisitorLoginPage.as_view(), name='stat'),
    path('logout_view/', views.logout_view, name='logout_view'),
 
+
 ]

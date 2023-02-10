@@ -108,6 +108,16 @@ class Sidebar(TemplateView):
 class SearchRecord(LoginRequiredMixin, TemplateView):
     template_name = 'searchRecord.html'
 
+    def post(self, request):
+        active_tab = request.session.get('active_tab')
+        print()
+        return render(request, 'searchRecord.html', {'active_tab': active_tab})
+
+    # def search(request):
+    #     active_tab = request.POST.get('active_tab', 'tab2')
+    #     request.session['active_tab'] = active_tab
+    #     return HttpResponse()
+
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
     def __init__(self):
