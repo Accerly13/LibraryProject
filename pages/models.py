@@ -39,14 +39,6 @@ class UserType(models.Model):
     class Meta:
         db_table = "usertype"
 
-class Course(models.Model):
-    course_user_id = models.IntegerField(primary_key=True, unique=True)
-    course_name = models.CharField(max_length=50, verbose_name='course_name')
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
-
-    class Meta:
-        db_table = "course"
-
 class UserInfo(models.Model):
     user_idno = models.CharField(primary_key=True, max_length=15, unique=True, default='')
     first_name = models.CharField(max_length=50, verbose_name='f_name')
@@ -57,7 +49,6 @@ class UserInfo(models.Model):
     type = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
     department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
     course = models.CharField(max_length=50)
-    course_user = models.ForeignKey(Course, on_delete=models.CASCADE, default='', related_name='users')
 
     class Meta:
         db_table = "users"
