@@ -103,14 +103,14 @@
             </thead>
             <tbody>
               <tr>
-                <td>201910167&nbsp<i class="fa fa-eye"></i></td>
+                <td>201910167&nbsp<i id="icon-eye" class="fa fa-eye"></i></td>
                 <td>Regina Mae P. Bulawan</td>
                 <td>Computer Studies</td>
               </tr>
             </tbody>
           </table>
         </div>  
-
+        <div id="content-eye" style="display: none;">
         <div class="d-flex justify-content-center">
           <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
@@ -134,12 +134,19 @@
             </tbody>
           </table>
         </div>  
+      </div>
 
       </div>
       </div>
     </div>
     </div>
     <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelector("#icon-eye").addEventListener("click", function() {
+        document.querySelector("#content-eye").style.display = 
+          document.querySelector("#content-eye").style.display === "none" ? "block" : "none";
+      });
+    });
     var activeTab = localStorage.getItem("activeTab");
 
     // If there is no active tab, set the first tab as the active tab
