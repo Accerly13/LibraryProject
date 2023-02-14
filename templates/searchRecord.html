@@ -7,7 +7,7 @@
   </header>
 
   <div class="warpper">
-    <input class="radio" id="one" name="group" type="radio" />
+    <input class="radio" id="one" name="group" type="radio" checked />
     <input class="radio" id="two" name="group" type="radio" />
     <div class="tabs">
       <label class="tab" onclick="switchTab('tab1')" data-tab="tab1" id="one-tab" for="one">View Visitor</label>
@@ -141,19 +141,28 @@
     </div>
     </div>
     <script>
+    let currentPage = location.href;
+    
+    window.addEventListener("beforeunload", function(event) {
+      let newPage = location.href;
+      if (currentPage === newPage) {
+        sessionStorage.removeItem("activeTab");
+      }
+    });
+  
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelector("#icon-eye").addEventListener("click", function() {
         document.querySelector("#content-eye").style.display = 
           document.querySelector("#content-eye").style.display === "none" ? "block" : "none";
       });
     });
-    var activeTab = localStorage.getItem("activeTab");
+    var activeTab = sessionStorage.getItem("activeTab");
 
     // If there is no active tab, set the first tab as the active tab
     if (!activeTab) {
       activeTab = "tab1";
       document.getElementById("one").checked = true;
-      localStorage.setItem("activeTab", activeTab);
+      sessionStorage.setItem("activeTab", activeTab);
     }
     if (activeTab == "tab1") {
       document.getElementById("one").checked = true;
@@ -175,9 +184,8 @@
       document.getElementById(activeTab).style.display = "none";
       document.getElementById(tabId).style.display = "block";
       activeTab = tabId;
-      localStorage.setItem("activeTab", activeTab);
-    }
-        
+      sessionStorage.setItem("activeTab", activeTab);
+    }   
       $(document).ready(function() {
       $('#start-date').datepicker({
           autoclose: true,
