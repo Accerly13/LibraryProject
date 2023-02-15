@@ -112,7 +112,6 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
         self.dept = Department.objects.all()
         self.users = UserInfo.objects.all()
         self.dates_login = DatesLogin.objects.all()
-        self.context = ""
     def get(self, request):
         return render(request, 'searchRecord.html', {'dept': self.dept, 'users': self.users, 'dates_login': self.dates_login})
         
@@ -135,8 +134,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         self.usertype = UserType.objects.all()
         self.users = UserInfo.objects.all()
         self.course = UserInfo.objects.values_list('course', flat=True).distinct()
+        self.context = ""
     def get(self, request):
-        return render(request, 'updateRecord.html', {'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype, 'users': self.users, 'course': self.course})
+        input_value = request.GET['user_update']  
+        return render(request, 'updateRecord.html', { 'result': input_value, 'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype, 'users': self.users, 'course': self.course})
 
     def post(self, request):
         if request.POST.get('college'):
@@ -230,7 +231,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 UserInfo.objects.create(user_idno=idnum, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	       
-        elif request.POST.get('user_update'):
+       
             # usertype = request.POST['user_update']
             # try: 
             #     users = UserInfo.objects.filter(user_idno__startswith=usertype)
@@ -240,10 +241,6 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             #     messages.success(request, ("New Usertype is Registered!"))	
             #     return redirect('/admin/dashboard/updaterecord/')	     
         # elif request.POST.get('input_value'):
-            input_value = request.POST['user_update']
-            self.context = {'result': input_value}
-            print(self.context)
-            return render(request, 'updateRecord.html', self.context)
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'

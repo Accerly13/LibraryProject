@@ -687,7 +687,7 @@ var activeTab = sessionStorage.getItem("activeTab");
 
     var formData = new FormData(form);
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/admin/dashboard/updaterecord/');
+    xhr.open('GET', '/admin/dashboard/updaterecord/');
     xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
     xhr.onreadystatechange = function() {
 

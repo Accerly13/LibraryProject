@@ -143,14 +143,14 @@
     </div>
     </div>
     <script>
-    // let currentPage = location.href;
+    let currentPage = location.href;
     
-    // window.addEventListener("beforeunload", function(event) {
-    //   let newPage = location.href;
-    //   if (currentPage === newPage) {
-    //     sessionStorage.removeItem("activeTab");
-    //   }
-    // });
+    window.addEventListener("beforeunload", function(event) {
+      let newPage = location.href;
+      if (currentPage === newPage) {
+        sessionStorage.removeItem("activeTab");
+      }
+    });
   
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelector("#icon-eye").addEventListener("click", function() {
