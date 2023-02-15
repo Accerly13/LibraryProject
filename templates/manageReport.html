@@ -23,7 +23,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-date">Start Date:</label>
-                <input type="text" class="form-control" id="start-date" placeholder="mm/dd/yyyy">
+                <input type="text" class="form-control" id="start-date" placeholder="mm/dd/yyyy" required>
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-date">End Date:</label>
-                <input type="text" class="form-control" id="end-date" placeholder="mm/dd/yyyy">
+                <input type="text" class="form-control" id="end-date" placeholder="mm/dd/yyyy" required>
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-time">Start Time:</label>
-                <input type="text" class="form-control" id="start-time" placeholder="hh:mm">
+                <input type="text" class="form-control" id="start-time" placeholder="hh:mm" required>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-time1">End Time:</label>
-                <input type="text" class="form-control" id="end-time1" placeholder="hh:mm">
+                <input type="text" class="form-control" id="end-time1" placeholder="hh:mm" required>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-date1">Start Date:</label>
-                <input type="text" class="form-control" id="start-date1" placeholder="mm/dd/yyyy">
+                <input type="text" class="form-control" id="start-date1" placeholder="mm/dd/yyyy" required>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-date1">End Date:</label>
-                <input type="text" class="form-control" id="end-date1" placeholder="mm/dd/yyyy">
+                <input type="text" class="form-control" id="end-date1" placeholder="mm/dd/yyyy" required>
               </div>
             </div>
           </div>
@@ -113,7 +113,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-time">Start Time:</label>
-                <input type="text" class="form-control" id="start-time" placeholder="hh:mm">
+                <input type="text" class="form-control" id="start-time" placeholder="hh:mm" required>
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-time">End Time:</label>
-                <input type="text" class="form-control" id="end-time" placeholder="hh:mm">
+                <input type="text" class="form-control" id="end-time" placeholder="hh:mm" required>
               </div>
             </div>
           </div>
@@ -156,8 +156,8 @@
             Choose where to export:
             <div class="col-md-6 offset-md-1">
               <div class="form-group">
-                <input type="radio" name="exportype" value="pdftwo" checked> PDF &nbsp&nbsp
-                <input type="radio" name="exportype" value="csvtwo"> CSV &nbsp&nbsp
+                <input type="radio" name="exportype" value="pdftwo" checked required> PDF &nbsp&nbsp
+                <input type="radio" name="exportype" value="csvtwo" required> CSV &nbsp&nbsp
                 <button class="btn btn-primary">Export report</button>
               </div>
             </div>
@@ -169,7 +169,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-date3">Start Date:</label>
-                <input type="text" class="form-control" id="start-date3" placeholder="mm/dd/yyyy">
+                <input type="text" class="form-control" id="start-date3" placeholder="mm/dd/yyyy" required>
               </div>
             </div>
           </div>
@@ -178,7 +178,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-date2">End Date:</label>
-                <input type="text" class="form-control" id="end-date2" placeholder="mm/dd/yyyy">
+                <input type="text" class="form-control" id="end-date2" placeholder="mm/dd/yyyy" required>
               </div>
             </div>
           </div>
@@ -186,7 +186,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-time">Start Time:</label>
-                <input type="text" class="form-control" id="start-time" placeholder="hh:mm">
+                <input type="text" class="form-control" id="start-time" placeholder="hh:mm" required>
               </div>
             </div>
           </div>
@@ -195,7 +195,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-time">End Time:</label>
-                <input type="text" class="form-control" id="end-time" placeholder="hh:mm">
+                <input type="text" class="form-control" id="end-time" placeholder="hh:mm" required>
               </div>
             </div>
           </div>
@@ -229,8 +229,8 @@
             Choose where to export:
             <div class="col-md-6 offset-md-1">
               <div class="form-group">
-                <input type="radio" name="exportype" value="pdfthree" checked> PDF &nbsp&nbsp
-                <input type="radio" name="exportype" value="csvthree"> CSV &nbsp&nbsp
+                <input type="radio" name="exportype" value="pdfthree" checked required> PDF &nbsp&nbsp
+                <input type="radio" name="exportype" value="csvthree" required> CSV &nbsp&nbsp
                 <button class="btn btn-primary">Export report</button>
               </div>
             </div>
@@ -245,9 +245,9 @@
         <div class="row">
           <div class="col-md-6 offset-md-3">
           <div class="form-group">
-            <input type="radio" name="schoolyear" value="intersession" checked> Intersession &nbsp&nbsp
-            <input type="radio" name="schoolyear" value="firstsem"> First semester &nbsp&nbsp
-            <input type="radio" name="schoolyear" value="secondsem"> Second semester &nbsp&nbsp
+            <input type="radio" name="schoolyear" value="intersession" checked required> Intersession &nbsp&nbsp
+            <input type="radio" name="schoolyear" value="firstsem" required> First semester &nbsp&nbsp
+            <input type="radio" name="schoolyear" value="secondsem" required> Second semester &nbsp&nbsp
           </div>
         </div>
           </div>
@@ -259,7 +259,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-date4">Start Year:</label>
-                <input type="text" class="form-control" id="startyear" placeholder="Enter start year">
+                <input type="text" class="form-control" id="startyear" placeholder="Enter start year" required>
               </div>
             </div>
           </div>
@@ -268,7 +268,7 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-date3">End Year:</label>
-                <input type="text" class="form-control" id="endyear" placeholder="Enter end year">
+                <input type="text" class="form-control" id="endyear" placeholder="Enter end year" required>
               </div>
             </div>
           </div>
