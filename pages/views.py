@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from datetime import datetime
 from django.http import JsonResponse
+from django.db.models.functions import Lower, Upper, Substr
+
 
 @login_required
 def protected_view(request):
@@ -110,7 +112,7 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
 
     def __init__(self):
         self.dept = Department.objects.all()
-        self.users = UserInfo.objects.all()
+        self.users = UserInfo.objects.all().annotate(firstname=Lower('first_name')).order_by('last_name')
         self.dates_login = DatesLogin.objects.all()
     def get(self, request):
         if 'search_user' in request.GET:
@@ -136,7 +138,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         self.colleges = College.objects.all()
         self.dept = Department.objects.all()
         self.usertype = UserType.objects.all()
-        self.users = UserInfo.objects.all()
+        self.users = UserInfo.objects.all().annotate(firstname=Lower('first_name')).order_by('last_name')
         self.course = UserInfo.objects.values_list('course', flat=True).distinct()
     def get(self, request):
         return render(request, 'updateRecord.html', { 'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype, 'users': self.users, 'course': self.course})

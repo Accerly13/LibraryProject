@@ -213,7 +213,7 @@ option:hover,  .active{
               {% for item in users %}
               <tr>
                   <td>{{item.user_idno}}&nbsp<i id="icon-eye" class="fa fa-eye"></i></td>
-                  <td> {{item.last_name}}, {{item.middle_name}} {{item.first_name}}</td>
+                  <td> {{item.last_name}}, {{item.firstname|title}} {{item.middle_name}}</td>
                   <td>{{item.department.department_name}}</td>
               </tr>
               {% endfor %}
