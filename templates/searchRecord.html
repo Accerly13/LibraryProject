@@ -102,11 +102,13 @@
               </tr>
             </thead>
             <tbody>
+              {% for item in users %}
               <tr>
-                <td>201910167&nbsp<i id="icon-eye" class="fa fa-eye"></i></td>
-                <td>Regina Mae P. Bulawan</td>
-                <td>Computer Studies</td>
+                <td>{{item.user_idno}} &nbsp<i id="icon-eye" class="fa fa-eye"></i></td>
+                <td>{{item.first_name}} {{item.middle_name}} {{item.last_name}}</td>
+                <td>{{item.department.department_name}}</td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>  
@@ -141,14 +143,14 @@
     </div>
     </div>
     <script>
-    let currentPage = location.href;
+    // let currentPage = location.href;
     
-    window.addEventListener("beforeunload", function(event) {
-      let newPage = location.href;
-      if (currentPage === newPage) {
-        sessionStorage.removeItem("activeTab");
-      }
-    });
+    // window.addEventListener("beforeunload", function(event) {
+    //   let newPage = location.href;
+    //   if (currentPage === newPage) {
+    //     sessionStorage.removeItem("activeTab");
+    //   }
+    // });
   
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelector("#icon-eye").addEventListener("click", function() {

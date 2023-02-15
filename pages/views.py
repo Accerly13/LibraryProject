@@ -108,6 +108,13 @@ class Sidebar(TemplateView):
 class SearchRecord(LoginRequiredMixin, TemplateView):
     template_name = 'searchRecord.html'
 
+    def __init__(self):
+        self.dept = Department.objects.all()
+        self.users = UserInfo.objects.all()
+        self.dates_login = DatesLogin.objects.all()
+    def get(self, request):
+        return render(request, 'searchRecord.html', {'dept': self.dept, 'users': self.users, 'dates_login': self.dates_login})
+        
     def post(self, request):
         active_tab = request.POST.get('active_tab')
         response = active_tab
