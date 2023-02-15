@@ -280,17 +280,16 @@
       </div>
       <script>
 
-var activeTab = sessionStorage.getItem("activeTab");
+var activeTab = sessionStorage.getItem("activeTabManageReport");
 
     // If there is no active tab, set the first tab as the active tab
     if (!activeTab) {
       activeTab = "tab1";
       document.getElementById("one").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
+      sessionStorage.setItem("activeTabManageReport", activeTab);
     }
     if (activeTab == "tab1") {
       document.getElementById("one").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
     
     }else if (activeTab == "tab2"){ 
       document.getElementById("two").checked = true;
@@ -316,7 +315,7 @@ var activeTab = sessionStorage.getItem("activeTab");
       document.getElementById(activeTab).style.display = "none";
       document.getElementById(tabId).style.display = "block";
       activeTab = tabId;
-      sessionStorage.setItem("activeTab", activeTab);
+      sessionStorage.setItem("activeTabManageReport", activeTab);
     }
 
         $(document).ready(function() {
