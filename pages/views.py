@@ -138,13 +138,8 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         self.usertype = UserType.objects.all()
         self.users = UserInfo.objects.all()
         self.course = UserInfo.objects.values_list('course', flat=True).distinct()
-        self.context = ""
     def get(self, request):
-        if 'user_update' in request.GET:
-            input_value = request.GET['user_update']
-        else:
-            input_value = ''  
-        return render(request, 'updateRecord.html', { 'result': input_value, 'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype, 'users': self.users, 'course': self.course})
+        return render(request, 'updateRecord.html', { 'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype, 'users': self.users, 'course': self.course})
 
     def post(self, request):
         if request.POST.get('college'):
