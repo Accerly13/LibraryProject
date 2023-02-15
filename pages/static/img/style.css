@@ -323,6 +323,11 @@ overflow-y: scroll;
   background-color: #393939;
 }
 
+.ulHover:hover {
+  color: #9a9a9a;
+  background-color: #393939;
+}
+
 .main {
   margin-left: 160px;
   padding: 0px 10px;
