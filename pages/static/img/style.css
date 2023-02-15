@@ -319,7 +319,8 @@ overflow-y: scroll;
 }
 
 .navHover:hover {
-  color: #dfdfdf;
+  color: #9a9a9a;
+  background-color: #393939;
 }
 
 .main {

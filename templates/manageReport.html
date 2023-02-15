@@ -11,14 +11,14 @@
     <input class="radio" id="four" name="group" type="radio">
     <!-- <div class="flex-tab"> -->
       <div class="tabs flex-tab">
-          <label class="tab" id="one-tab" for="one">Student</label>
-          <label class="tab" id="two-tab" for="two">Faculty</label>
-          <label class="tab" id="three-tab" for="three">Personnel</label>
-          <label class="tab" id="four-tab" for="four">Overall</label>
+          <label class="tab" onclick="switchTab('tab1')" data-tab="tab1" id="one-tab" for="one">Student</label>
+          <label class="tab" onclick="switchTab('tab2')" data-tab="tab2" id="two-tab" for="two">Faculty</label>
+          <label class="tab" onclick="switchTab('tab3')" data-tab="tab3" id="three-tab" for="three">Personnel</label>
+          <label class="tab" onclick="switchTab('tab4')" data-tab="tab4" id="four-tab" for="four">Overall</label>
         </div>
     <!-- </div> -->
     <div class="panels panel-relative mx-auto mb-5">
-      <div class="panel" id="one-panel">
+      <div class="panel" id="tab1">
         <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
@@ -91,7 +91,7 @@
           </div>
 
       </div>
-      <div class="panel" id="two-panel">
+      <div class="panel" id="tab2">
         <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
@@ -164,7 +164,7 @@
           </div>
 
       </div>
-      <div class="panel" id="three-panel">
+      <div class="panel" id="tab3">
         <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
@@ -238,7 +238,7 @@
 
       </div>
          
-      <div class="panel" id="four-panel">
+      <div class="panel" id="tab4">
 
         <header style="font-size: 20px; font-weight: bold; color: rgb(41, 41, 41); margin: 1rem;">Semestral Report</header>
 
@@ -279,6 +279,46 @@
       </div>
       </div>
       <script>
+
+var activeTab = sessionStorage.getItem("activeTab");
+
+    // If there is no active tab, set the first tab as the active tab
+    if (!activeTab) {
+      activeTab = "tab1";
+      document.getElementById("one").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    }
+    if (activeTab == "tab1") {
+      document.getElementById("one").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    
+    }else if (activeTab == "tab2"){ 
+      document.getElementById("two").checked = true;
+    
+    }else if (activeTab == "tab3" ){ 
+      document.getElementById("three").checked = true;
+    
+    }else{ 
+      document.getElementById("four").checked = true;
+    
+    }
+
+    // Show the active tab and hide the other tabs
+    document.getElementById(activeTab).style.display = "block";
+    for (var i = 1; i < 5; i++) {
+      if ("tab" + i != activeTab) {
+        document.getElementById("tab" + i).style.display = "none";
+      }
+    }
+
+    // Function to switch tabs
+    function switchTab(tabId) {
+      document.getElementById(activeTab).style.display = "none";
+      document.getElementById(tabId).style.display = "block";
+      activeTab = tabId;
+      sessionStorage.setItem("activeTab", activeTab);
+    }
+
         $(document).ready(function() {
         $('#start-date').datepicker({
             autoclose: true,
