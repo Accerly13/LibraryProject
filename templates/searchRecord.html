@@ -84,19 +84,16 @@
       </div>
       <div class="panel" id="tab2">
         <div class="row">
-          <form id="input_user" method="get"> 
-            {% csrf_token %}
             <div class="col-md-6 offset-md-3">
                 <div class="form-group">
                   <label for="start-date">Search user: (By ID Number or Last Name)</label>
                   <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="search_user" id="user_input" required>
                 </div>
             </div>
-          </form>
         </div>
 
         <div class="d-flex justify-content-center">
-          <table class="table table-striped table-bordered table-hover">
+          <table id="table-data" class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
               <tr class="text-center">
                 <th>ID Number</th>
@@ -107,11 +104,9 @@
             <tbody>
               {% for item in users %}
               <tr>
-                {% if item.user_idno == result %}
                 <td>{{item.user_idno}} &nbsp<i id="icon-eye" class="fa fa-eye"></i></td>
                 <td>{{item.first_name}} {{item.middle_name}} {{item.last_name}}</td>
                 <td>{{item.department.department_name}}</td>
-                {% endif %}
               </tr>
               {% endfor %}
             </tbody>
@@ -180,7 +175,7 @@
 
     // Show the active tab and hide the other tabs
     document.getElementById(activeTab).style.display = "block";
-    for (var i = 1; i <= 3; i++) {
+    for (var i = 1; i <= 2; i++) {
       if ("tab" + i != activeTab) {
         document.getElementById("tab" + i).style.display = "none";
       }
@@ -193,23 +188,27 @@
       activeTab = tabId;
       sessionStorage.setItem("activeTab", activeTab);
     }   
+    
+    document.getElementById("user_input").addEventListener("input", function() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("user_input");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table-data");
+      tr = table.getElementsByTagName("tr");
 
-    var form = document.getElementById('input_user');
-  document.getElementById("user_input").addEventListener("input", function(event) {
-    event.preventDefault();
-
-    var formData = new FormData(form);
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/admin/dashboard/searchrecord/');
-    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-    xhr.onreadystatechange = function() {
-
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        console.log(xhr.responseText);
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
       }
-    };
-    xhr.send(formData);
-  });
+    })
+
 
       $(document).ready(function() {
       $('#start-date').datepicker({
