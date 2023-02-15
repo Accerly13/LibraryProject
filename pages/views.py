@@ -239,9 +239,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             #     messages.success(request, ("New Usertype is Registered!"))	
             #     return redirect('/admin/dashboard/updaterecord/')	     
         # elif request.POST.get('input_value'):
-            print("hello")
             input_value = request.POST['user_update']
-            return render('/admin/dashboard/updaterecord/', {'result': input_value})
+            context = {'result': input_value}
+            return render(request, 'updateRecord.html', context)
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
