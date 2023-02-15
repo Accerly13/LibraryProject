@@ -629,32 +629,14 @@ var activeTab = sessionStorage.getItem("activeTab");
       document.getElementById("one").checked = true;
       sessionStorage.setItem("activeTab", activeTab);
     
-    }else if (!activeTab){ 
-      activeTab = "tab2";
+    }else if (activeTab == "tab2"){ 
       document.getElementById("two").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
     
-    }else if (activeTab == "tab2") {
-      document.getElementById("two").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
-    
-    }else if (!activeTab){ 
-      activeTab = "tab3";
+    }else if (activeTab == "tab3"){ 
       document.getElementById("three").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
-    
-    }else if (activeTab == "tab3") {
-      document.getElementById("three").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
-    
-    }else if (!activeTab){ 
-      activeTab = "tab4";
+ 
+    }else if (activeTab == "tab4"){ 
       document.getElementById("four").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
-    
-    }else if (activeTab == "tab4") {
-      document.getElementById("four").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
     
     }else {
       document.getElementById("five").checked = true;
