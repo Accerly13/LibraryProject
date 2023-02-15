@@ -463,7 +463,7 @@ option:hover,  .active{
             <label class="col-sm-2 col-form-label" for="delete_dept">Delete a Department:</label>
             <select class="custom-select" id="inputGroupSelect04" name="delete_dept">
               {% for item in dept %}
-                <option value="{{item.dept_name}}"> {{ item.dept_name }} </option>
+                <option value="{{item.department_name}}"> {{ item.department_name }} </option>
               {% endfor %}
             </select>
             <div class="input-group-button">
@@ -683,11 +683,14 @@ var activeTab = sessionStorage.getItem("activeTab");
 //   });
   var form = document.getElementById('input_user');
   document.getElementById("user_input").addEventListener("input", function(event) {
+    const input_value = this.value;
+
     event.preventDefault();
+   
 
     var formData = new FormData(form);
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/admin/dashboard/updaterecord/');
+    xhr.open('GET', '/admin/dashboard/updaterecord/'+ encodeURIComponent(input_value), true);
     xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
     xhr.onreadystatechange = function() {
 
