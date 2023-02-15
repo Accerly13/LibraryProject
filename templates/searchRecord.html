@@ -158,13 +158,13 @@
           document.querySelector("#content-eye").style.display === "none" ? "block" : "none";
       });
     });
-    var activeTab = sessionStorage.getItem("activeTab");
+    var activeTab = sessionStorage.getItem("activeTabSearch");
 
     // If there is no active tab, set the first tab as the active tab
     if (!activeTab) {
       activeTab = "tab1";
       document.getElementById("one").checked = true;
-      sessionStorage.setItem("activeTab", activeTab);
+      sessionStorage.setItem("activeTabSearch", activeTab);
     }
     if (activeTab == "tab1") {
       document.getElementById("one").checked = true;
@@ -186,7 +186,7 @@
       document.getElementById(activeTab).style.display = "none";
       document.getElementById(tabId).style.display = "block";
       activeTab = tabId;
-      sessionStorage.setItem("activeTab", activeTab);
+      sessionStorage.setItem("activeTabSearch", activeTab);
     }   
     
     document.getElementById("user_input").addEventListener("input", function() {
