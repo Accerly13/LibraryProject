@@ -180,7 +180,7 @@
 
     // Show the active tab and hide the other tabs
     document.getElementById(activeTab).style.display = "block";
-    for (var i = 1; i <= 2; i++) {
+    for (var i = 1; i <= 3; i++) {
       if ("tab" + i != activeTab) {
         document.getElementById("tab" + i).style.display = "none";
       }
@@ -195,21 +195,21 @@
     }   
 
     var form = document.getElementById('input_user');
-    document.getElementById("user_input").addEventListener("input", function(event) {
-      event.preventDefault();
+  document.getElementById("user_input").addEventListener("input", function(event) {
+    event.preventDefault();
 
-      var formData = new FormData(form);
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', '/admin/dashboard/searchrecord/');
-      xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-      xhr.onreadystatechange = function() {
+    var formData = new FormData(form);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/admin/dashboard/searchrecord/');
+    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+    xhr.onreadystatechange = function() {
 
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          console.log(xhr.responseText);
-        }
-      };
-      xhr.send(formData);
-    });
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        console.log(xhr.responseText);
+      }
+    };
+    xhr.send(formData);
+  });
 
       $(document).ready(function() {
       $('#start-date').datepicker({
