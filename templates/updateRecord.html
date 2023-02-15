@@ -192,7 +192,7 @@ option:hover,  .active{
       </div>
       <div class="panel" id="tab2">
         <div class="row">
-          <form id="input_user" method="post"> 
+          <form id="input_user" method="get"> 
             {% csrf_token %}
             <div class="col-md-6 offset-md-3">
                 <div class="form-group">
@@ -215,7 +215,7 @@ option:hover,  .active{
             <tbody>
               {% for item in users %}
               <tr>
-                {% if item.user_idno == string_user_id %}
+                {% if item.user_idno == result %}
                   <td>{{item.user_idno}}&nbsp<i class="fa fa-eye"></i></td>
                   <td>{{item.first_name}} {{item.middle_name}} {{item.last_name}}</td>
                   <td>{{item.department.department_name}}</td>
@@ -657,7 +657,7 @@ var activeTab = sessionStorage.getItem("activeTab");
 
     // Show the active tab and hide the other tabs
     document.getElementById(activeTab).style.display = "block";
-    for (var i = 1; i <= 6; i++) {
+    for (var i = 1; i <= 5; i++) {
       if ("tab" + i != activeTab) {
         document.getElementById("tab" + i).style.display = "none";
       }
@@ -678,10 +678,24 @@ var activeTab = sessionStorage.getItem("activeTab");
       modalContainer.style.display = "none";
   });
 
-document.getElementById("input_user").addEventListener("input", function() {
-  alert(this.value)
-    document.getElementById("input_user").submit()
-    
+// document.getElementById("user_input").addEventListener("input", function() {
+//     document.getElementById("input_user").submit() 
+//   });
+  var form = document.getElementById('input_user');
+  document.getElementById("user_input").addEventListener("input", function(event) {
+    event.preventDefault();
+
+    var formData = new FormData(form);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/admin/dashboard/updaterecord/');
+    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+    xhr.onreadystatechange = function() {
+
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        console.log(xhr.responseText);
+      }
+    };
+    xhr.send(formData);
   });
   function checkAndAddOption(selectElement) {
       if (selectElement.value === "") {

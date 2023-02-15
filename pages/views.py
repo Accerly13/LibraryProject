@@ -112,6 +112,7 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
         self.dept = Department.objects.all()
         self.users = UserInfo.objects.all()
         self.dates_login = DatesLogin.objects.all()
+        self.context = ""
     def get(self, request):
         return render(request, 'searchRecord.html', {'dept': self.dept, 'users': self.users, 'dates_login': self.dates_login})
         
@@ -240,8 +241,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             #     return redirect('/admin/dashboard/updaterecord/')	     
         # elif request.POST.get('input_value'):
             input_value = request.POST['user_update']
-            context = {'result': input_value}
-            return render(request, 'updateRecord.html', context)
+            self.context = {'result': input_value}
+            print(self.context)
+            return render(request, 'updateRecord.html', self.context)
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
