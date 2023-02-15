@@ -68,15 +68,15 @@ option:hover,  .active{
     <input class="radio" id="five" name="group" type="radio">
     <!-- <div class="flex-tab"> -->
       <div class="tabs flex-tab">
-          <label class="tab" id="one-tab" for="one">Import Users</label>
-          <label class="tab" id="two-tab" for="two">Update User</label>
-          <label class="tab" id="three-tab" for="three">Update College</label>
-          <label class="tab" id="four-tab" for="four">Update Department</label>
-          <label class="tab" id="five-tab" for="five">Update User Type</label>
+          <label class="tab" onclick="switchTab('tab1')" data-tab="tab1" id="one-tab" for="one">Import Users</label>
+          <label class="tab" onclick="switchTab('tab2')" data-tab="tab2" id="two-tab" for="two">Update User</label>
+          <label class="tab" onclick="switchTab('tab3')" data-tab="tab3" id="three-tab" for="three">Update College</label>
+          <label class="tab" onclick="switchTab('tab4')" data-tab="tab4" id="four-tab" for="four">Update Department</label>
+          <label class="tab" onclick="switchTab('tab5')" data-tab="tab5" id="five-tab" for="five">Update User Type</label>
         </div>
     <!-- </div> -->
     <div class="panels panel-relative mx-auto mb-5">
-      <div class="panel" id="one-panel">
+      <div class="panel" id="tab1">
         <div class="flex justify-between items-center mb-5">
           <div class="panel-title">Add New Data</div>
           <div class="d-grid-md-flex justify-content-md-end">
@@ -91,47 +91,47 @@ option:hover,  .active{
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="customFile">Upload Picture</label>
             <div class="col-sm-10">
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" required />
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">ID Number:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="idnum" name="idnum">
+              <input class="form-control" type="text" id="idnum" name="idnum" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">Alternative Number:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="altid" name="altid">
+              <input class="form-control" type="text" id="altid" name="altid" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="fname">First name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="fname" name="fname">
+              <input class="form-control" type="text" id="fname" name="fname" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="mname">Middle name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="mname" name="mname">
+              <input class="form-control" type="text" id="mname" name="mname" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="lname">Last name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="lname" name="lname">
+              <input class="form-control" type="text" id="lname" name="lname" required>
             </div>
           </div>
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="gender">Gender:</label>
             <div class="col-sm-10">
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M">
+                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M" required>
                 <label class="btn btn-outline-primary" for="btnradio1">Male</label>
               
-                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F">
+                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F" required>
                 <label class="btn btn-outline-primary" for="btnradio2">Female</label>
               </div>
             </div>
@@ -139,8 +139,8 @@ option:hover,  .active{
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="department">Department:</label>
             <div class="col-sm-10">
-                <input class="form-select"  autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department">
-                  <datalist id="department_select" role="listbox" style="z-index: 9999; width: 90%;">
+                <input class="form-select"  autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department" required>
+                  <datalist id="department_select" role="listbox" style="z-index: 9999; width: 95%;">
                     {% for item in dept %}
                       <option value="{{item.department_name}}"> {{ item.department_name }} </option>  
                     {% endfor %}  
@@ -161,7 +161,7 @@ option:hover,  .active{
                 <div id="inputnew"></div> 
                 {% else %}
                   <div>
-                    <input class="form-control" type="text" id="course" name="courses">
+                    <input class="form-control" type="text" id="course" name="courses" required>
                   </div> 
                 {% endif %}
               </div>
@@ -190,14 +190,14 @@ option:hover,  .active{
                 </div>
         </form>
       </div>
-      <div class="panel" id="two-panel">
+      <div class="panel" id="tab2">
         <div class="row">
-          <form method="post"> 
+          <form id="input_user" method="post"> 
             {% csrf_token %}
             <div class="col-md-6 offset-md-3">
                 <div class="form-group">
                   <label for="start-date">Search user: (By ID Number or Last Name)</label>
-                  <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update" id="user_input">
+                  <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update" id="user_input" required>
                 </div>
             </div>
           </form>
@@ -254,47 +254,47 @@ option:hover,  .active{
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="customFile">Upload Picture</label>
             <div class="col-sm-10">
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" required/>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">ID Number:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="idnum" name="idnum">
+              <input class="form-control" type="text" id="idnum" name="idnum" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">Alternative Number:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="idnum" name="idnum">
+              <input class="form-control" type="text" id="idnum" name="idnum" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="fname">First name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="fname" name="fname">
+              <input class="form-control" type="text" id="fname" name="fname" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="mname">Middle name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="mname" name="mname">
+              <input class="form-control" type="text" id="mname" name="mname" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="lname">Last name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="lname" name="lname">
+              <input class="form-control" type="text" id="lname" name="lname" required>
             </div>
           </div>
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="gender">Gender:</label>
             <div class="col-sm-10">
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M">
+                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M" required>
                 <label class="btn btn-outline-primary" for="btnradio1">Male</label>
               
-                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F">
+                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F" required>
                 <label class="btn btn-outline-primary" for="btnradio2">Female</label>
               </div>
             </div>
@@ -349,14 +349,14 @@ option:hover,  .active{
         </form>
         
       </div>
-      <div class="panel" id="three-panel">
+      <div class="panel" id="tab3">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
         <div class="row mb-3">
           <form action="/admin/dashboard/updaterecord/" method="post" name="add_college_form">
             {% csrf_token %}
           <div class="input-group">
             <label class="col-sm-2 col-form-label" for="college">Add a College:</label>
-            <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="college">
+            <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="college" required>
             <div class="input-group-button">
               <button class="btn-update btn-outline-secondary" type="submit">Add</button>
             </div>
@@ -378,7 +378,7 @@ option:hover,  .active{
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="fname">New College Name:</label>
-              <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="new_college_name">
+              <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="new_college_name" required>
               <div class="input-group-button">
                 <button class="btn-update btn-outline-secondary" type="submit">Update</button>
               </div>
@@ -410,14 +410,14 @@ option:hover,  .active{
           {% endif %}
         </div>
    
-      <div class="panel" id="four-panel">
+      <div class="panel" id="tab4">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
         <form method="post">
           {% csrf_token %}
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="dept">Add a Department:</label>
-              <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="dept">
+              <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="dept" required>
               <div class="input-group-button">
                 <button class="btn-update btn-outline-secondary" type="submit">Add</button>
               </div>
@@ -449,7 +449,7 @@ option:hover,  .active{
         <div class="row mb-3">
           <div class="input-group">
             <label class="col-sm-2 col-form-label" for="fname">New department Name:</label>
-            <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="new_dept_name">
+            <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="new_dept_name" required>
             <div class="input-group-button">
               <button class="btn-update btn-outline-secondary" type="submit">Update</button>
             </div>
@@ -474,14 +474,14 @@ option:hover,  .active{
         </form>
         </div>
       
-      <div class="panel" id="five-panel">
+      <div class="panel" id="tab5">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
         <form method="post">
         {% csrf_token %}
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="fname">Add User Type</label>
-              <input type="text" class="form-control" placeholder="" aria-label="College of" aria-describedby="basic-addon2" name="usertype">
+              <input type="text" class="form-control" placeholder="" aria-label="College of" aria-describedby="basic-addon2" name="usertype" required>
               <div class="input-group-button">
                 <button class="btn-update btn-outline-secondary" type="submit">Add</button>
               </div>
@@ -611,15 +611,76 @@ option:hover,  .active{
 </style>
 
 <script>
+
+var activeTab = sessionStorage.getItem("activeTab");
+
+    // If there is no active tab, set the first tab as the active tab
+    if (!activeTab) {
+      activeTab = "tab1";
+      document.getElementById("one").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    }
+    if (activeTab == "tab1") {
+      document.getElementById("one").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    
+    }else if (!activeTab){ 
+      activeTab = "tab2";
+      document.getElementById("two").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    
+    }else if (activeTab == "tab2") {
+      document.getElementById("two").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    
+    }else if (!activeTab){ 
+      activeTab = "tab3";
+      document.getElementById("three").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    
+    }else if (activeTab == "tab3") {
+      document.getElementById("three").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    
+    }else if (!activeTab){ 
+      activeTab = "tab4";
+      document.getElementById("four").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    
+    }else if (activeTab == "tab4") {
+      document.getElementById("four").checked = true;
+      sessionStorage.setItem("activeTab", activeTab);
+    
+    }else {
+      document.getElementById("five").checked = true;
+    }
+
+    // Show the active tab and hide the other tabs
+    document.getElementById(activeTab).style.display = "block";
+    for (var i = 1; i <= 6; i++) {
+      if ("tab" + i != activeTab) {
+        document.getElementById("tab" + i).style.display = "none";
+      }
+    }
+
+    // Function to switch tabs
+    function switchTab(tabId) {
+      document.getElementById(activeTab).style.display = "none";
+      document.getElementById(tabId).style.display = "block";
+      activeTab = tabId;
+      sessionStorage.setItem("activeTab", activeTab);
+    }
+
+
   var closeModalBtn = document.getElementById("close-modal");
     closeModalBtn.addEventListener("click", function() {
       var modalContainer = document.querySelector(".modal");
       modalContainer.style.display = "none";
   });
 
-document.getElementById("user_input").addEventListener("input", function() {
+document.getElementById("input_user").addEventListener("input", function() {
   alert(this.value)
-    document.getElementById("user_input").submit()
+    document.getElementById("input_user").submit()
     
   });
   function checkAndAddOption(selectElement) {
