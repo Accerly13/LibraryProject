@@ -91,47 +91,47 @@ option:hover,  .active{
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="customFile">Upload Picture</label>
             <div class="col-sm-10">
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" required />
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">ID Number:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="idnum" name="idnum">
+              <input class="form-control" type="text" id="idnum" name="idnum" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">Alternative Number:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="altid" name="altid">
+              <input class="form-control" type="text" id="altid" name="altid" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="fname">First name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="fname" name="fname">
+              <input class="form-control" type="text" id="fname" name="fname" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="mname">Middle name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="mname" name="mname">
+              <input class="form-control" type="text" id="mname" name="mname" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="lname">Last name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="lname" name="lname">
+              <input class="form-control" type="text" id="lname" name="lname" required>
             </div>
           </div>
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="gender">Gender:</label>
             <div class="col-sm-10">
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M">
+                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M" required>
                 <label class="btn btn-outline-primary" for="btnradio1">Male</label>
               
-                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F">
+                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F" required>
                 <label class="btn btn-outline-primary" for="btnradio2">Female</label>
               </div>
             </div>
@@ -139,8 +139,8 @@ option:hover,  .active{
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="department">Department:</label>
             <div class="col-sm-10">
-                <input class="form-select"  autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department">
-                  <datalist id="department_select" role="listbox" style="z-index: 9999; width: 90%;">
+                <input class="form-select"  autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department" required>
+                  <datalist id="department_select" role="listbox" style="z-index: 9999; width: 95%;">
                     {% for item in dept %}
                       <option value="{{item.department_name}}"> {{ item.department_name }} </option>  
                     {% endfor %}  
@@ -161,7 +161,7 @@ option:hover,  .active{
                 <div id="inputnew"></div> 
                 {% else %}
                   <div>
-                    <input class="form-control" type="text" id="course" name="courses">
+                    <input class="form-control" type="text" id="course" name="courses" required>
                   </div> 
                 {% endif %}
               </div>
@@ -197,7 +197,7 @@ option:hover,  .active{
             <div class="col-md-6 offset-md-3">
                 <div class="form-group">
                   <label for="start-date">Search user: (By ID Number or Last Name)</label>
-                  <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update" id="user_input">
+                  <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="user_update" id="user_input" required>
                 </div>
             </div>
           </form>
@@ -254,47 +254,47 @@ option:hover,  .active{
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="customFile">Upload Picture</label>
             <div class="col-sm-10">
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" required/>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">ID Number:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="idnum" name="idnum">
+              <input class="form-control" type="text" id="idnum" name="idnum" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">Alternative Number:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="idnum" name="idnum">
+              <input class="form-control" type="text" id="idnum" name="idnum" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="fname">First name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="fname" name="fname">
+              <input class="form-control" type="text" id="fname" name="fname" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="mname">Middle name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="mname" name="mname">
+              <input class="form-control" type="text" id="mname" name="mname" required>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="lname">Last name:</label>
             <div class="col-sm-10">
-              <input class="form-control" type="text" id="lname" name="lname">
+              <input class="form-control" type="text" id="lname" name="lname" required>
             </div>
           </div>
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="gender">Gender:</label>
             <div class="col-sm-10">
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M">
+                <input type="radio" class="btn-check" id="btnradio1" name="gender" value="M" required>
                 <label class="btn btn-outline-primary" for="btnradio1">Male</label>
               
-                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F">
+                <input type="radio" class="btn-check" id="btnradio2" name="gender" value="F" required>
                 <label class="btn btn-outline-primary" for="btnradio2">Female</label>
               </div>
             </div>
@@ -356,7 +356,7 @@ option:hover,  .active{
             {% csrf_token %}
           <div class="input-group">
             <label class="col-sm-2 col-form-label" for="college">Add a College:</label>
-            <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="college">
+            <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="college" required>
             <div class="input-group-button">
               <button class="btn-update btn-outline-secondary" type="submit">Add</button>
             </div>
@@ -378,7 +378,7 @@ option:hover,  .active{
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="fname">New College Name:</label>
-              <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="new_college_name">
+              <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="new_college_name" required>
               <div class="input-group-button">
                 <button class="btn-update btn-outline-secondary" type="submit">Update</button>
               </div>
@@ -417,7 +417,7 @@ option:hover,  .active{
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="dept">Add a Department:</label>
-              <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="dept">
+              <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="dept" required>
               <div class="input-group-button">
                 <button class="btn-update btn-outline-secondary" type="submit">Add</button>
               </div>
@@ -449,7 +449,7 @@ option:hover,  .active{
         <div class="row mb-3">
           <div class="input-group">
             <label class="col-sm-2 col-form-label" for="fname">New department Name:</label>
-            <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="new_dept_name">
+            <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="new_dept_name" required>
             <div class="input-group-button">
               <button class="btn-update btn-outline-secondary" type="submit">Update</button>
             </div>
@@ -481,7 +481,7 @@ option:hover,  .active{
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="fname">Add User Type</label>
-              <input type="text" class="form-control" placeholder="" aria-label="College of" aria-describedby="basic-addon2" name="usertype">
+              <input type="text" class="form-control" placeholder="" aria-label="College of" aria-describedby="basic-addon2" name="usertype" required>
               <div class="input-group-button">
                 <button class="btn-update btn-outline-secondary" type="submit">Add</button>
               </div>
