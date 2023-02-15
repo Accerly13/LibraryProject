@@ -84,12 +84,15 @@
       </div>
       <div class="panel" id="tab2">
         <div class="row">
-          <div class="col-md-6 offset-md-3">
-            <div class="form-group">
-              <label for="start-date">Search user: (By ID Number or Last Name)</label>
-              <input type="text" class="form-control" placeholder="ex. CO2019-1-1190">
+          <form id="input_user" method="get"> 
+            {% csrf_token %}
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                  <label for="start-date">Search user: (By ID Number or Last Name)</label>
+                  <input type="text" class="form-control" placeholder="ex. CO2019-1-1190" name="search_user" id="user_input" required>
+                </div>
             </div>
-          </div>
+          </form>
         </div>
 
         <div class="d-flex justify-content-center">
@@ -104,9 +107,11 @@
             <tbody>
               {% for item in users %}
               <tr>
+                {% if item.user_idno == result %}
                 <td>{{item.user_idno}} &nbsp<i id="icon-eye" class="fa fa-eye"></i></td>
                 <td>{{item.first_name}} {{item.middle_name}} {{item.last_name}}</td>
                 <td>{{item.department.department_name}}</td>
+                {% endif %}
               </tr>
               {% endfor %}
             </tbody>
@@ -143,14 +148,14 @@
     </div>
     </div>
     <script>
-    let currentPage = location.href;
+    // let currentPage = location.href;
     
-    window.addEventListener("beforeunload", function(event) {
-      let newPage = location.href;
-      if (currentPage === newPage) {
-        sessionStorage.removeItem("activeTab");
-      }
-    });
+    // window.addEventListener("beforeunload", function(event) {
+    //   let newPage = location.href;
+    //   if (currentPage === newPage) {
+    //     sessionStorage.removeItem("activeTab");
+    //   }
+    // });
   
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelector("#icon-eye").addEventListener("click", function() {
@@ -175,7 +180,7 @@
 
     // Show the active tab and hide the other tabs
     document.getElementById(activeTab).style.display = "block";
-    for (var i = 1; i <= 3; i++) {
+    for (var i = 1; i <= 2; i++) {
       if ("tab" + i != activeTab) {
         document.getElementById("tab" + i).style.display = "none";
       }
@@ -188,6 +193,24 @@
       activeTab = tabId;
       sessionStorage.setItem("activeTab", activeTab);
     }   
+
+    var form = document.getElementById('input_user');
+    document.getElementById("user_input").addEventListener("input", function(event) {
+      event.preventDefault();
+
+      var formData = new FormData(form);
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/admin/dashboard/searchrecord/');
+      xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+      xhr.onreadystatechange = function() {
+
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          console.log(xhr.responseText);
+        }
+      };
+      xhr.send(formData);
+    });
+
       $(document).ready(function() {
       $('#start-date').datepicker({
           autoclose: true,

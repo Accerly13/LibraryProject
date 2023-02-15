@@ -113,7 +113,11 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
         self.users = UserInfo.objects.all()
         self.dates_login = DatesLogin.objects.all()
     def get(self, request):
-        return render(request, 'searchRecord.html', {'dept': self.dept, 'users': self.users, 'dates_login': self.dates_login})
+        if 'search_user' in request.GET:
+            input_value = request.GET['search_user']
+        else:
+            input_value = '' 
+        return render(request, 'searchRecord.html', {'result':input_value, 'dept': self.dept, 'users': self.users, 'dates_login': self.dates_login})
         
     def post(self, request):
         active_tab = request.POST.get('active_tab')
