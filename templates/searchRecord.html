@@ -207,9 +207,7 @@
       tr = table.getElementsByTagName("tr");
 
       if (filter === '') { // Check if input field is empty
-        for (i = 0; i < tr.length; i++) {
-          tr[i].style.display = "none";
-        }
+        document.getElementById("table-data").style.display = "none"
       } 
       else {
         for (i = 0; i < tr.length; i++) {
