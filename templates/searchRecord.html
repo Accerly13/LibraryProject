@@ -190,8 +190,6 @@
     }   
     
     document.getElementById("user_input").addEventListener("input", searchTable);
-    document.getElementById("user_input").addEventListener("keyup", searchTable);
-    document.getElementById("user_input").addEventListener("change", searchTable);
 
     function searchTable() {
       var input, filter, table, tr, td, i, txtValue, td1, txtValue1;
@@ -204,7 +202,12 @@
         td = tr[i].getElementsByTagName("td")[0];
         td1 = tr[i].getElementsByTagName("td")[1];
         if (td && td1) {
-          if (td.innerText.toUpperCase().startsWith(filter) || td1.innerText.toUpperCase().startsWith(filter)) {
+          txtValue = td.textContent || td.innerText;
+          txtValue1 = td1.innerText;
+          if (!txtValue1) {
+            txtValue1 = "";
+          }
+          if (txtValue.toUpperCase().startsWith(filter) || txtValue1.toUpperCase().startsWith(filter)) {
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
@@ -212,6 +215,7 @@
         }
       }
     }
+
 
 
 
