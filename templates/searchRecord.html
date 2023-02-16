@@ -104,7 +104,7 @@
             <tbody>
               {% for item in users %}
               <tr>
-                <td>{{item.user_idno}} &nbsp<i id="icon-eye" class="fa fa-eye"></i></td>
+                <td>{{item.user_idno}} &nbsp<i id="icon-eye{{forloop.counter0}}" class="fa fa-eye"></i></td>
                 <td>{{item.last_name}}, {{item.firstname|title}} {{item.middle_name}}</td>
                 <td>{{item.department.department_name}}</td>
               </tr>
@@ -151,13 +151,17 @@
     //     sessionStorage.removeItem("activeTab");
     //   }
     // });
+
   
     document.addEventListener("DOMContentLoaded", function() {
-      document.querySelector("#icon-eye").addEventListener("click", function() {
-        document.querySelector("#content-eye").style.display = 
-          document.querySelector("#content-eye").style.display === "none" ? "block" : "none";
-      });
-    });
+      document.querySelectorAll("[id^='icon-eye']").forEach(function(el) {
+          // Add an event listener to each element
+          el.addEventListener("click", function() {
+                document.querySelector("#content-eye").style.display = 
+              document.querySelector("#content-eye").style.display === "none" ? "block" : "none";
+          });
+          });
+        });
     var activeTab = sessionStorage.getItem("activeTabSearch");
 
     // If there is no active tab, set the first tab as the active tab
@@ -190,24 +194,35 @@
     }   
     
     document.getElementById("user_input").addEventListener("input", searchTable);
-
+    if (document.getElementById("user_input").value === "") {
+      document.getElementById("table-data").style.display = "none"
+    }
+       
     function searchTable() {
+      document.getElementById("table-data").style.display = ""
       var input, filter, table, tr, td, i, txtValue, td1, txtValue1;
       input = document.getElementById("user_input");
       filter = input.value.toUpperCase();
       table = document.getElementById("table-data");
       tr = table.getElementsByTagName("tr");
 
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        td1 = tr[i].getElementsByTagName("td")[1];
-        if (td && td1) {
-          txtValue = td.textContent || td.innerText;
-          txtValue1 = td1.innerText || td1.textContent;
-          if (txtValue.toUpperCase().startsWith(filter) || txtValue1.toUpperCase().startsWith(filter)) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
+      if (filter === '') { // Check if input field is empty
+        for (i = 0; i < tr.length; i++) {
+          tr[i].style.display = "none";
+        }
+      } 
+      else {
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          td1 = tr[i].getElementsByTagName("td")[1];
+          if (td && td1) {
+            txtValue = td.textContent || td.innerText;
+            txtValue1 = td1.innerText || td1.textContent;
+            if (txtValue.toUpperCase().startsWith(filter) || txtValue1.toUpperCase().startsWith(filter)) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
           }
         }
       }
