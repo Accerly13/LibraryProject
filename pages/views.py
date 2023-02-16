@@ -121,6 +121,7 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
         user_searched = request.POST.get('input_user_samp')
         user_searched_dates = DatesLogin.objects.filter(user_id=user_searched)
         user_logins = {'dates_login': list(user_searched_dates.values())}
+        print(user_logins)
         return JsonResponse({'user_searched': user_logins})
         # user_searched = request.POST.get('user_id')
         # user_render = self.users.get(user_idno=user_searched)
