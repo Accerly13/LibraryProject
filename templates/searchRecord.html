@@ -92,7 +92,7 @@
             </div>
         </div>
 
-        <div id="table-click" class="justify-content-center">
+        <div class="d-flex justify-content-center">
           <table id="table-data" class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
               <tr class="text-center">
@@ -104,13 +104,9 @@
             <tbody>
               {% for item in users %}
               <tr>
-                <td id="user-id{{forloop.counter0}}">{{item.user_idno}} &nbsp<i id="icon-eye{{forloop.counter0}}" class="fa fa-eye"></i></td>
-                <td id="user-name{{forloop.counter0}}">{{item.last_name}}, {{item.firstname|title}} {{item.middle_name}}</td>
-                <td id="user-dept{{forloop.counter0}}">{{item.department.department_name}}</td>
-                <form id="input_user{{forloop.counter0}}" method="post"> 
-                  {% csrf_token %}
-                  <input type="text" value="{{item.user_idno}}" name="input_user_samp" hidden>
-                </form>
+                <td>{{item.user_idno}} &nbsp<i id="icon-eye" class="fa fa-eye"></i></td>
+                <td> {{item.last_name}}, {{item.firstname|title}} {{item.middle_name}}</td>
+                <td>{{item.department.department_name}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -118,12 +114,12 @@
         </div>  
         <div id="content-eye" style="display: none;">
         <div class="d-flex justify-content-center">
-          <table id="table-data-show" class="table table-striped table-bordered table-hover">
+          <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
               <tr class="text-center">
-                <th id="user-id-show"></th>
-                <th id="user-name-show"></th>
-                <th id="user-dept-show"></th>
+                <th>ID Number: 201910167</th>
+                <th>Name: Regina Mae P. Bulawan</th>
+                <th>Department: Computer Studies</th>
               </tr>
             </thead>
             <tbody>
@@ -131,6 +127,11 @@
                 <th>Date</th>
                 <th>Time in</th>
                 <th>Time out</th>
+              </tr>
+              <tr>
+                <td>July 1, 2023</td>
+                <td>8:00am</td>
+                <td>10:00am</td>
               </tr>
             </tbody>
           </table>
@@ -150,64 +151,11 @@
     //     sessionStorage.removeItem("activeTab");
     //   }
     // });
-    
-    table_show = document.getElementById("table-data-show");
-    tr_show =  table_show.getElementsByTagName("tr");
-    
+  
     document.addEventListener("DOMContentLoaded", function() {
-      document.querySelectorAll("[id^='icon-eye']").forEach(function(el) {
-          // Add an event listener to each element
-          el.addEventListener("click", function(event) {
-            var table, tr, td;
-            table = document.getElementById("table-data");
-            tr = table.getElementsByTagName("tr");
-            stringReplace = el.id.replace("icon-eye", "")
-            event.preventDefault();
-            var myForm = document.querySelector('#input_user'+stringReplace);
-            var formData = new FormData(myForm);
-            fetch('/admin/dashboard/searchrecord/', {
-              method: 'POST',
-              body: formData
-            }).then(response => response.json())
-            .then(data => {
-              // Get the tbody element
-              var tableBody = document.querySelector('#table-data-show tbody');
-
-              // Loop through the data and create a new row for each item
-              var items = data.user_searched;
-              var html = ""
-              for (var i = 0; i < items.dates_login.length; i++) {
-                  // Create a new tr element
-                  var newRow = document.createElement('tr');
-
-                  // Create td elements for each column and set their text content
-                  var dates_cell = document.createElement('td');
-                  dates_cell.textContent = items.dates_login[i].dates;
-                  var TimeInCell = document.createElement('td');
-                  TimeInCell.textContent = items.dates_login[i].time_in;
-                  var TimeOutCell = document.createElement('td');
-                  TimeOutCell.textContent = items.dates_login[i].time_out;
-
-                  // Append the td elements to the tr element
-                  newRow.appendChild(dates_cell);
-                  newRow.appendChild(TimeInCell);
-                  newRow.appendChild(TimeOutCell);
-
-                  // Append the tr element to the tbody element
-                  tableBody.appendChild(newRow);
-              }
-            })
-            .catch(error => console.error(error));
-            var td_show = tr[stringReplace].getElementsByTagName("td")[0];
-            var td_show1 = tr[stringReplace].getElementsByTagName("td")[1];
-            var td_show2 = tr[stringReplace].getElementsByTagName("td")[2];
-            document.getElementById("user-id-show").innerHTML = "ID Number: " + td_show.innerText
-            document.getElementById("user-name-show").innerHTML = "Name: " + td_show1.innerText
-            document.getElementById("user-dept-show").innerHTML = "Department: " + td_show2.innerText
-            document.querySelector("#content-eye").style.display = 
-            document.querySelector("#content-eye").style.display === "none" ? "block" : "none";
-            document.querySelector("#table-click").style.display = "none"
-          });
+      document.querySelector("#icon-eye").addEventListener("click", function() {
+        document.querySelector("#content-eye").style.display = 
+          document.querySelector("#content-eye").style.display === "none" ? "block" : "none";
       });
     });
     var activeTab = sessionStorage.getItem("activeTabSearch");
@@ -241,79 +189,66 @@
       sessionStorage.setItem("activeTabSearch", activeTab);
     }   
     
-    document.getElementById("user_input").addEventListener("input", searchTable);
-    if (document.getElementById("user_input").value === "") {
-      document.getElementById("table-data").style.display = "none"
-    }
-       
-    function searchTable() {
-      $("#table-data-show tbody tr").remove(); 
-      document.querySelector("#table-click").style.display = ""
-      document.querySelector("#content-eye").style.display = "none"
-
-      document.getElementById("table-data").style.display = ""
+    document.getElementById("user_input").addEventListener("input", function() {
       var input, filter, table, tr, td, i, txtValue, td1, txtValue1;
       input = document.getElementById("user_input");
       filter = input.value.toUpperCase();
       table = document.getElementById("table-data");
       tr = table.getElementsByTagName("tr");
-      if (filter === '') { // Check if input field is empty
-        document.getElementById("table-data").style.display = "none"
-      } 
-      else {
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[0];
-          td1 = tr[i].getElementsByTagName("td")[1];
-          if (td && td1) {
-            txtValue = td.textContent || td.innerText;
-            txtValue1 = td1.innerText || td1.textContent;
-            if (txtValue.toUpperCase().startsWith(filter) || txtValue1.toUpperCase().startsWith(filter)) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
-            }
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        td1 = tr[i].getElementsByTagName("td")[1];
+        if (td && td1) {
+          txtValue = td.textContent || td.innerText;
+          txtValue1 = td1.textContent || td1.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue1.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
           }
         }
       }
-    }
+    })
 
-    $(document).ready(function() {
-    $('#start-date').datepicker({
-        autoclose: true,
-        format: 'mm/dd/yyyy',
-        startDate: '01/01/2010',
-        endDate: '12/31/2022'
-    });
-    $('#end-date').datepicker({
-        autoclose: true,
-        format: 'mm/dd/yyyy',
-        startDate: '01/01/2010',
-        endDate: '12/31/2022'
-    });
-    });
 
-    $(document).ready(function() {
-    $('#start-time').timepicker({
-        timeFormat: 'HH:mm',
-        interval: 60,
-        minTime: '00:00',
-        maxTime: '23:59',
-        startTime: '00:00',
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true
-    });
-    $('#end-time').timepicker({
-        timeFormat: 'HH:mm',
-        interval: 60,
-        minTime: '00:00',
-        maxTime: '23:59',
-        startTime: '00:00',
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true
-    });
-    });
+      $(document).ready(function() {
+      $('#start-date').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: '01/01/2010',
+          endDate: '12/31/2022'
+      });
+      $('#end-date').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: '01/01/2010',
+          endDate: '12/31/2022'
+      });
+      });
+  
+      $(document).ready(function() {
+      $('#start-time').timepicker({
+          timeFormat: 'HH:mm',
+          interval: 60,
+          minTime: '00:00',
+          maxTime: '23:59',
+          startTime: '00:00',
+          dynamic: false,
+          dropdown: true,
+          scrollbar: true
+      });
+      $('#end-time').timepicker({
+          timeFormat: 'HH:mm',
+          interval: 60,
+          minTime: '00:00',
+          maxTime: '23:59',
+          startTime: '00:00',
+          dynamic: false,
+          dropdown: true,
+          scrollbar: true
+      });
+      });
     </script>
   </div>
   <main class="grid-2-column-2 h-[100%]"> </main>
