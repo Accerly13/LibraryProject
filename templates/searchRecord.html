@@ -109,7 +109,7 @@
                 <td id="user-dept{{forloop.counter0}}">{{item.department.department_name}}</td>
                 <form id="input_user{{forloop.counter0}}" method="post"> 
                   {% csrf_token %}
-                  <input type="text" value="{{item.user_idno}}" hidden>
+                  <input type="text" value="{{item.user_idno}}" name="input_user_samp" hidden>
                 </form>
               </tr>
               {% endfor %}
@@ -131,11 +131,6 @@
                 <th>Date</th>
                 <th>Time in</th>
                 <th>Time out</th>
-              </tr>
-              <tr>
-                <td>July 1, 2023</td>
-                <td>8:00am</td>
-                <td>10:00am</td>
               </tr>
             </tbody>
           </table>
@@ -168,18 +163,41 @@
             tr = table.getElementsByTagName("tr");
             stringReplace = el.id.replace("icon-eye", "")
             event.preventDefault();
-            var form = document.getElementById('input_user'+stringReplace);
-            var formData = new FormData(form);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/admin/dashboard/searchrecord/');
-            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-            xhr.onreadystatechange = function() {
-              if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                console.log(xhr.responseText);
+            var myForm = document.querySelector('#input_user'+stringReplace);
+            var formData = new FormData(myForm);
+            fetch('/admin/dashboard/searchrecord/', {
+              method: 'POST',
+              body: formData
+            }).then(response => response.json())
+            .then(data => {
+              // Get the tbody element
+              var tableBody = document.querySelector('#table-data-show tbody');
+
+              // Loop through the data and create a new row for each item
+              var items = data.user_searched;
+              var html = ""
+              for (var i = 0; i < items.dates_login.length; i++) {
+                  // Create a new tr element
+                  var newRow = document.createElement('tr');
+
+                  // Create td elements for each column and set their text content
+                  var nameCell = document.createElement('td');
+                  nameCell.textContent = items.dates_login[i].dates;
+                  var emailCell = document.createElement('td');
+                  emailCell.textContent = items.dates_login[i].time_in;
+                  var ageCell = document.createElement('td');
+                  ageCell.textContent = items.dates_login[i].time_out;
+
+                  // Append the td elements to the tr element
+                  newRow.appendChild(nameCell);
+                  newRow.appendChild(emailCell);
+                  newRow.appendChild(ageCell);
+
+                  // Append the tr element to the tbody element
+                  tableBody.appendChild(newRow);
               }
-            };
-            console.log(formData)
-            xhr.send(formData);
+            })
+            .catch(error => console.error(error));
             var td_show = tr[stringReplace].getElementsByTagName("td")[0];
             var td_show1 = tr[stringReplace].getElementsByTagName("td")[1];
             var td_show2 = tr[stringReplace].getElementsByTagName("td")[2];

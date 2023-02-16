@@ -115,16 +115,16 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
         self.users = UserInfo.objects.all().annotate(firstname=Lower('first_name')).order_by('last_name')
         self.dates_login = DatesLogin.objects.all()
     def get(self, request):
-        if 'search_user' in request.GET:
-            input_value = request.GET['search_user']
-        else:
-            input_value = '' 
-        return render(request, 'searchRecord.html', {'result':input_value, 'dept': self.dept, 'users': self.users, 'dates_login': self.dates_login})
+        return render(request, 'searchRecord.html', {'dept': self.dept, 'users': self.users, 'dates_login': self.dates_login})
         
-    # def post(self, request):
-    #     user_searched = request.POST.get('user_id')
-    #     user_render = self.users.get(user_idno=user_searched)
-    #     return render(request, 'searchRecord.html', {'user_searched': user_render})
+    def post(self, request):
+        user_searched = request.POST.get('input_user_samp')
+        user_searched_dates = DatesLogin.objects.filter(user_id=user_searched)
+        user_logins = {'dates_login': list(user_searched_dates.values())}
+        return JsonResponse({'user_searched': user_logins})
+        # user_searched = request.POST.get('user_id')
+        # user_render = self.users.get(user_idno=user_searched)
+        # return render(request, 'searchRecord.html', {'user_searched': user_render})
 
     # def search(request):
     #     active_tab = request.POST.get('active_tab', 'tab2')
