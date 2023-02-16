@@ -121,11 +121,10 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
             input_value = '' 
         return render(request, 'searchRecord.html', {'result':input_value, 'dept': self.dept, 'users': self.users, 'dates_login': self.dates_login})
         
-    def post(self, request):
-        active_tab = request.POST.get('active_tab')
-        response = active_tab
-        return HttpResponse(response)
-        # return render(request, 'searchRecord.html', {'active_tab': active_tab})
+    # def post(self, request):
+    #     user_searched = request.POST.get('user_id')
+    #     user_render = self.users.get(user_idno=user_searched)
+    #     return render(request, 'searchRecord.html', {'user_searched': user_render})
 
     # def search(request):
     #     active_tab = request.POST.get('active_tab', 'tab2')
