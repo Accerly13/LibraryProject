@@ -189,7 +189,11 @@
       sessionStorage.setItem("activeTabSearch", activeTab);
     }   
     
-    document.getElementById("user_input").addEventListener("input", function() {
+    document.getElementById("user_input").addEventListener("input", searchTable);
+    document.getElementById("user_input").addEventListener("keyup", searchTable);
+    document.getElementById("user_input").addEventListener("change", searchTable);
+
+    function searchTable() {
       var input, filter, table, tr, td, i, txtValue, td1, txtValue1;
       input = document.getElementById("user_input");
       filter = input.value.toUpperCase();
@@ -200,16 +204,16 @@
         td = tr[i].getElementsByTagName("td")[0];
         td1 = tr[i].getElementsByTagName("td")[1];
         if (td && td1) {
-          txtValue = td.textContent || td.innerText;
-          txtValue1 = td1.textContent || td1.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue1.toUpperCase().indexOf(filter) > -1) {
+          if (td.innerText.toUpperCase().startsWith(filter) || td1.innerText.toUpperCase().startsWith(filter)) {
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
           }
         }
       }
-    })
+    }
+
+
 
 
       $(document).ready(function() {
