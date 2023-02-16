@@ -105,10 +105,10 @@
             <tbody>
               {% for item in users %}
               <tr>
-                <td id="user-id{{forloop.counter0}}">{{item.user_idno}} &nbsp<i id="icon-eye{{forloop.counter0}}" class="fa fa-eye"></i></td>
+                <td id="user-id{{forloop.counter0}}">{{item.user_idno}} &nbsp<i id="icon-eye{{forloop.counter}}" class="fa fa-eye"></i></td>
                 <td id="user-name{{forloop.counter0}}">{{item.last_name}}, {{item.firstname|title}} {{item.middle_name}}</td>
                 <td id="user-dept{{forloop.counter0}}">{{item.department.department_name}}</td>
-                <form id="input_user{{forloop.counter0}}" method="post"> 
+                <form id="input_user{{forloop.counter}}" method="post"> 
                   {% csrf_token %}
                   <input type="text" value="{{item.user_idno}}" name="input_user_samp" hidden>
                 </form>
