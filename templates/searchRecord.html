@@ -16,7 +16,7 @@
     <div class="panels">
       <div class="tab-content">
       <div class="panel" id="tab1">
-      <form method="post">
+      <form id="generate-list" method="post">
         {% csrf_token %}
         <div class="row">
           <div class="col-md-6 offset-md-3">
@@ -53,15 +53,12 @@
           </div>
         </div>
         <div class="d-flex justify-content-center"style="padding-bottom: 1rem;"> 
-          <button class="btn btn-primary" type="submit">Generate</button>
+          <button class="btn btn-primary" onclick="generateButton()">Generate</button>
         </div>
       </form>
         <div class="d-flex justify-content-center">
-          <table class="table table-striped table-bordered table-hover">
+          <table id="view-visitor-rendered" class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
-              <tr class="text-center">
-                <th colspan="5">Generated report from {{start_date}} to {{end_date}} from {{start_time}} to {{end_time}}</th>
-              </tr>
             </thead>
             <tbody>
               <tr class="text-center">
@@ -71,15 +68,6 @@
                 <th>Date</th>
                 <th>Time visited</th>
               </tr>
-              {% for item in dates_login %}
-              <tr class="text-center">
-                <th>201910167</th>
-                <th>Regina Mae P. Bulawan</th>
-                <th>Computer Studies</th>
-                <th>{{item.dates}}</th>
-                <th>{{item.time_in}}-{{item.time_out}}</th>
-              </tr>
-              {% endfor %}
             </tbody>
           </table>
         </div>  
@@ -130,11 +118,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="text-center">
-                <th>Date</th>
-                <th>Time in</th>
-                <th>Time out</th>
-              </tr>
+
             </tbody>
           </table>
         </div>  
@@ -153,9 +137,88 @@
     //     sessionStorage.removeItem("activeTab");
     //   }
     // });
-    
-    table_show = document.getElementById("table-data-show");
-    tr_show =  table_show.getElementsByTagName("tr");
+    function generateButton() {
+            event.preventDefault();
+            var myForm = document.querySelector('#generate-list');
+            var formData = new FormData(myForm);
+            fetch('/admin/dashboard/searchrecord/', {
+              method: 'POST',
+              body: formData
+            }).then(response => response.json())
+            .then(data => {
+              // Get the tbody element
+                var tableBody = document.querySelector('#view-visitor-rendered tbody');
+                var tableHeader = document.querySelector('#view-visitor-rendered thead')
+                var newRowHead = document.createElement('tr');
+                var start_time = new Date(data.start_time)
+                var end_time = new Date(data.end_time)
+                var formattedTimeStart = start_time.toLocaleTimeString('en-US', {hour: '2-digit',
+                     minute: '2-digit'
+                });
+                var formattedTimeEnd = end_time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+                newRowHead.className = 'text-center'
+                var title_cell = document.createElement('th');
+                title_cell.colSpan = '5'
+                title_cell.textContent = 'Generated report from ' + new Date(data.start_date).toLocaleDateString('en-US', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    year: 'numeric'
+                }) + ' to ' + new Date(data.end_date).toLocaleDateString('en-US', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    year: 'numeric'
+                }) + ' from ' + formattedTimeStart + ' to ' + formattedTimeEnd
+                newRowHead.appendChild(title_cell);
+
+                // Append the tr element to the thead element
+                tableHeader.appendChild(newRowHead);
+                // Loop through the data and create a new row for each item
+                var items = data.dates_login_searched;
+                var html = ""
+                for (var i = 0; i < items.dates_login.length; i++) {
+                    // Create a new tr element  
+                    var [hour, minutes] = items.dates_login[i].time_in.split(":").map(Number);
+                    var newRow = document.createElement('tr');
+                    var dateObj = new Date();
+                    dateObj.setHours(hour);
+                    dateObj.setMinutes(minutes);
+                    var [hour1, minutes1] = items.dates_login[i].time_out.split(":").map(Number);
+                    var dateObj1 = new Date();
+                    dateObj1.setHours(hour1);
+                    dateObj1.setMinutes(minutes1);
+                    newRow.className = 'text-center'
+
+                    // Create td elements for each column and set their text content
+                    var id_cell = document.createElement('th');
+                    id_cell.textContent = items.dates_login[i].user_id;
+                    var name_cell = document.createElement('th');
+                    name_cell.textContent = items.dates_login[i].dates;
+                    var deptCell = document.createElement('th');
+                    deptCell.textContent = 'items.dates_login[i].user.department_id';
+                    var dates_cell = document.createElement('th');
+                    dates_cell.textContent = new Date(items.dates_login[i].dates).toLocaleDateString('en-US', {
+                                              day: '2-digit',
+                                              month: '2-digit',
+                                              year: 'numeric'
+                                            });
+                    var TimeInCell = document.createElement('th');
+                    TimeInCell.textContent = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
+                                             + '-' + dateObj1.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+
+
+                    // Append the td elements to the tr element
+                    newRow.appendChild(id_cell);
+                    newRow.appendChild(name_cell);
+                    newRow.appendChild(deptCell);
+                    newRow.appendChild(dates_cell);
+                    newRow.appendChild(TimeInCell);
+
+                    // Append the tr element to the tbody element
+                    tableBody.appendChild(newRow);
+                }
+              })
+              .catch(error => console.error(error));
+      }
     
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("[id^='icon-eye']").forEach(function(el) {
@@ -175,13 +238,30 @@
             .then(data => {
               // Get the tbody element
               var tableBody = document.querySelector('#table-data-show tbody');
+              var newRow = document.createElement('tr');
+              newRow.className = 'text-center'
+              var dates_cell1 = document.createElement('th');
+              dates_cell1.textContent = 'Date'
+              var TimeInCell1 = document.createElement('th');
+              TimeInCell1.textContent = 'Time In'
+              var TimeOutCell1 = document.createElement('th');
+              TimeOutCell1.textContent = 'Time Out';
+
+
+              newRow.appendChild(dates_cell1);
+              newRow.appendChild(TimeInCell1);
+              newRow.appendChild(TimeOutCell1);
+
+                  // Append the tr element to the tbody element
+              tableBody.appendChild(newRow);
 
               // Loop through the data and create a new row for each item
               var items = data.user_searched;
               var html = ""
               for (var i = 0; i < items.dates_login.length; i++) {
                   // Create a new tr element
-                  var newRow = document.createElement('tr');
+                  var newRow1 = document.createElement('tr');
+                  newRow1.className = 'text-center'
 
                   // Create td elements for each column and set their text content
                   var dates_cell = document.createElement('td');
@@ -192,12 +272,12 @@
                   TimeOutCell.textContent = items.dates_login[i].time_out;
 
                   // Append the td elements to the tr element
-                  newRow.appendChild(dates_cell);
-                  newRow.appendChild(TimeInCell);
-                  newRow.appendChild(TimeOutCell);
+                  newRow1.appendChild(dates_cell);
+                  newRow1.appendChild(TimeInCell);
+                  newRow1.appendChild(TimeOutCell);
 
                   // Append the tr element to the tbody element
-                  tableBody.appendChild(newRow);
+                  tableBody.appendChild(newRow1);
               }
             })
             .catch(error => console.error(error));
