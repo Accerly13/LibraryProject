@@ -279,17 +279,25 @@
     }
 
     $(document).ready(function() {
-    $('#start-date').datepicker({
-        autoclose: true,
-        format: 'mm/dd/yyyy',
-        startDate: '02/17/23',
-        endDate: '12/31/2023'
-    });
+      $('#start-date').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+          })
+      });
     $('#end-date').datepicker({
         autoclose: true,
         format: 'mm/dd/yyyy',
-        startDate: '02/17/23',
-        endDate: '12/31/2023'
+        startDate: null,
+        endDate: new Date().toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+        })
     });
     });
 
