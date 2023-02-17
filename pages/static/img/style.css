@@ -728,13 +728,6 @@ h2 {
   margin-right: auto;
 }
 
-input[type="time"] {
-  border: none;
-  color: #2a2c2d;
-  font-size: 5px;
-  font-family: helvetica;
-}
-
 /* Wrapper around the hour, minute, second, and am/pm fields as well as 
 the up and down buttons and the 'X' button */
 /* input[type=time]::-webkit-datetime-edit-fields-wrapper {

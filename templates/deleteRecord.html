@@ -95,16 +95,24 @@
 
           $(document).ready(function() {
           $('#start-date').datepicker({
-              autoclose: true,
-              format: 'mm/dd/yyyy',
-              startDate: '01/01/2010',
-              endDate: '12/31/2022'
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: null,
+            endDate: new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+        })
           });
           $('#end-date').datepicker({
-              autoclose: true,
-              format: 'mm/dd/yyyy',
-              startDate: '01/01/2010',
-              endDate: '12/31/2022'
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            startDate: null,
+            endDate: new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+        })
           });
           });
 
