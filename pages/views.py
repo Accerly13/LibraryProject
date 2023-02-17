@@ -134,9 +134,9 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
                 user_query = UserInfo.objects.get(user_idno=item.user)
                 if user_query:
                     data = {'name': user_query.last_name + ' ' + user_query.first_name + ' ' + user_query.middle_name, 'department': user_query.department}
-                    tempObject.append('name')
+                    tempObject.append(data)
             dates_login_context = {'dates_login': list(dates_login.values())}
-            return JsonResponse ({'dates_login_searched': dates_login_context , 'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':data})	
+            return JsonResponse ({'dates_login_searched': dates_login_context , 'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':tempObject})	
 
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
