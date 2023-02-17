@@ -199,8 +199,7 @@ option:hover,  .active{
                 </div>
             </div>
         </div>
-
-        <div class="d-flex justify-content-center">
+        <div id="table-click" class="justify-content-center">
           <table id="table-data" class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
               <tr class="text-center">
@@ -212,7 +211,7 @@ option:hover,  .active{
             <tbody>
               {% for item in users %}
               <tr>
-                  <td>{{item.user_idno}}&nbsp<i id="icon-eye{{forloop.counter0}}" class="fa fa-eye"></i></i></td>
+                  <td>{{item.user_idno}}&nbsp<i id="icon-eye{{forloop.counter}}" class="fa fa-eye"></i></i></td>
                   <td>{{item.last_name}}, {{item.firstname|title}} {{item.middle_name}}</td>
                   <td>{{item.department.department_name}}</td>
               </tr>
@@ -609,6 +608,7 @@ document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("[id^='icon-eye']").forEach(function(el) {
           // Add an event listener to each element
           el.addEventListener("click", function(event) {
+            document.querySelector("#table-click").style.display = "none"
             var table, tr, td;
             table = document.getElementById("table-data");
             tr = table.getElementsByTagName("tr");
@@ -680,6 +680,10 @@ if (document.getElementById("user_input").value === "") {
     }
 
 function searchTable() {
+  $("#table-data-show tbody tr").remove(); 
+      document.querySelector("#table-click").style.display = ""
+      document.querySelector("#content-eye").style.display = "none"
+
   document.getElementById("table-data").style.display = ""
   var input, filter, table, tr, td, i, txtValue, td1, txtValue1;
       input = document.getElementById("user_input");
