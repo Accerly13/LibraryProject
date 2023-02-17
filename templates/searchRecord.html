@@ -48,7 +48,7 @@
           <div class="col-md-6 offset-md-3">
             <div class="form-group">
               <label for="end-time">End Time:</label>
-              <input type="time" class="form-control" id="end-time" placeholder="hh:mm" name="end_date">
+              <input type="time" class="form-control" id="end-time" placeholder="hh:mm" name="end_time">
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
           <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
               <tr class="text-center">
-                <th colspan="5">Generated report from 1/23/23 to 2/23/23 from 6:00am to 7:00pm</th>
+                <th colspan="5">Generated report from {{start_date}} to {{end_date}} from {{start_time}} to {{end_time}}</th>
               </tr>
             </thead>
             <tbody>
@@ -71,13 +71,15 @@
                 <th>Date</th>
                 <th>Time visited</th>
               </tr>
+              {% for item in dates_login %}
               <tr class="text-center">
                 <th>201910167</th>
                 <th>Regina Mae P. Bulawan</th>
                 <th>Computer Studies</th>
-                <th>January 1, 2023</th>
-                <th>8:00am-9:00pm</th>
+                <th>{{item.dates}}</th>
+                <th>{{item.time_in}}-{{item.time_out}}</th>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>  
@@ -303,21 +305,21 @@
 
     $(document).ready(function() {
     $('#start-time').timepicker({
-        timeFormat: 'HH:mm',
+        timeFormat: '%H:%M:%S',
         interval: 60,
-        minTime: '00:00',
-        maxTime: '23:59',
-        startTime: '00:00',
+        minTime: '00:00:00',
+        maxTime: '23:59:59',
+        startTime: '00:00:00',
         dynamic: false,
         dropdown: true,
         scrollbar: true
     });
     $('#end-time').timepicker({
-        timeFormat: 'HH:mm',
+        timeFormat: '%H:%M:%S',
         interval: 60,
-        minTime: '00:00',
-        maxTime: '23:59',
-        startTime: '00:00',
+        minTime: '00:00:00',
+        maxTime: '23:59:59',
+        startTime: '00:00:00',
         dynamic: false,
         dropdown: true,
         scrollbar: true
