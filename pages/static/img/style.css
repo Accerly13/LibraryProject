@@ -733,7 +733,6 @@ input[type="time"] {
   color: #2a2c2d;
   font-size: 5px;
   font-family: helvetica;
-  width: 210px;
 }
 
 /* Wrapper around the hour, minute, second, and am/pm fields as well as 
