@@ -45,7 +45,7 @@ class StudentDashboardOut(LoginRequiredMixin, TemplateView):
     def post(self, request):
         student_id = request.POST['student_id']
         try:
-            userinfo = DatesLogin.objects.get(user_id = student_id, time_out=None)
+            userinfo = DatesLogin.objects.get(user = student_id, time_out=None)
             now = datetime.now()
             userinfo.time_out = now.time() 
             userinfo.save()
@@ -67,7 +67,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
         try:
             userinfo = UserInfo.objects.get(user_idno = student_id)
             now = datetime.now()
-            DatesLogin.objects.create(dates=now.date(), time_in=now.time(), time_out=None, user=userinfo)
+            DatesLogin.objects.create(dates=now.date(), time_in=now.time(), time_out=None, user=userinfo.user_idno)
             messages.success(request, ("Succesfully Recorded!"))
             return render(request, 'studentdashboard.html', {'student_id': student_id, 'users':self.users})
         except:
@@ -120,7 +120,7 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
     def post(self, request):
         if request.POST.get('input_user_samp'):
             user_searched = request.POST.get('input_user_samp')
-            user_searched_dates = DatesLogin.objects.filter(user_id=user_searched)
+            user_searched_dates = DatesLogin.objects.filter(user=user_searched)
             user_logins = {'dates_login': list(user_searched_dates.values())}
             return JsonResponse({'user_searched': user_logins})
         else: 
@@ -133,7 +133,7 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
             for item in dates_login:
                 user_query = UserInfo.objects.get(user_idno=item.user)
                 if user_query:
-                    data = {'name': user_query.last_name + ' ' + user_query.first_name + ' ' + user_query.middle_name, 'department': user_query.department}
+                    data = {'name': user_query.last_name + ' ' + user_query.first_name + ' ' + user_query.middle_name, 'department': user_query.department.department_name}
                     tempObject.append(data)
             dates_login_context = {'dates_login': list(dates_login.values())}
             return JsonResponse ({'dates_login_searched': dates_login_context , 'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':tempObject})	

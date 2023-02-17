@@ -191,11 +191,11 @@
 
                     // Create td elements for each column and set their text content
                     var id_cell = document.createElement('th');
-                    id_cell.textContent = items.dates_login[i].user_id;
+                    id_cell.textContent = items.dates_login[i].user;
                     var name_cell = document.createElement('th');
-                    name_cell.textContent = data_user.data[i].name;
+                    name_cell.textContent = data_user[i].name;
                     var deptCell = document.createElement('th');
-                    deptCell.textContent = data_user.data[i].department;
+                    deptCell.textContent = data_user[i].department;
                     var dates_cell = document.createElement('th');
                     dates_cell.textContent = new Date(items.dates_login[i].dates).toLocaleDateString('en-US', {
                                               day: '2-digit',
