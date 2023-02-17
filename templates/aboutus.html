@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>JOBL Stat</title>
+  </head>
+  {% load static %}
+  <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
+  <body>
+    <header mb-3>
+      <h2 class=" visitor text-center text-stroke">VISITOR INFORMATION</h2>
+      <nav>
+        <a href="/visitor/">Home</a> |
+        <a href="/visitor/about/">About</a> |
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <div style="text-align: center; max-width: 1000px; margin: 0 auto; margin-bottom: 1em; margin-top: 3rem;">
+        <h1 class="text-center mb-3">James J. O'Brien, S.J. Library</h1>
+
+        <div class="info">
+            <p>
+                is the Information Resource Center of the University. It exists to support the academic and research activities of the University. It likewise welcomes the opportunity of serving other institutions in the province and the region within the limits of its resources. The 3-storey building has a total floor area of 3,600 square meters and a shelving capacity of up to 100,000 volumes. It can seat up to 600 users. The college and the graduate school collections are housed in this place.
+            </p>
+        </div>
+    </div>
+    
+    
+    <div class="wrapper mt-4">
+        <div class="mission-vision">
+          <div class="mission">
+            <h2>Our Mission</h2>
+            <p>The James O' Brien, S.J. Library exists primarily to serve the teaching, research, curricular and extension programs of the university through organized, relevant, accessible and efficient information services.</p>
+          </div>
+          <div class="vision">
+            <h2>Our Vision</h2>
+            <p>Towards excellent and competitive services, Ateneo de Naga University Library, in support of teaching, learning, and research provides links between print and electronic information sources for systematic access to accurate and efficient retrieval of materials; more active role for competent librarians with an opportunity for quality integrated library services through modern library facilities and technical innovations.</p>
+          </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+
+  <script>
+document.getElementById("about-btn").addEventListener("click", function() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("about").style.display = "block";
+});
+
+  </script>
+
+  </body>
+</html>
+
+<style>
+
+
+    /* Style for screens with a maximum width of 767px */
+    @media (max-width: 767px) {
+        /* Center align text and reduce font size for h1 */
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Reduce margin top and bottom for the container */
+        .container {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Reduce font size for the info paragraph */
+        .info p {
+            font-size: 0.9rem;
+        }
+        
+        /* Reduce margin top for the wrapper */
+        .wrapper {
+            margin-top: 1.5rem;
+        }
+        
+        /* Center align text and reduce font size for h2 */
+        h2 {
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
+        /* Reduce font size for the mission and vision paragraphs */
+        .mission p, .vision p {
+            font-size: 0.9rem;
+        }
+    }
+    
+    /* Style for screens with a minimum width of 768px */
+    @media (min-width: 768px) {
+        /* Center align text and reduce font size for h1 */
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        /* Set margin top and bottom for the container */
+        .container {
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Set font size for the info paragraph */
+        .info p {
+            font-size: 1rem;
+        }
+        
+        /* Set margin top for the wrapper */
+        .wrapper {
+            margin-top: 3rem;
+        }
+        
+        /* Center align text and set font size for h2 */
+        h2 {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Set font size for the mission and vision paragraphs */
+        .mission p, .vision p {
+            font-size: 1rem;
+        }
+    }
+
+h1 {
+  text-decoration: underline;
+  text-underline-offset: 10px; /* Add a gap of 8px between text and underline */
+  color: #333; /* change the color of the underline */
+}
+
+
+.mission p, .vision p, .info p{
+  text-align: justify;
+}
+
+
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.footer{
+  color: #333;
+}
+
+#home, #about {
+  padding: 20px;
+}
+
+input{
+  text-align: center;
+}
+
+.visitor{
+  color: aliceblue;
+}
+ header {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+body {
+        /* background-image: url("{% static 'img/background.png' %}"); */
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 500px;
+        width: 100%;
+    }
+    .wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mission-vision {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mission, .vision {
+  width: 100%;
+}
+
+.mission {
+  margin-right: 10%;
+}
+
+.vision {
+  margin-left: 10%;
+}
+
+</style>

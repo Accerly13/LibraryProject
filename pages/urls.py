@@ -22,6 +22,7 @@ urlpatterns = [
    path('dashboardout/', views.StudentDashboardOut.as_view(), name='studentdashboardout'),
    path('tablesample/', views.TableSample.as_view(), name='tablesample'),
    path('visitor/', views.VisitorDashboard.as_view(), name='visitordashboard'),
+   path('visitor/about/', views.AboutUs.as_view(), name='aboutus'),
    path('', views.VisitorLoginPage.as_view(), name='stat'),
    path('logout_view/', views.logout_view, name='logout_view'),
 

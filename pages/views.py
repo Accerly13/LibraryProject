@@ -254,3 +254,6 @@ class ManageReport(LoginRequiredMixin, TemplateView):
 
 class TableSample(LoginRequiredMixin, TemplateView):
     template_name = 'tablesample.html'
+
+class AboutUs(LoginRequiredMixin, TemplateView):
+    template_name = 'aboutus.html'
