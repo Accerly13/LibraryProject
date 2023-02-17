@@ -122,14 +122,14 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
             user_searched = request.POST.get('input_user_samp')
             user_searched_dates = DatesLogin.objects.filter(user_id=user_searched)
             user_logins = {'dates_login': list(user_searched_dates.values())}
-            print(user_logins)
             return JsonResponse({'user_searched': user_logins})
         else: 
-            start_date =  request.POST.get('start_date')
-            end_date =  request.POST.get('end_date')
             start_time =  request.POST.get('start_time')
-            end_date =  request.POST.get('end_date')
-            print(start_date)
+            end_time =  request.POST.get('end_time')
+            start_date = datetime.strptime(request.POST['start_date'], '%m/%d/%Y')
+            end_date = datetime.strptime(request.POST['end_date'], '%m/%d/%Y')
+
+            dates_login = DatesLogin.objects.filter(dates__gte=start_date, dates__lte=end_date)
             return redirect('/admin/dashboard/searchrecord/')	
 
 class UpdateRecord(LoginRequiredMixin, TemplateView):

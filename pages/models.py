@@ -40,7 +40,7 @@ class UserType(models.Model):
         db_table = "usertype"
 
 class UserInfo(models.Model):
-    user_idno = models.CharField(primary_key=True, max_length=15, unique=True, default='')
+    user_idno = models.CharField(primary_key=True, max_length=20, unique=True, default='')
     first_name = models.CharField(max_length=50, verbose_name='f_name')
     middle_name = models.CharField(max_length=50, verbose_name='m_name')
     last_name = models.CharField(max_length=50, verbose_name='l_name')
