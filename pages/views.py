@@ -124,13 +124,19 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
             user_logins = {'dates_login': list(user_searched_dates.values())}
             return JsonResponse({'user_searched': user_logins})
         else: 
-            start_time =  request.POST.get('start_time')
-            end_time =  request.POST.get('end_time')
+            start_time =  datetime.strptime(request.POST['start_time'], '%H:%M')
+            end_time =  datetime.strptime(request.POST['end_time'], '%H:%M')
             start_date = datetime.strptime(request.POST['start_date'], '%m/%d/%Y')
             end_date = datetime.strptime(request.POST['end_date'], '%m/%d/%Y')
-
-            dates_login = DatesLogin.objects.filter(dates__gte=start_date, dates__lte=end_date)
-            return redirect('/admin/dashboard/searchrecord/')	
+            tempObject = []
+            dates_login = DatesLogin.objects.filter(dates__gte=start_date, dates__lte=end_date, time_in__gte=start_time, time_out__lte=end_time)
+            for item in dates_login:
+                user_query = UserInfo.objects.get(user_idno=item.user)
+                if user_query:
+                    data = {'name': user_query.last_name + ' ' + user_query.first_name + ' ' + user_query.middle_name, 'department': user_query.department}
+                    tempObject.append('name')
+            dates_login_context = {'dates_login': list(dates_login.values())}
+            return JsonResponse ({'dates_login_searched': dates_login_context , 'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':data})	
 
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
