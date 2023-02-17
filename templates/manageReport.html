@@ -319,65 +319,106 @@ var activeTab = sessionStorage.getItem("activeTabManageReport");
     }
 
         $(document).ready(function() {
-        $('#start-date').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          $('#start-date').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+          })
         });
+        
         $('#start-date1').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+          })
         });
         $('#start-date2').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+          })
         });
         $('#start-date3').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+          })
         });
         $('#start-date4').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+          })
         });
         $('#end-date').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+        })
         });
         $('#end-date1').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+        })
         });
         $('#end-date2').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+        })
         });
         $('#end-date3').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+        })
         });
         $('#end-date4').datepicker({
-            autoclose: true,
-            format: 'mm/dd/yyyy',
-            startDate: '01/01/2010',
-            endDate: '12/31/2023'
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+          startDate: null,
+          endDate: new Date().toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+        })
         });
         });
 
