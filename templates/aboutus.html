@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  </head>
     <title>JOBL Stat</title>
   </head>
   {% load static %}
@@ -17,34 +18,61 @@
       <h2 class=" visitor text-center text-stroke">VISITOR INFORMATION</h2>
       <nav>
         <a href="/visitor/">Home</a> |
-        <a href="/visitor/about/">About</a> |
-        <a href="#">Contact</a>
+        <a href="/visitor/about/">About</a>
       </nav>
     </header>
 
     <div style="text-align: center; max-width: 1000px; margin: 0 auto; margin-bottom: 1em; margin-top: 3rem;">
-        <h1 class="text-center mb-3">James J. O'Brien, S.J. Library</h1>
-
-        <div class="info">
-            <p>
-                is the Information Resource Center of the University. It exists to support the academic and research activities of the University. It likewise welcomes the opportunity of serving other institutions in the province and the region within the limits of its resources. The 3-storey building has a total floor area of 3,600 square meters and a shelving capacity of up to 100,000 volumes. It can seat up to 600 users. The college and the graduate school collections are housed in this place.
-            </p>
-        </div>
-    </div>
-    
-    
-    <div class="wrapper mt-4">
-        <div class="mission-vision">
+      <h1 class="text-center mb-3"  style="font-weight: bold;">James J. O'Brien, S.J. Library</h1>
+  
+      <div class="info">
+          <p>
+              is the Information Resource Center of the University. It exists to support the academic and research activities of the University. It likewise welcomes the opportunity of serving other institutions in the province and the region within the limits of its resources. The 3-storey building has a total floor area of 3,600 square meters and a shelving capacity of up to 100,000 volumes. It can seat up to 600 users. The college and the graduate school collections are housed in this place.
+          </p>
+      </div>
+      <hr>
+  </div>
+  
+  <div class="wrapper mt-4">
+      <div class="mission-vision">
           <div class="mission">
-            <h2>Our Mission</h2>
-            <p>The James O' Brien, S.J. Library exists primarily to serve the teaching, research, curricular and extension programs of the university through organized, relevant, accessible and efficient information services.</p>
+              <h2 style="font-weight: bold;">Our Mission</h2>
+              <p>The James O' Brien, S.J. Library exists primarily to serve the teaching, research, curricular and extension programs of the university through organized, relevant, accessible and efficient information services.</p>
           </div>
+          <hr>
           <div class="vision">
-            <h2>Our Vision</h2>
-            <p>Towards excellent and competitive services, Ateneo de Naga University Library, in support of teaching, learning, and research provides links between print and electronic information sources for systematic access to accurate and efficient retrieval of materials; more active role for competent librarians with an opportunity for quality integrated library services through modern library facilities and technical innovations.</p>
+              <h2  style="font-weight: bold;">Our Vision</h2>
+              <p>Towards excellent and competitive services, Ateneo de Naga University Library, in support of teaching, learning, and research provides links between print and electronic information sources for systematic access to accurate and efficient retrieval of materials; more active role for competent librarians with an opportunity for quality integrated library services through modern library facilities and technical innovations.</p>
+          </div>
+          <hr>
+      </div>
+      <hr>
+      <div class="contact mt-2" style="text-align: center;">
+        <div class="contact-info">
+          <div class="info-group">
+            <p><strong><i class="fas fa-phone-alt"></i> Telephone:</strong></p>
+            <p>(054) 881-4107 & (054) 881-2368 local 2089</p>
+          </div>
+          <div class="info-group">
+            <p><strong><i class="fas fa-map-marker-alt"></i> Address:</strong></p>
+            <p>James J. O'Brien, SJ Library<br>
+            Ateneo de Naga University<br>
+            Ateneo Avenue, Naga City, Philippines</p>
+          </div>
+          <div class="info-group">
+            <p><strong><i class="fas fa-envelope"></i> Email:</strong></p>
+            <p>referencelib@gbox.adnu.edu.ph & adnulibrary@gbox.adnu.edu.ph</p>
+          </div>
+          <div class="info-group">
+            <p><strong><i class="fab fa-facebook"></i> Facebook:</strong></p>
+            <p><a href="https://www.facebook.com/adnulibrary" target="_blank">Ateneo de Naga University Library</a></p>
           </div>
         </div>
-    </div>
+        
+        
+      </div>
+  </div>
+  
 
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -69,6 +97,18 @@ document.getElementById("about-btn").addEventListener("click", function() {
 </html>
 
 <style>
+
+.contact-info {
+  display: flex;
+}
+
+.info-group {
+  width: 30%;
+  display: inline-block;
+  text-align: left;
+  margin: 0 2%;
+  vertical-align: top;
+}
 
 
     /* Style for screens with a maximum width of 767px */
@@ -155,6 +195,29 @@ h1 {
 }
 
 
+hr {
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 1em 0;
+}
+
+.mission-vision {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mission, .vision {
+  flex-basis: 48%;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.mission h2, .vision h2 {
+  text-decoration: underline;
+}
+
+
 .wrapper {
   max-width: 800px;
   margin: 0 auto;
@@ -190,7 +253,8 @@ body {
         height: 500px;
         width: 100%;
     }
-    .wrapper {
+    
+.wrapper {
   max-width: 800px;
   margin: 0 auto;
 }
@@ -204,12 +268,13 @@ body {
   width: 100%;
 }
 
-.mission {
-  margin-right: 10%;
+.mission{
+  margin-right: 5%;
 }
 
-.vision {
-  margin-left: 10%;
+.vision{
+  margin-left: 5%;
 }
+
 
 </style>
