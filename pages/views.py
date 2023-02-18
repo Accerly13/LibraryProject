@@ -47,7 +47,7 @@ class StudentDashboardOut(LoginRequiredMixin, TemplateView):
         try:
             userinfo = DatesLogin.objects.get(user = student_id, time_out=None)
             now = datetime.now()
-            userinfo.time_out = now.time() 
+            userinfo.time_out = now.time().replace(second=0, microsecond=0) 
             userinfo.save()
             messages.success(request, ("You have successfully been logged out. Thank you for using our service."))
             return redirect('/dashboardout/')	
@@ -67,7 +67,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
         try:
             userinfo = UserInfo.objects.get(user_idno = student_id)
             now = datetime.now()
-            DatesLogin.objects.create(dates=now.date(), time_in=now.time(), time_out=None, user=userinfo.user_idno)
+            DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
             messages.success(request, ("Succesfully Recorded!"))
             return render(request, 'studentdashboard.html', {'student_id': student_id, 'users':self.users})
         except:
@@ -129,7 +129,7 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
             start_date = datetime.strptime(request.POST['start_date'], '%m/%d/%Y')
             end_date = datetime.strptime(request.POST['end_date'], '%m/%d/%Y')
             tempObject = []
-            dates_login = DatesLogin.objects.filter(dates__gte=start_date, dates__lte=end_date, time_in__gte=start_time, time_out__lte=end_time)
+            dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
             for item in dates_login:
                 user_query = UserInfo.objects.get(user_idno=item.user)
                 if user_query:
