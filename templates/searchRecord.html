@@ -138,6 +138,8 @@
     //   }
     // });
     function generateButton() {
+            $("#view-visitor-rendered tbody tr").remove(); 
+            $("#view-visitor-rendered thead tr").remove();
             event.preventDefault();
             var myForm = document.querySelector('#generate-list');
             var formData = new FormData(myForm);
