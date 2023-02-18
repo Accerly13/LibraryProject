@@ -241,7 +241,7 @@
               <div class="col-sm-10">
                 <select class="form-select" aria-label="Default select example" name="department_select">
                   {% for item in dept %}
-                    <option value="{{item.dept_name}}"> {{ item.dept_name }} </option>
+                    <option value="{{item.department_name}}"> {{ item.department_name }} </option>
                   {% endfor %}
                 </select>
               </div>
@@ -249,11 +249,19 @@
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="department">Course:</label>
                 <div class="col-sm-10">
-                  <select class="form-select" aria-label="Default select example" name="courses" onclick="checkAndAddOption(this)">
+                  {% if course %}
+                  <select class="form-select" aria-label="Default select example" name="courses" onclick="checkAndAddOption(this)"> 
                     {% for item in course %}
-                      <option value="{{item.course_name}}"> {{ item.course_name }} </option>
+                      <option value="{{item}}"> {{ item }} </option>
                     {% endfor %}
+                    <option onclick="checkAndAddOption(this)" value="">Add New </option>
                   </select>
+                  <div id="inputnew"></div> 
+                  {% else %}
+                    <div>
+                      <input class="form-control" type="text" id="course" name="courses" required>
+                    </div> 
+                  {% endif %}
                 </div>
               </div>
               <div class="row mb-3">
@@ -261,7 +269,7 @@
                   <div class="col-sm-10">
                     <select class="form-select" aria-label="Default select example" name="usertype_select">
                       {% for item in usertype %}
-                        <option value="{{item.usertype_name}}"> {{ item.usertype_name }} </option>
+                        <option value="{{item.type_id}}"> {{ item.type_name }} </option>
                       {% endfor %}
                     </select>
                   </div>
@@ -379,7 +387,7 @@
           <label class="col-sm-2 col-form-label" for="department">Update a Department:</label>
               <select class="form-select" aria-label="Default select example" name="update_dept_form">
                 {% for item in dept %}
-                  <option value="{{item.dept_name}}"> {{ item.dept_name }} </option>
+                  <option value="{{item.department_name}}"> {{ item.department_name }} </option>
                 {% endfor %}
               </select>
           </div>
