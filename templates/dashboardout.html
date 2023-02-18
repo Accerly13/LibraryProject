@@ -189,6 +189,10 @@
     </div>
 </body>
   <script>
+  if (sessionStorage.getItem("activeTabSearch")) {
+    sessionStorage.removeItem("activeTabSearch");
+  }
+
 
 const displayTime = document.querySelector(".display-time");
 // Time

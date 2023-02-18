@@ -600,6 +600,9 @@ option:hover,  .active{
 </style>
 
 <script>
+if (sessionStorage.getItem("activeTabSearch")) {
+  sessionStorage.removeItem("activeTabSearch");
+}
 
 document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("[id^='icon-eye']").forEach(function(el) {

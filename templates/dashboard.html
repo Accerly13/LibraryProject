@@ -60,3 +60,9 @@
   <main class="grid-2-column-2 h-[100%]"> </main>
 </div>
 {% endblock content %}
+
+<script>
+  if (sessionStorage.getItem("activeTabSearch")) {
+    sessionStorage.removeItem("activeTabSearch");
+  }
+</script>

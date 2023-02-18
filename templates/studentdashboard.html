@@ -235,6 +235,10 @@ footer {
     </footer>
 </body>
 <script>
+  if (sessionStorage.getItem("activeTabSearch")) {
+    sessionStorage.removeItem("activeTabSearch");
+  }
+
 const displayTime = document.querySelector(".display-time");
 // Time
 function showTime() {

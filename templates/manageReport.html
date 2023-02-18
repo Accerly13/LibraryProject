@@ -279,6 +279,10 @@
       </div>
       </div>
       <script>
+        if (sessionStorage.getItem("activeTabSearch")) {
+          sessionStorage.removeItem("activeTabSearch");
+        }
+
 
 var activeTab = sessionStorage.getItem("activeTabManageReport");
 
