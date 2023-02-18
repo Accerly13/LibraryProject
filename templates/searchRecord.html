@@ -270,9 +270,9 @@
                   var dates_cell = document.createElement('td');
                   dates_cell.textContent = items.dates_login[i].dates;
                   var TimeInCell = document.createElement('td');
-                  TimeInCell.textContent = items.dates_login[i].time_in;
+                  TimeInCell.textContent = convertTime(items.dates_login[i].time_in);
                   var TimeOutCell = document.createElement('td');
-                  TimeOutCell.textContent = items.dates_login[i].time_out;
+                  TimeOutCell.textContent = convertTime(items.dates_login[i].time_out);
 
                   // Append the td elements to the tr element
                   newRow1.appendChild(dates_cell);
@@ -340,7 +340,7 @@
       document.getElementById("table-data").style.display = ""
       var input, filter, table, tr, td, i, txtValue, td1, txtValue1;
       input = document.getElementById("user_input");
-      filter = input.value.toUpperCase();
+      filter = input.value.toUpperCase().replace(/[^a-z0-9]/gi, "");
       table = document.getElementById("table-data");
       tr = table.getElementsByTagName("tr");
       if (filter === '') { // Check if input field is empty
@@ -351,9 +351,9 @@
           td = tr[i].getElementsByTagName("td")[0];
           td1 = tr[i].getElementsByTagName("td")[1];
           if (td && td1) {
-            txtValue = td.textContent || td.innerText;
-            txtValue1 = td1.innerText || td1.textContent;
-            if (txtValue.toUpperCase().startsWith(filter) || txtValue1.toUpperCase().startsWith(filter)) {
+            txtValue = td.textContent.replace(/[^a-z0-9]/gi, "") || td.innerText.replace(/[^a-z0-9]/gi, "");
+            txtValue1 = td1.innerText.replace(/[^a-z0-9]/gi, "") || td1.textContent.replace(/[^a-z0-9]/gi, "");
+            if (txtValue.toUpperCase().replace(/[^a-z0-9]/gi, "").startsWith(filter) || txtValue1.toUpperCase().replace(/[^a-z0-9]/gi, "").startsWith(filter)) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
@@ -361,6 +361,16 @@
           }
         }
       }
+    }
+
+    function convertTime(time24) {
+      var hour = parseInt(time24.substring(0, 2));
+      var minute = time24.substring(3, 5);
+      var ampm = hour >= 12 ? 'pm' : 'am';
+      hour = hour % 12;
+      hour = hour ? hour : 12; // the hour '0' should be '12'
+      var time12 = hour + ':' + minute + ' ' + ampm;
+      return time12;
     }
 
     $(document).ready(function() {
