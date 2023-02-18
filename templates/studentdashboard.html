@@ -43,6 +43,11 @@
 
 <style>
 
+footer {
+    background-color: #336699;
+    color: #fff;
+    padding: 10px;
+  }
 
 * {
   margin: 0;
@@ -51,7 +56,7 @@
 }
 
 .box-wrapper {
-            height: 95vh;
+            height: 100%;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -101,7 +106,9 @@
   text-align: center;
 }
 .card-header {
-    padding: 1.5rem;
+    /* padding: 1.5rem; */
+    background-color: #336699;
+    color: #fff;
     min-width: 100%;
   }
 
@@ -137,7 +144,7 @@
             <div style="display:flex; justify-content:center">
               <div class="box-wrapper">
                 <div class="card">
-                  <div style="font-size: 2rem; display: flex; justify-content: center; color: #336699; font-weight: bold;" class="card-header">USERS LOG IN</div>
+                  <div style="font-size: 2rem; display: flex; justify-content: center; color: whitesmoke; font-weight: bold;" class="card-header">USERS LOG IN</div>
                   <div class="card-body">
                     <div class="container-fluid justify-content-center ">
                         <div class="row">
@@ -222,6 +229,10 @@
               </div>
             </div>
     </div>
+
+    <footer class="text-center">
+      <p>&copy; 2023 MyWebsite.com. All rights reserved.</p>
+    </footer>
 </body>
 <script>
 const displayTime = document.querySelector(".display-time");
