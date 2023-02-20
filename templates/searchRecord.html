@@ -61,13 +61,6 @@
             <thead class="thead-dark">
             </thead>
             <tbody>
-              <tr class="text-center">
-                <th>ID Number</th>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Date</th>
-                <th>Time visited</th>
-              </tr>
             </tbody>
           </table>
         </div>  
@@ -129,99 +122,117 @@
     </div>
     </div>
     <script>
-    // let currentPage = location.href;
-    
-    // window.addEventListener("beforeunload", function(event) {
-    //   let newPage = location.href;
-    //   if (currentPage === newPage) {
-    //     sessionStorage.removeItem("activeTab");
-    //   }
-    // });
     function generateButton() {
-            $("#view-visitor-rendered tbody tr").remove(); 
-            $("#view-visitor-rendered thead tr").remove();
-            event.preventDefault();
-            var myForm = document.querySelector('#generate-list');
-            var formData = new FormData(myForm);
-            fetch('/admin/dashboard/searchrecord/', {
-              method: 'POST',
-              body: formData
-            }).then(response => response.json())
-            .then(data => {
-              // Get the tbody element
-                var tableBody = document.querySelector('#view-visitor-rendered tbody');
-                var tableHeader = document.querySelector('#view-visitor-rendered thead')
-                var newRowHead = document.createElement('tr');
-                var start_time = new Date(data.start_time)
-                var end_time = new Date(data.end_time)
-                var formattedTimeStart = start_time.toLocaleTimeString('en-US', {hour: '2-digit',
-                     minute: '2-digit'
-                });
-                var formattedTimeEnd = end_time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-                newRowHead.className = 'text-center'
-                var title_cell = document.createElement('th');
-                title_cell.colSpan = '5'
-                title_cell.textContent = 'Generated report from ' + new Date(data.start_date).toLocaleDateString('en-US', {
-                    month: '2-digit',
-                    day: '2-digit',
-                    year: 'numeric'
-                }) + ' to ' + new Date(data.end_date).toLocaleDateString('en-US', {
-                    month: '2-digit',
-                    day: '2-digit',
-                    year: 'numeric'
-                }) + ' from ' + formattedTimeStart + ' to ' + formattedTimeEnd
-                newRowHead.appendChild(title_cell);
-
-                // Append the tr element to the thead element
-                tableHeader.appendChild(newRowHead);
-                // Loop through the data and create a new row for each item
-                var items = data.dates_login_searched;
-                var data_user = data.data;
-                var html = ""
-                for (var i = 0; i < items.dates_login.length; i++) {
-                    // Create a new tr element  
-                    var [hour, minutes] = items.dates_login[i].time_in.split(":").map(Number);
-                    var newRow = document.createElement('tr');
-                    var dateObj = new Date();
-                    dateObj.setHours(hour);
-                    dateObj.setMinutes(minutes);
-                    var [hour1, minutes1] = items.dates_login[i].time_out.split(":").map(Number);
-                    var dateObj1 = new Date();
-                    dateObj1.setHours(hour1);
-                    dateObj1.setMinutes(minutes1);
-                    newRow.className = 'text-center'
-
-                    // Create td elements for each column and set their text content
-                    var id_cell = document.createElement('th');
-                    id_cell.textContent = items.dates_login[i].user;
-                    var name_cell = document.createElement('th');
-                    name_cell.textContent = data_user[i].name;
-                    var deptCell = document.createElement('th');
-                    deptCell.textContent = data_user[i].department;
-                    var dates_cell = document.createElement('th');
-                    dates_cell.textContent = new Date(items.dates_login[i].dates).toLocaleDateString('en-US', {
-                                              day: '2-digit',
-                                              month: '2-digit',
-                                              year: 'numeric'
-                                            });
-                    var TimeInCell = document.createElement('th');
-                    TimeInCell.textContent = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
-                                             + '-' + dateObj1.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+          $("#view-visitor-rendered tbody tr").remove(); 
+          $("#view-visitor-rendered thead tr").remove();
+          event.preventDefault();
+          var myForm = document.querySelector('#generate-list');
+          var formData = new FormData(myForm);
+          fetch('/admin/dashboard/searchrecord/', {
+            method: 'POST',
+            body: formData
+          }).then(response => response.json())
+          .then(data => {
+            // Get the tbody element
+              var tableBody = document.querySelector('#view-visitor-rendered tbody');
+              var tableHeader = document.querySelector('#view-visitor-rendered thead')
+              var newRowHead = document.createElement('tr');
+              var start_time = new Date(data.start_time)
+              var end_time = new Date(data.end_time)
+              var formattedTimeStart = start_time.toLocaleTimeString('en-US', {hour: '2-digit',
+                    minute: '2-digit'
+              });
+              var formattedTimeEnd = end_time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+              newRowHead.className = 'text-center'
+              var title_cell = document.createElement('th');
+              title_cell.colSpan = '5'
+              title_cell.textContent = 'Generated report from ' + new Date(data.start_date).toLocaleDateString('en-US', {
+                  month: '2-digit',
+                  day: '2-digit',
+                  year: 'numeric'
+              }) + ' to ' + new Date(data.end_date).toLocaleDateString('en-US', {
+                  month: '2-digit',
+                  day: '2-digit',
+                  year: 'numeric'
+              }) + ' from ' + formattedTimeStart + ' to ' + formattedTimeEnd
+              newRowHead.appendChild(title_cell);
+              tableHeader.appendChild(newRowHead);
+              var newRow = document.createElement('tr');
+              newRow.className = 'text-center'
 
 
-                    // Append the td elements to the tr element
-                    newRow.appendChild(id_cell);
-                    newRow.appendChild(name_cell);
-                    newRow.appendChild(deptCell);
-                    newRow.appendChild(dates_cell);
-                    newRow.appendChild(TimeInCell);
+              var id_no = document.createElement('th');
+              id_no.textContent = "ID Number"
+              var name_col = document.createElement('th');
+              name_col.textContent = "Name";
+              var department_col = document.createElement('th');
+              department_col.textContent = "Department";
+              var date_col= document.createElement('th');
+              date_col.textContent = "Dates"
+              var time_visit_col = document.createElement('th');
+              time_visit_col.textContent = "Time Visited"
 
-                    // Append the tr element to the tbody element
-                    tableBody.appendChild(newRow);
-                }
-              })
-              .catch(error => console.error(error));
-      }
+
+              // Append the td elements to the tr element
+              newRow.appendChild(id_no);
+              newRow.appendChild(name_col);
+              newRow.appendChild(department_col);
+              newRow.appendChild(date_col);
+              newRow.appendChild(time_visit_col);
+
+              // Append the tr element to the tbody element
+              tableBody.appendChild(newRow);
+
+              // Append the tr element to the thead element
+              // Loop through the data and create a new row for each item
+              var items = data.dates_login_searched;
+              var data_user = data.data;
+              var html = ""
+              for (var i = 0; i < items.dates_login.length; i++) {
+                
+                  // Create a new tr element  
+                  newRow = document.createElement('tr');
+                  var [hour, minutes] = items.dates_login[i].time_in.split(":").map(Number);
+                  var dateObj = new Date();
+                  dateObj.setHours(hour);
+                  dateObj.setMinutes(minutes);
+                  var [hour1, minutes1] = items.dates_login[i].time_out.split(":").map(Number);
+                  var dateObj1 = new Date();
+                  dateObj1.setHours(hour1);
+                  dateObj1.setMinutes(minutes1);
+                  newRow.className = 'text-center'
+
+                  // Create td elements for each column and set their text content
+                  var id_cell = document.createElement('th');
+                  id_cell.textContent = items.dates_login[i].user;
+                  var name_cell = document.createElement('th');
+                  name_cell.textContent = data_user[i].name;
+                  var deptCell = document.createElement('th');
+                  deptCell.textContent = data_user[i].department;
+                  var dates_cell = document.createElement('th');
+                  dates_cell.textContent = new Date(items.dates_login[i].dates).toLocaleDateString('en-US', {
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric'
+                                          });
+                  var TimeInCell = document.createElement('th');
+                  TimeInCell.textContent = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
+                                            + '-' + dateObj1.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+
+
+                  // Append the td elements to the tr element
+                  newRow.appendChild(id_cell);
+                  newRow.appendChild(name_cell);
+                  newRow.appendChild(deptCell);
+                  newRow.appendChild(dates_cell);
+                  newRow.appendChild(TimeInCell);
+
+                  // Append the tr element to the tbody element
+                  tableBody.appendChild(newRow);
+              }
+            })
+            .catch(error => console.error(error));
+    }
     
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("[id^='icon-eye']").forEach(function(el) {
