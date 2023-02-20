@@ -16,12 +16,14 @@
       </div>
 
       <div class="panels">
+        <form method="post">
+        {% csrf_token %}
         <div class="panel" id="one-panel">
           <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-date">Start Date:</label>
-                <input type="text" class="form-control" id="start-date" placeholder="mm/dd/yyyy">
+                <input type="text" class="form-control" id="start-date" placeholder="mm/dd/yyyy" name="start_date">
               </div>
             </div>
           </div>
@@ -30,14 +32,15 @@
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-date">End Date:</label>
-                <input type="text" class="form-control" id="end-date" placeholder="mm/dd/yyyy">
+                <input type="text" class="form-control" id="end-date" placeholder="mm/dd/yyyy" name="end_date">
               </div>
             </div>
           </div>
 
           <div class="d-flex justify-content-center" style="padding-bottom: 1rem;">
-            <button class="btn btn-primary">Generate</button>
+            <button class="btn btn-primary" onclick="generateButton()">Generate</button>
           </div>
+        </form>
 
           <div class="d-flex justify-content-center">
             <table class="table table-striped table-bordered table-hover">
@@ -145,6 +148,92 @@
       modal.style.display = "none";
     }
   }
+  function generateButton() {
+      $("#view-visitor-rendered tbody tr").remove(); 
+      $("#view-visitor-rendered thead tr").remove();
+      event.preventDefault();
+      var myForm = document.querySelector('#generate-list');
+      var formData = new FormData(myForm);
+      fetch('/admin/dashboard/searchrecord/', {
+        method: 'POST',
+        body: formData
+      }).then(response => response.json())
+      .then(data => {
+        // Get the tbody element
+          var tableBody = document.querySelector('#view-visitor-rendered tbody');
+          var tableHeader = document.querySelector('#view-visitor-rendered thead')
+          var newRowHead = document.createElement('tr');
+          var start_time = new Date(data.start_time)
+          var end_time = new Date(data.end_time)
+          var formattedTimeStart = start_time.toLocaleTimeString('en-US', {hour: '2-digit',
+                minute: '2-digit'
+          });
+          var formattedTimeEnd = end_time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+          newRowHead.className = 'text-center'
+          var title_cell = document.createElement('th');
+          title_cell.colSpan = '5'
+          title_cell.textContent = 'Generated report from ' + new Date(data.start_date).toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+          }) + ' to ' + new Date(data.end_date).toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+          }) + ' from ' + formattedTimeStart + ' to ' + formattedTimeEnd
+          newRowHead.appendChild(title_cell);
+
+          // Append the tr element to the thead element
+          tableHeader.appendChild(newRowHead);
+          // Loop through the data and create a new row for each item
+          var items = data.dates_login_searched;
+          var data_user = data.data;
+          var html = ""
+          for (var i = 0; i < items.dates_login.length; i++) {
+              // Create a new tr element  
+              var [hour, minutes] = items.dates_login[i].time_in.split(":").map(Number);
+              var newRow = document.createElement('tr');
+              var dateObj = new Date();
+              dateObj.setHours(hour);
+              dateObj.setMinutes(minutes);
+              var [hour1, minutes1] = items.dates_login[i].time_out.split(":").map(Number);
+              var dateObj1 = new Date();
+              dateObj1.setHours(hour1);
+              dateObj1.setMinutes(minutes1);
+              newRow.className = 'text-center'
+
+              // Create td elements for each column and set their text content
+              var id_cell = document.createElement('th');
+              id_cell.textContent = items.dates_login[i].user;
+              var name_cell = document.createElement('th');
+              name_cell.textContent = data_user[i].name;
+              var deptCell = document.createElement('th');
+              deptCell.textContent = data_user[i].department;
+              var dates_cell = document.createElement('th');
+              dates_cell.textContent = new Date(items.dates_login[i].dates).toLocaleDateString('en-US', {
+                                        day: '2-digit',
+                                        month: '2-digit',
+                                        year: 'numeric'
+                                      });
+              var TimeInCell = document.createElement('th');
+              TimeInCell.textContent = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
+                                        + '-' + dateObj1.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+
+
+              // Append the td elements to the tr element
+              newRow.appendChild(id_cell);
+              newRow.appendChild(name_cell);
+              newRow.appendChild(deptCell);
+              newRow.appendChild(dates_cell);
+              newRow.appendChild(TimeInCell);
+
+              // Append the tr element to the tbody element
+              tableBody.appendChild(newRow);
+          }
+        })
+        .catch(error => console.error(error));
+}
+
         </script>
       </div>
     </div>
@@ -152,7 +241,6 @@
 
   <main class="grid-2-column-2 h-[100%]"> </main>
 </div>
-
 <style>
 .confirm-btn {
   padding: 10px 20px;

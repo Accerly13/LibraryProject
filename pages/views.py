@@ -255,6 +255,13 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
 
+    def post(self, request):
+        start_date = datetime.strptime(request.POST['start_date'], '%m/%d/%Y')
+        end_date = datetime.strptime(request.POST['end_date'], '%m/%d/%Y')
+        dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date])
+        dates_login_context = {'dates_login': list(dates_login.values())}
+        return JsonResponse ({'dates_login_searched': dates_login_context , 'start_date': start_date, 'end_date': end_date})	
+
 class ManageReport(LoginRequiredMixin, TemplateView):
     template_name = 'manageReport.html'
 
