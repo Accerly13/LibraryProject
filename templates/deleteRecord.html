@@ -51,12 +51,6 @@
               </thead>
               <tbody>
                 <tr class="text-center">
-                  <th>Date</th>
-                  <th>Opening time</th>
-                  <th>Closing time</th>
-                  <th>Total number of users visited</th>
-                </tr>
-                <tr class="text-center">
                   <th>1/23/23</th>
                   <th>7:00am</th>
                   <th>7:00pm</th>
@@ -164,6 +158,7 @@
           var tableHeader = document.querySelector('#record_rendered thead')
           var newRowHead = document.createElement('tr');
           var title_cell = document.createElement('th');
+          newRowHead.className = 'text-center'
           title_cell.colSpan = '5'
           title_cell.textContent = 'Generated report from ' + new Date(data.start_date).toLocaleDateString('en-US', {
               month: '2-digit',
@@ -179,6 +174,31 @@
           // Append the tr element to the thead element
           tableHeader.appendChild(newRowHead);
           // Loop through the data and create a new row for each item
+
+          var newRow = document.createElement('tr');
+          newRow.className = 'text-center'
+
+
+          var date_col = document.createElement('th');
+          date_col.textContent = "Date"
+          var opening_time_col = document.createElement('th');
+          opening_time_col.textContent = "Opening Time";
+          var closing_time_col = document.createElement('th');
+          closing_time_col.textContent = "Closing Time";
+          var total_no = document.createElement('th');
+          total_no.textContent = "Total number of users visited"
+
+          // Append the td elements to the tr element
+          newRow.appendChild(date_col);
+          newRow.appendChild(opening_time_col);
+          newRow.appendChild(closing_time_col);
+          newRow.appendChild(total_no);
+
+          // Append the tr element to the tbody element
+          tableBody.appendChild(newRow);
+
+
+
           var items = data.dates_login_searched;
           var data_user = data.data;
           var html = ""
