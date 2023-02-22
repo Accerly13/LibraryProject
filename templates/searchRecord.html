@@ -122,6 +122,10 @@
     </div>
     </div>
     <script>
+
+          sessionStorage?.removeItem("activeTab");
+          sessionStorage?.removeItem("activeTabManageReport");
+
     function generateButton() {
           $("#view-visitor-rendered tbody tr").remove(); 
           $("#view-visitor-rendered thead tr").remove();
