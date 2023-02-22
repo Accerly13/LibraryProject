@@ -53,6 +53,21 @@
 
           <div id="deleteButton" style="display:none; justify-content: center">
             <button class="btn-delete btn-primary me-md-2" type="button" id="myBtn">Delete</button>
+          <form id="delete-list" method="post">
+            {% csrf_token %}
+            <input type="text" id="confirmation" name="confirmation" value="" hidden>
+            <input type="text" class="form-control" id="start-date1" placeholder="mm/dd/yyyy" name="start_date1" hidden>
+            <input type="text" class="form-control" id="end-date1" placeholder="mm/dd/yyyy" name="end_date1" hidden>
+          </form>
+          </div>
+          <div style="display:flex; justify-content: center"> 
+            {% if messages %}
+            <p class="messages">
+                {% for message in messages %}
+                <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+                {% endfor %}
+            </p>
+            {% endif %}
           </div>
 
           <div id="myModal" class="modal">
@@ -63,10 +78,10 @@
                 <button id="close-modal" type="button" class="btn-close" aria-label="Close"></button>
               </div>
               <div class="confirm-message">Are you sure you want to delete the record?</div>
-              <div class="confirm-actions">
-                <button class="btn-delete mr-2 btn-primary" type="submit">Yes</button>
-                <button class="btn btn-primary" id="close-modal" type="submit">No</button>
-              </div>
+                <div class="confirm-actions">
+                  <button class="btn-delete mr-2 btn-primary" onclick="DeleteRecords()">Yes</button>
+                  <button class="btn btn-primary" id="close-modal" onclick="noButton()">No</button>
+                </div> 
             </div>
 
           </div>
@@ -121,19 +136,27 @@
   btn.onclick = function() {
     modal.style.display = "block";
   }
-  
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
+  function DeleteRecords() {
+    document.getElementById("confirmation").value = "Yes"
+    event.preventDefault();
+      var myForm = document.querySelector('#delete-list');
+      var formData = new FormData(myForm);
+      fetch('/admin/dashboard/deleterecord/', {
+        method: 'POST',
+        body: formData
+      })
+      modal.style.display = "none";
+      $("#record_rendered tbody tr").remove(); 
+      $("#record_rendered thead tr").remove();
+      document.querySelector("#deleteButton").style.display = "none"
+
+  }
+  function noButton() {
     modal.style.display = "none";
   }
-  
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
   function generateButton() {
+      document.getElementById("start-date1").value = document.getElementById("start-date").value
+      document.getElementById("end-date1").value = document.getElementById("end-date").value
       $("#record_rendered tbody tr").remove(); 
       $("#record_rendered thead tr").remove();
       event.preventDefault();
