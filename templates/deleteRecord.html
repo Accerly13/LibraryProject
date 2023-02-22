@@ -77,9 +77,10 @@
       </div>
 
         <script>
-          if (sessionStorage.getItem("activeTabSearch")) {
-            sessionStorage.removeItem("activeTabSearch");
-          }
+          sessionStorage?.removeItem("activeTabSearch");
+          sessionStorage?.removeItem("activeTab");
+          sessionStorage?.removeItem("activeTabManageReport");
+
           var closeModalBtn = document.getElementById("close-modal");
           closeModalBtn.addEventListener("click", function() {
             var modalContainer = document.querySelector(".modal");
