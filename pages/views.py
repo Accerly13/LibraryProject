@@ -256,16 +256,19 @@ class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
 
     def post(self, request):
-        start_date = datetime.strptime(request.POST['start_date'], '%m/%d/%Y')
-        end_date = datetime.strptime(request.POST['end_date'], '%m/%d/%Y')
-        dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date]).values_list('dates', flat=True).distinct()
-        tempObject = []
-        for item in dates_login:
-            dates_login_filtered = DatesLogin.objects.filter(dates=item)
-            data = {'date':item, 'earliest_time':dates_login_filtered.earliest('time_in').time_in, 'latest_time':dates_login_filtered.latest('time_in').time_in,
-                    'no_of_user':dates_login_filtered.values_list('user', flat=True).distinct().count()}
-            tempObject.append(data)
-        return JsonResponse ({'start_date': start_date, 'end_date': end_date, 'data':tempObject})	
+        try:
+            start_date = datetime.strptime(request.POST['start_date'], '%m/%d/%Y')
+            end_date = datetime.strptime(request.POST['end_date'], '%m/%d/%Y')
+            dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date]).values_list('dates', flat=True).distinct()
+            tempObject = []
+            for item in dates_login:
+                dates_login_filtered = DatesLogin.objects.filter(dates=item)
+                data = {'date':item, 'earliest_time':dates_login_filtered.earliest('time_in').time_in, 'latest_time':dates_login_filtered.latest('time_in').time_in,
+                        'no_of_user':dates_login_filtered.values_list('user', flat=True).distinct().count()}
+                tempObject.append(data)
+            return JsonResponse ({'start_date': start_date, 'end_date': end_date, 'data':tempObject})	
+        except:
+            return JsonResponse ({'start_date': start_date, 'end_date': end_date, 'data':tempObject})	
 
 class ManageReport(LoginRequiredMixin, TemplateView):
     template_name = 'manageReport.html'
