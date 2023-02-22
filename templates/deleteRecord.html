@@ -51,7 +51,7 @@
             </table>
           </div>
 
-          <div style="display:flex; justify-content: center">
+          <div id="deleteButton" style="display:none; justify-content: center">
             <button class="btn-delete btn-primary me-md-2" type="button" id="myBtn">Delete</button>
           </div>
 
@@ -228,6 +228,7 @@
               // Append the tr element to the tbody element
               tableBody.appendChild(newRow);
           }
+          document.querySelector("#deleteButton").style.display = "flex"
         })
         .catch(error => console.error(error));
 }
