@@ -86,7 +86,6 @@
           if (sessionStorage.getItem("activeTabSearch")) {
             sessionStorage.removeItem("activeTabSearch");
           }
-
           var closeModalBtn = document.getElementById("close-modal");
           closeModalBtn.addEventListener("click", function() {
             var modalContainer = document.querySelector(".modal");
@@ -199,46 +198,40 @@
 
 
 
-          var items = data.dates_login_searched;
-          var data_user = data.data;
+          var items = data.data;
           var html = ""
-          for (var i = 0; i < items.dates_login.length; i++) {
-              // Create a new tr element  
-              var [hour, minutes] = items.dates_login[i].time_in.split(":").map(Number);
+          for (var i = 0; i < items.length; i++) {
               var newRow = document.createElement('tr');
+              newRow.className = 'text-center'
+              // Create a new tr element  
+              var [hour, minutes] = items[i].earliest_time.split(":").map(Number);
               var dateObj = new Date();
               dateObj.setHours(hour);
               dateObj.setMinutes(minutes);
-              var [hour1, minutes1] = items.dates_login[i].time_out.split(":").map(Number);
+              var [hour1, minutes1] = items[i].latest_time.split(":").map(Number);
               var dateObj1 = new Date();
               dateObj1.setHours(hour1);
               dateObj1.setMinutes(minutes1);
-              newRow.className = 'text-center'
 
               // Create td elements for each column and set their text content
-              var id_cell = document.createElement('th');
-              id_cell.textContent = items.dates_login[i].user;
-              var name_cell = document.createElement('th');
-              name_cell.textContent = data_user[i].name;
-              var deptCell = document.createElement('th');
-              deptCell.textContent = data_user[i].department;
-              var dates_cell = document.createElement('th');
-              dates_cell.textContent = new Date(items.dates_login[i].dates).toLocaleDateString('en-US', {
+              var date_cell = document.createElement('th');
+              date_cell.textContent = new Date(items[i].date).toLocaleDateString('en-US', {
                                         day: '2-digit',
                                         month: '2-digit',
                                         year: 'numeric'
                                       });
-              var TimeInCell = document.createElement('th');
-              TimeInCell.textContent = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
-                                        + '-' + dateObj1.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-
+              var time_in_cell = document.createElement('th');
+              time_in_cell.textContent = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+              var timeOut_Cell = document.createElement('th');
+              timeOut_Cell.textContent = dateObj1.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+              var number_of_user_cell = document.createElement('th');
+              number_of_user_cell.textContent = items[i].no_of_user
 
               // Append the td elements to the tr element
-              newRow.appendChild(id_cell);
-              newRow.appendChild(name_cell);
-              newRow.appendChild(deptCell);
-              newRow.appendChild(dates_cell);
-              newRow.appendChild(TimeInCell);
+              newRow.appendChild(date_cell);
+              newRow.appendChild(time_in_cell);
+              newRow.appendChild(timeOut_Cell);
+              newRow.appendChild(number_of_user_cell);
 
               // Append the tr element to the tbody element
               tableBody.appendChild(newRow);
