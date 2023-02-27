@@ -286,12 +286,23 @@ class ManageReport(LoginRequiredMixin, TemplateView):
         tempObject = []
         dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
         for item in dates_login:
-            user_query = UserInfo.objects.get(user_idno=item.user)
+            user_query = UserInfo.objects.get(user_idno=item.user, type_id=3)
+            print(user_query)
             if user_query:
                 data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
                 tempObject.append(data)
-        dates_login_context = {'dates_login': list(dates_login.values())}
-        return JsonResponse ({'dates_login_searched': dates_login_context , 'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':tempObject})
+        department_counts = {}
+        for item in tempObject:
+            department = item['department']
+            college = item['college']
+            if department not in department_counts:
+                department_counts[department] = {}
+            if college not in department_counts[department]:
+                department_counts[department][college] = 0
+            department_counts[department][college] += 1
+        print(department_counts)
+
+        return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':department_counts})
 
 class TableSample(LoginRequiredMixin, TemplateView):
     template_name = 'tablesample.html'

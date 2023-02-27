@@ -508,30 +508,33 @@
 
                 // Append the tr element to the thead element
                 // Loop through the data and create a new row for each item
-                var items = data.dates_login_searched;
                 var data_user = data.data;
                 var html = ""
-                for (var i = 0; i < items.dates_login.length; i++) {
+                for (var department in data_user) {
+                    var college_counts = data_user[department];
+                    for (var college in college_counts) {
+                      var count = college_counts[college];
                   
-                    // Create a new tr element  
-                    newRow = document.createElement('tr');
-                    newRow.className = 'text-center'
+                      // Create a new tr element  
+                      newRow = document.createElement('tr');
+                      newRow.className = 'text-center'
 
-                    // Create td elements for each column and set their text content
-                    var college_cell = document.createElement('th');
-                    college_cell.textContent = data_user[i].college;
-                    var deptCell = document.createElement('th');
-                    deptCell.textContent = data_user[i].department;
-                    var total_user_cell = document.createElement('th');
-                    total_user_cell.textContent = '1';
-              
-                    // Append the td elements to the tr element
-                    newRow.appendChild(college_cell);
-                    newRow.appendChild(deptCell);
-                    newRow.appendChild(total_user_cell);
+                      // Create td elements for each column and set their text content
+                      var college_cell = document.createElement('th');
+                      college_cell.textContent =  college
+                      var deptCell = document.createElement('th');
+                      deptCell.textContent =  department;
+                      var total_user_cell = document.createElement('th');
+                      total_user_cell.textContent =  count;
+                
+                      // Append the td elements to the tr element
+                      newRow.appendChild(college_cell);
+                      newRow.appendChild(deptCell);
+                      newRow.appendChild(total_user_cell);
 
-                    // Append the tr element to the tbody element
-                    tableBody.appendChild(newRow);
+                      // Append the tr element to the tbody element
+                      tableBody.appendChild(newRow);
+                  }
                 }
               })
               .catch(error => console.error(error));
