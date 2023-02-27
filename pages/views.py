@@ -278,6 +278,21 @@ class DeleteRecord(LoginRequiredMixin, TemplateView):
 class ManageReport(LoginRequiredMixin, TemplateView):
     template_name = 'manageReport.html'
 
+    def post(self, request):
+        start_time =  datetime.strptime(request.POST['start-time-student'], '%H:%M')
+        end_time =  datetime.strptime(request.POST['end-time-student'], '%H:%M')
+        start_date = datetime.strptime(request.POST['start-date-student'], '%m/%d/%Y')
+        end_date = datetime.strptime(request.POST['end-date-student'], '%m/%d/%Y')
+        tempObject = []
+        dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
+        for item in dates_login:
+            user_query = UserInfo.objects.get(user_idno=item.user)
+            if user_query:
+                data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
+                tempObject.append(data)
+        dates_login_context = {'dates_login': list(dates_login.values())}
+        return JsonResponse ({'dates_login_searched': dates_login_context , 'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':tempObject})
+
 class TableSample(LoginRequiredMixin, TemplateView):
     template_name = 'tablesample.html'
 
