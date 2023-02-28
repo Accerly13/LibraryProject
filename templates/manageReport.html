@@ -509,21 +509,14 @@
                 // Append the tr element to the thead element
                 // Loop through the data and create a new row for each item
                 var data_user = data.data;
+                console.log(data_user)
                 var html = ""
                 for (var department in data_user) {
                     var college_counts = data_user[department];
-                    var uniqueUsers = {};
-                    var count = 0;
                     for (var college in college_counts) {
 
                       var users = college_counts[college];
-
-                      for (var user in users) {
-                        if (!uniqueUsers[user]) {
-                          count += users[user];
-                          uniqueUsers[user] = true;
-                        }
-                      }
+                      var count = Object.values(users).reduce((a, b) => a + b, 0);
                       
                       // Create a new tr element  
                       newRow = document.createElement('tr');
