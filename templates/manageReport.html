@@ -510,33 +510,7 @@
                 // Loop through the data and create a new row for each item
                 var data_user = data.data;
                 var html = ""
-                var department_counts = {};
-                for (var i = 0; i < data_user.length; i++) {
-                  var item = data_user[i];
-                  var department = item.department;
-                  var college = item.college;
-                  var user = item.user;
-                  if (department in department_counts) {
-                    if (college in department_counts[department]) {
-                      if (user in department_counts[department][college]) {
-                        // user has already been counted
-                        continue;
-                      } else {
-                        // new user in this college and department
-                        department_counts[department][college][user] = 1;
-                      }
-                    } else {
-                      // new college in this department
-                      department_counts[department][college] = {};
-                      department_counts[department][college][user] = 1;
-                    }
-                  } else {
-                    // new department
-                    department_counts[department] = {};
-                    department_counts[department][college] = {};
-                    department_counts[department][college][user] = 1;
-                  }
-                }
+                console.log(data_user)
                 for (var department in data_user) {
                     var college_counts = data_user[department];
                     for (var college in college_counts) {
