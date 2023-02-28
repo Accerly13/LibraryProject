@@ -694,7 +694,7 @@ function searchTable() {
   document.getElementById("table-data").style.display = ""
   var input, filter, table, tr, td, i, txtValue, td1, txtValue1;
       input = document.getElementById("user_input");
-      filter = input.value.toUpperCase();
+      filter = input.value.toUpperCase().replace(/[^a-z0-9]/gi, "");
       table = document.getElementById("table-data");
       tr = table.getElementsByTagName("tr");
       if (filter === '') { // Check if input field is empty
@@ -705,9 +705,9 @@ function searchTable() {
           td = tr[i].getElementsByTagName("td")[0];
           td1 = tr[i].getElementsByTagName("td")[1];
           if (td && td1) {
-            txtValue = td.textContent || td.innerText;
-            txtValue1 = td1.innerText || td1.textContent;
-            if (txtValue.toUpperCase().startsWith(filter) || txtValue1.toUpperCase().startsWith(filter)) {
+            txtValue = td.textContent.replace(/[^a-z0-9]/gi, "") || td.innerText.replace(/[^a-z0-9]/gi, "");
+            txtValue1 = td1.innerText.replace(/[^a-z0-9]/gi, "") || td1.textContent.replace(/[^a-z0-9]/gi, "");
+            if (txtValue.toUpperCase().replace(/[^a-z0-9]/gi, "").startsWith(filter) || txtValue1.toUpperCase().replace(/[^a-z0-9]/gi, "").startsWith(filter)) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
