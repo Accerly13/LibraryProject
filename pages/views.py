@@ -298,7 +298,7 @@ class ManageReport(LoginRequiredMixin, TemplateView):
             user = item['user']
             if department not in department_counts:
                 department_counts[department] = {}
-            if college not in department_counts[department]:
+            if user not in department_counts[department]:
                 department_counts[department][college] = 0
             department_counts[department][college] += 1
 
