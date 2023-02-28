@@ -514,31 +514,28 @@
                 for (var department in data_user) {
                     var college_counts = data_user[department];
                     for (var college in college_counts) {
-                      var count = college_counts[college];
 
                       var users = college_counts[college];
-                      for (var user in users) {
-                        var count = users[user]
+                      var count = Object.values(users).reduce((a, b) => a + b, 0);
                       // Create a new tr element  
-                        newRow = document.createElement('tr');
-                        newRow.className = 'text-center'
+                      newRow = document.createElement('tr');
+                      newRow.className = 'text-center'
 
-                        // Create td elements for each column and set their text content
-                        var college_cell = document.createElement('th');
-                        college_cell.textContent =  college
-                        var deptCell = document.createElement('th');
-                        deptCell.textContent =  department;
-                        var total_user_cell = document.createElement('th');
-                        total_user_cell.textContent =  count;
-                  
-                        // Append the td elements to the tr element
-                        newRow.appendChild(college_cell);
-                        newRow.appendChild(deptCell);
-                        newRow.appendChild(total_user_cell);
+                      // Create td elements for each column and set their text content
+                      var college_cell = document.createElement('th');
+                      college_cell.textContent =  college
+                      var deptCell = document.createElement('th');
+                      deptCell.textContent =  department;
+                      var total_user_cell = document.createElement('th');
+                      total_user_cell.textContent =  count;
+                
+                      // Append the td elements to the tr element
+                      newRow.appendChild(college_cell);
+                      newRow.appendChild(deptCell);
+                      newRow.appendChild(total_user_cell);
 
-                        // Append the tr element to the tbody element
-                        tableBody.appendChild(newRow);
-                      }
+                      // Append the tr element to the tbody element
+                      tableBody.appendChild(newRow);
                   }
                 }
               })
