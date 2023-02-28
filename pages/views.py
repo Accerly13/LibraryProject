@@ -290,7 +290,6 @@ class ManageReport(LoginRequiredMixin, TemplateView):
             if user_query:
                 data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name, 'user':user_query.user_idno}
                 tempObject.append(data)
-        print(tempObject)
         department_counts = {}
         for item in tempObject:
             department = item['department']
@@ -298,10 +297,13 @@ class ManageReport(LoginRequiredMixin, TemplateView):
             user = item['user']
             if department not in department_counts:
                 department_counts[department] = {}
-            if user not in department_counts[department]:
-                department_counts[department][college] = 0
-            department_counts[department][college] += 1
+            if college not in department_counts[department]:
+                department_counts[department][college] = {}
+            if user not in department_counts[department][college]:
+                department_counts[department][college][user] = 0
+            department_counts[department][college][user] += 1
 
+        print(department_counts)
         return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':department_counts})
 
 class TableSample(LoginRequiredMixin, TemplateView):
