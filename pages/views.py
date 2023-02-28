@@ -298,10 +298,8 @@ class ManageReport(LoginRequiredMixin, TemplateView):
             if department not in department_counts:
                 department_counts[department] = {}
             if college not in department_counts[department]:
-                department_counts[department][college] = {}
-            if user not in department_counts[department][college]:
-                department_counts[department][college][user] = 0
-            department_counts[department][college][user] += 1
+                department_counts[department][college] = set()
+            department_counts[department][college].add(user)
         return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':department_counts})
 
 class TableSample(LoginRequiredMixin, TemplateView):
