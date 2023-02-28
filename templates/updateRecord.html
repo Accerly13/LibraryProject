@@ -716,27 +716,6 @@ function searchTable() {
         }
     }
   }
-
-
-  // var form = document.getElementById('input_user');
-  // document.getElementById("user_input").addEventListener("input", function(event) {
-  //   const input_value = this.value;
-
-  //   event.preventDefault();
-   
-
-  //   var formData = new FormData(form);
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open('GET', '/admin/dashboard/updaterecord/'+ encodeURIComponent(input_value), true);
-  //   xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-  //   xhr.onreadystatechange = function() {
-
-  //     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-  //       console.log(xhr.responseText);
-  //     }
-  //   };
-  //   xhr.send(formData);
-  // });
   function checkAndAddOption(selectElement) {
       if (selectElement.value === "") {
         var div1=document.getElementById("inputnew");
