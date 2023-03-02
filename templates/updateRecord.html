@@ -85,8 +85,8 @@
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="department">Department:</label>
             <div class="col-sm-10">
-                <input class="form-select" autocomplete="off" role="combobox" list="" id="searchinput" name="department_select" placeholder="Search department" required>
-                  <datalist id="department_select" role="listbox" style="z-index: 9999; width: 95%;">
+                <input class="form-select" autocomplete="off" role="combobox" list="" id="searchinput" name="data_list" placeholder="Search department" required>
+                  <datalist id="data_list" role="listbox" style="z-index: 9999; width: 95.5%;">
                     {% for item in dept %}
                       <option value="{{item.department_name}}"> {{ item.department_name }} </option>  
                     {% endfor %}  
@@ -98,7 +98,7 @@
             <label class="col-sm-2 col-form-label" for="department">Course:</label>
               <div class="col-sm-10">
                 {% if course %}
-                <select class="form-select" aria-label="Default select example" name="courses" onclick="checkAndAddOption(this)"> 
+                <select class="form-select" aria-label="Default select example" name="courses"> 
                   {% for item in course %}
                     <option value="{{item}}"> {{ item }} </option>
                   {% endfor %}
@@ -239,7 +239,7 @@
             <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="department">Department:</label>
               <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example" name="department_select">
+                <select class="form-select" aria-label="Default select example" name="data_list">
                   {% for item in dept %}
                     <option value="{{item.department_name}}"> {{ item.department_name }} </option>
                   {% endfor %}
@@ -729,13 +729,13 @@ function searchTable() {
   }
 
   searchinput.onfocus = function () {
-  department_select.style.display = 'block';
+  data_list.style.display = 'block';
   searchinput.style.borderRadius = "5px 5px 0 0";  
 };
-for (let option of department_select.options) {
+for (let option of data_list.options) {
   option.onclick = function () {
     searchinput.value = option.value;
-    department_select.style.display = 'none';
+    data_list.style.display = 'none';
     searchinput.style.borderRadius = "5px";
   }
 };
@@ -743,7 +743,7 @@ for (let option of department_select.options) {
 searchinput.oninput = function() {
   currentFocus = -1;
   var text = searchinput.value.toUpperCase();
-  for (let option of department_select.options) {
+  for (let option of data_list.options) {
     if(option.value.toUpperCase().indexOf(text) > -1){
       option.style.display = "block";
   }else{
@@ -751,21 +751,38 @@ searchinput.oninput = function() {
     }
   };
 }
+
+var datalist = document.getElementById('data_list');
+var input = document.getElementById('searchinput');
+
+document.addEventListener('click', (event) => {
+  const target = event.target;
+  
+  // if the click target is not the input or an option in the datalist, hide the datalist
+  if (target !== input && !datalist.contains(target)) {
+    datalist.style.display = 'none';
+  }
+});
+
+input.addEventListener('focus', () => {
+  datalist.style.display = 'block';
+});
+
 var currentFocus = -1;
 searchinput.onkeydown = function(e) {
   if(e.keyCode == 40){
     currentFocus++
-   addActive(department_select.options);
+   addActive(data_list.options);
   }
   else if(e.keyCode == 38){
     currentFocus--
-   addActive(department_select.options);
+   addActive(data_list.options);
   }
   else if(e.keyCode == 13){
     e.preventDefault();
         if (currentFocus > -1) {
           /*and simulate a click on the "active" item:*/
-          if (department_select.options) department_select.options[currentFocus].click();
+          if (data_list.options) data_list.options[currentFocus].click();
         }
   }
 }
