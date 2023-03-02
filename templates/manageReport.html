@@ -69,13 +69,13 @@
               </table>
             </div>
 
-            <div class="row" style="display: flex; justify-content: space-evenly;">
+            <div id="exportPdf{{item.type_name|lower}}" class="row" style="display: none; justify-content: space-evenly;">
               Choose where to export:
               <div class="col-md-6 offset-md-1">
                 <div class="form-group">
-                  <input type="radio" name="exportype" value="pdfone" checked> PDF &nbsp&nbsp
-                  <input type="radio" name="exportype" value="csvone"> CSV &nbsp&nbsp
-                  <button class="btn btn-primary">Export report</button>
+                  <input type="radio" name="exportype{{item.type_name|lower}}" value="pdfone" checked> PDF &nbsp&nbsp
+                  <input type="radio" name="exportype{{item.type_name|lower}}" value="csvone"> CSV &nbsp&nbsp
+                  <button class="btn btn-primary" onclick="exportToPdf('exportype{{item.type_name|lower}}')">Export report</button>
                 </div>
               </div>
             </div>
@@ -123,11 +123,86 @@
           </div>
       </div>
       </div>
+
       <script>
+        
         if (sessionStorage.getItem("activeTabSearch")) {
           sessionStorage.removeItem("activeTabSearch");
         }
 
+    function exportToPdf(name) {
+      var exportType = document.querySelector('input[name="'+name+'"]:checked').value;
+
+
+      if (exportType === 'pdfone') {
+        exportType_temp = exportType.replace('exportype', '')
+        // Select the table to export
+        var table = document.querySelector(`#rendered-data-${exportType_temp}`);
+        
+        // Create a new jsPDF instance
+        var doc = new jsPDF();
+        
+        // Set the column headers
+        var headers = [];
+        var headerCells = table.querySelectorAll('thead th');
+        for (var i = 0; i < headerCells.length; i++) {
+          headers.push(headerCells[i].textContent.trim());
+        }
+        
+        // Get the table rows
+        var rows = [];
+        var dataCells = table.querySelectorAll('tbody td');
+        var rowData = [];
+        for (var i = 0; i < dataCells.length; i++) {
+          rowData.push(dataCells[i].textContent.trim());
+          if ((i + 1) % headers.length === 0) {
+            rows.push(rowData);
+            rowData = [];
+          }
+        }
+        
+        // Add the table to the PDF
+        doc.autoTable({
+          head: [headers],
+          body: rows
+        });
+        
+        // Save the PDF file
+        doc.save('my-table.pdf');
+      } else if (exportType === 'csvone') {
+        exportType_temp = exportType.replace('exportype', '')
+        // Export the table as CSV
+        var table = document.querySelector(`#rendered-data-${exportType_temp}`);
+        var csvContent = 'data:text/csv;charset=utf-8,';
+        
+        // Get the column headers
+        var headers = [];
+        var headerCells = table.querySelectorAll('thead th');
+        for (var i = 0; i < headerCells.length; i++) {
+          headers.push(headerCells[i].textContent.trim());
+        }
+        csvContent += headers.join(',') + '\n';
+        
+        // Get the table rows
+        var dataCells = table.querySelectorAll('tbody td');
+        var rowData = [];
+        for (var i = 0; i < dataCells.length; i++) {
+          rowData.push(dataCells[i].textContent.trim());
+          if ((i + 1) % headers.length === 0) {
+            csvContent += rowData.join(',') + '\n';
+            rowData = [];
+          }
+        }
+        
+        // Download the CSV file
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'my-table.csv');
+        document.body.appendChild(link);
+        link.click();
+      }
+    }
 
     var activeTab = sessionStorage.getItem("activeTabManageReport");
 
@@ -172,7 +247,7 @@
     }
 
       $(document).ready(function() {
-        var dataLength = {{ usertype|length }};
+        var dataLength = "{{ usertype|length }}";
         
         for (var i = 1; i <= dataLength; i++) {
           $('#start-date'+i).datepicker({
@@ -201,7 +276,7 @@
       });
 
         $(document).ready(function() {
-          var dataLength = {{ usertype|length }};
+          var dataLength = "{{ usertype|length }}";
           
           for (var i = 1; i <= dataLength; i++) {
            
@@ -231,7 +306,7 @@
 
 
       function generateButton(type_name) {
-        
+        document.querySelector("#exportPdf"+type_name).style.display = "flex"
         $(`#rendered-data-${type_name} tbody tr`).remove(); 
         $(`#rendered-data-${type_name} thead tr`).remove();
         event.preventDefault();
