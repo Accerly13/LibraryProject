@@ -123,19 +123,21 @@
           </div>
       </div>
       </div>
-
+     
       <script>
-        
-        if (sessionStorage.getItem("activeTabSearch")) {
-          sessionStorage.removeItem("activeTabSearch");
-        }
+      window.jsPDF = window.jspdf.jsPDF;
+    
+    
+    if (sessionStorage.getItem("activeTabSearch")) {
+      sessionStorage.removeItem("activeTabSearch");
+    }
 
     function exportToPdf(name) {
       var exportType = document.querySelector('input[name="'+name+'"]:checked').value;
 
-
       if (exportType === 'pdfone') {
-        exportType_temp = exportType.replace('exportype', '')
+      
+        exportType_temp = name.replace('exportype', '')
         // Select the table to export
         var table = document.querySelector(`#rendered-data-${exportType_temp}`);
         
@@ -151,7 +153,7 @@
         
         // Get the table rows
         var rows = [];
-        var dataCells = table.querySelectorAll('tbody td');
+        var dataCells = table.querySelectorAll('tbody tr');
         var rowData = [];
         for (var i = 0; i < dataCells.length; i++) {
           rowData.push(dataCells[i].textContent.trim());
@@ -170,7 +172,7 @@
         // Save the PDF file
         doc.save('my-table.pdf');
       } else if (exportType === 'csvone') {
-        exportType_temp = exportType.replace('exportype', '')
+        exportType_temp = name.replace('exportype', '')
         // Export the table as CSV
         var table = document.querySelector(`#rendered-data-${exportType_temp}`);
         var csvContent = 'data:text/csv;charset=utf-8,';
