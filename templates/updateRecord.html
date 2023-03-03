@@ -245,7 +245,7 @@
             <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="department">Department:</label>
               <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example" name="data_list">
+                <select class="form-select" aria-label="Default select example" name="data_list" id="department-list">
                   {% for item in dept %}
                     <option value="{{item.department_name}}"> {{ item.department_name }} </option>
                   {% endfor %}
@@ -256,7 +256,7 @@
               <label class="col-sm-2 col-form-label" for="department">Course:</label>
                 <div class="col-sm-10">
                   {% if course %}
-                  <select class="form-select" aria-label="Default select example" name="courses-update" onclick="checkAndAddOption(this)"> 
+                  <select class="form-select" aria-label="Default select example" name="courses-update" onclick="checkAndAddOption(this)" id="course-select"> 
                     {% for item in course %}
                       <option value="{{item}}"> {{ item }} </option>
                     {% endfor %}
@@ -273,19 +273,19 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="department">User Type:</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" name="usertype_select-update">
+                    <select id="usertype-select" class="form-select" aria-label="Default select example" name="usertype_select-update">
                       {% for item in usertype %}
-                        <option value="{{item.type_id}}"> {{ item.type_name }} </option>
+                        <option value="{{item.type_name}}"> {{ item.type_name }} </option>
                       {% endfor %}
                     </select>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label" for="department">Comment:</label>
+                  <label class="col-sm-2 col-form-label" for="comment">Comment:</label>
                     <div class="col-sm-10">
                       <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="comments-update"></textarea>
-                        <label for="floatingTextarea">Comments</label>
+                        <textarea class="form-control" placeholder="Leave a comment here" id="comments-update" name="comments-update"></textarea>
+                        <label for="comments-update">Comments</label>
                       </div>
                     </div>
                   </div>
@@ -640,6 +640,48 @@ document.addEventListener("DOMContentLoaded", function() {
               var middleName = document.querySelector('#mname-update');
               var lastName = document.querySelector('#lname-update');
 
+              var comment = document.querySelector('#comments-update');
+
+              var select = document.getElementById("department-list");
+              for (var i = 0; i < select.options.length; i++) {
+                var option = select.options[i];
+
+                // If the option value matches the selected value, set the selected attribute
+                if (option.value === data.department) {
+                  option.selected = true;
+                }
+              }
+
+              var select1 = document.getElementById("course-select");
+              for (var i = 0; i < select1.options.length; i++) {
+                var option = select1.options[i];
+
+                // If the option value matches the selected value, set the selected attribute
+                if (option.value === data.user_searched.course) {
+                  option.selected = true;
+                }
+              }
+
+              var select2 = document.getElementById("usertype-select");
+              for (var i = 0; i < select2.options.length; i++) {
+                var option = select2.options[i];
+
+                // If the option value matches the selected value, set the selected attribute
+                if (option.value === data.usertype) {
+                  option.selected = true;
+                }
+              }
+
+              var radios = document.getElementsByName("gender-update");
+              for (var i = 0; i < radios.length; i++) {
+                var radio = radios[i];
+
+                // If the radio button value matches the selected value, set the checked attribute
+                if (radio.value === data.user_searched.gender) {
+                  radio.checked = true;
+                }
+              }
+              comment.value = data.user_searched.comment
               userId.value = data.user_searched.user_idno;
               nameInput.value = data.user_searched.first_name;
               middleName.value = data.user_searched.middle_name;
