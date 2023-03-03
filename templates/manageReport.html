@@ -166,7 +166,7 @@
         // Add the table to the PDF
         doc.autoTable({
           head: [headers],
-          body: rows
+          body: rows 
         });
         
         // Save the PDF file
@@ -186,7 +186,7 @@
         csvContent += headers.join(',') + '\n';
         
         // Get the table rows
-        var dataCells = table.querySelectorAll('tbody td');
+        var dataCells = table.querySelectorAll('tbody tr');
         var rowData = [];
         for (var i = 0; i < dataCells.length; i++) {
           rowData.push(dataCells[i].textContent.trim());
