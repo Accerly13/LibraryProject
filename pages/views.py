@@ -10,6 +10,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.http import JsonResponse
 from django.db.models.functions import Lower, Upper, Substr
+from django.forms.models import model_to_dict
 
 
 @login_required
@@ -244,8 +245,11 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         elif request.POST.get('input_user_samp'):
             user_searched = request.POST.get('input_user_samp')
             user_searched_details = UserInfo.objects.get(user_idno=user_searched)
-
-            return JsonResponse({'user_searched': user_searched_details})   
+            user_details = model_to_dict(user_searched_details)
+            print(user_details)
+            return JsonResponse({'user_searched': user_details, 
+                                 'department':user_searched_details.department.department_name, 
+                                 'college': user_searched_details.department.college.college_name})   
 
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):

@@ -199,33 +199,33 @@
               </div>
             </div>
             <div class="row mb-3">
-              <label class="col-sm-2 col-form-label" for="idnum">ID Number:</label>
+              <label class="col-sm-2 col-form-label" for="idnum-update">ID Number:</label>
               <div class="col-sm-10">
-                <input class="form-control" type="text" id="idnum" name="idnum-update" required>
+                <input class="form-control" type="text" id="idnum-update" name="idnum-update" required>
               </div>
             </div>
             <div class="row mb-3">
-              <label class="col-sm-2 col-form-label" for="idnum">Alternative Number:</label>
+              <label class="col-sm-2 col-form-label" for="alt-id-update">Alternative Number:</label>
               <div class="col-sm-10">
-                <input class="form-control" type="text" id="idnum" name="alt-id-update" required>
+                <input class="form-control" type="text" id="alt-id-update" name="alt-id-update" required>
               </div>
             </div>
             <div class="row mb-3">
-              <label class="col-sm-2 col-form-label" for="fname">First name:</label>
+              <label class="col-sm-2 col-form-label" for="fname-update">First name:</label>
               <div class="col-sm-10">
-                <input class="form-control" type="text" id="fname" name="fname-update" required>
+                <input class="form-control" type="text" id="fname-update" name="fname-update" required>
               </div>
             </div>
             <div class="row mb-3">
-              <label class="col-sm-2 col-form-label" for="mname">Middle name:</label>
+              <label class="col-sm-2 col-form-label" for="mname-update">Middle name:</label>
               <div class="col-sm-10">
-                <input class="form-control" type="text" id="mname" name="mname-update" required>
+                <input class="form-control" type="text" id="mname-update" name="mname-update" required>
               </div>
             </div>
             <div class="row mb-3">
-              <label class="col-sm-2 col-form-label" for="lname">Last name:</label>
+              <label class="col-sm-2 col-form-label" for="lname-update">Last name:</label>
               <div class="col-sm-10">
-                <input class="form-control" type="text" id="lname" name="lname-update" required>
+                <input class="form-control" type="text" id="lname-update" name="lname-update" required>
               </div>
             </div>
             <div class="row mb-3">
@@ -634,6 +634,17 @@ document.addEventListener("DOMContentLoaded", function() {
               body: formData
             }).then(response => response.json())
             .then(data => {
+              var userId = document.querySelector('#idnum-update');
+              // const altId = document.querySelector('#alt-id-update');
+              var nameInput = document.querySelector('#fname-update');
+              var middleName = document.querySelector('#mname-update');
+              var lastName = document.querySelector('#lname-update');
+
+              userId.value = data.user_searched.user_idno;
+              nameInput.value = data.user_searched.first_name;
+              middleName.value = data.user_searched.middle_name;
+              lastName.value = data.user_searched.last_name;
+
             })
             var td_show = tr[stringReplace].getElementsByTagName("td")[0];
             var td_show1 = tr[stringReplace].getElementsByTagName("td")[1];
