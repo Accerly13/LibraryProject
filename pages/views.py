@@ -240,17 +240,13 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 usertype = UserType.objects.get(type_id = usertype)
                 UserInfo.objects.create(user_idno=idnum, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
                 messages.success(request, ("New User is Registered!"))	
-                return redirect('/admin/dashboard/updaterecord/')	       
-       
-            # usertype = request.POST['user_update']
-            # try: 
-            #     users = UserInfo.objects.filter(user_idno__startswith=usertype)
-            #     messages.success(request, ("Usertype is Already Registered!"))
-            #     return redirect('/admin/dashboard/updaterecord/')	
-            # except:
-            #     messages.success(request, ("New Usertype is Registered!"))	
-            #     return redirect('/admin/dashboard/updaterecord/')	     
-        # elif request.POST.get('input_value'):
+                return redirect('/admin/dashboard/updaterecord/')
+        elif request.POST.get('input_user_samp'):
+            user_searched = request.POST.get('input_user_samp')
+            user_searched_details = UserInfo.objects.get(user_idno=user_searched)
+
+            return JsonResponse({'user_searched': user_searched_details})   
+
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
