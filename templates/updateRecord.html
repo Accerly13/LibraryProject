@@ -24,6 +24,13 @@
     <div class="panels panel-relative mx-auto mb-5">
       <div class="panel" id="tab1">
         <div class="flex justify-between items-center mb-5">
+          {% if messages %}
+          <p class="messages">
+              {% for message in messages %}
+              <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+              {% endfor %}
+          </p>
+          {% endif %}
           <div class="panel-title">Add New Data</div>
           <div class="d-grid-md-flex justify-content-md-end">
            
@@ -353,13 +360,6 @@
             </div>
           </form>
           </div>
-          {% if messages %}
-          <p class="messages">
-              {% for message in messages %}
-              <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
-              {% endfor %}
-          </p>
-          {% endif %}
         </div>
    
       <div class="panel" id="tab4">
