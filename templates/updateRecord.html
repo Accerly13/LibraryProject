@@ -98,11 +98,11 @@
             <label class="col-sm-2 col-form-label" for="department">Course:</label>
               <div class="col-sm-10">
                 {% if course %}
-                <select class="form-select" aria-label="Default select example" name="courses"> 
+                <select class="form-select" aria-label="Default select example" name="courses" onchange="handleSelectChange(this)"> 
                   {% for item in course %}
                     <option value="{{item}}"> {{ item }} </option>
                   {% endfor %}
-                  <option onclick="checkAndAddOption(this)" value="">Add New </option>
+                  <option value="add-new-course">Add New </option>
                 </select>
                 <div id="inputnew"></div> 
                 {% else %}
@@ -256,11 +256,11 @@
               <label class="col-sm-2 col-form-label" for="department">Course:</label>
                 <div class="col-sm-10">
                   {% if course %}
-                  <select class="form-select" aria-label="Default select example" name="courses-update" onclick="checkAndAddOption(this)" id="course-select"> 
+                  <select class="form-select" aria-label="Default select example" name="courses-update" id="course-select" onchange="handleSelectChange(this)"> 
                     {% for item in course %}
                       <option value="{{item}}"> {{ item }} </option>
                     {% endfor %}
-                    <option onclick="checkAndAddOption(this)" value="">Add New </option>
+                    <option value="add-new-course">Add New </option>
                   </select>
                   <div id="inputnew"></div> 
                   {% else %}
@@ -790,6 +790,29 @@ function searchTable() {
         div1.innerHTML="";
       }
   }
+
+  function handleSelectChange(select) {
+  if (select.value === "add-new-course") {
+    var input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Enter new course";
+    input.onblur = function() {
+      if (input.value) {
+        var option = document.createElement("option");
+        option.text = input.value;
+        option.value = input.value;
+        select.add(option, select.options[select.options.length - 1]);
+        input.remove();
+        select.value = option.value;
+      } else {
+        input.remove();
+        select.value = "";
+      }
+    };
+    select.after(input);
+    input.focus();
+  }
+}
 
   searchinput.onfocus = function () {
   data_list.style.display = 'block';

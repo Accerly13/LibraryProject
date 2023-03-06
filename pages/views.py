@@ -226,7 +226,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             mname = request.POST['mname']
             lname = request.POST['lname']
             gender = request.POST['gender']
-            dept_select = request.POST['department_select']
+            dept_select = request.POST['data_list']
             course = request.POST['courses']
             if course == "":
                 course = request.POST['courses1']
