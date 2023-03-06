@@ -147,33 +147,39 @@
 
     function exportToPdf(name) {
       var exportType = document.querySelector('input[name="'+name+'"]:checked').value;
-
       if (exportType === 'pdfone') {
       
         exportType_temp = name.replace('exportype', '')
-        var table = document.querySelector(`#rendered-data-${exportType_temp}`)
-        var tableBox = table.getBoundingClientRect();
-
-                // Create a canvas element with the same dimensions as the table
-        var canvas = document.createElement('canvas');
-        canvas.width = tableBox.width;
-        canvas.height = tableBox.height;
-
-        // Render the table to the canvas using html2canvas library
-        html2canvas(table, {
-          canvas: canvas,
-          allowTaint: true,
-          useCORS: true
-        }).then(function() {
-          // Create a new PDF document
-          var pdfDoc = new jsPDF('p', 'mm', 'a4');
-
-          // Add the canvas as an image to the PDF document
-          pdfDoc.addImage(canvas.toDataURL(), 'PNG', 0, 0, 210, 297);
-
-          // Save the PDF document
-          pdfDoc.save(`${exportType_temp}.pdf`);
+        // Select the table to export
+        var table = document.querySelector(`#rendered-data-${exportType_temp}`);
+        // Create a new jsPDF instance
+        var doc = new jsPDF();
+        
+        // Set the column headers
+        var headers = [];
+        var headerCells = table.querySelectorAll('thead th');
+        for (var i = 0; i < headerCells.length; i++) {
+          headers.push(headerCells[i].textContent.trim());
+        }
+        
+        // Get the table rows
+        var rows = [];
+        var dataCells = table.querySelectorAll('tbody tr');
+        var rowData = [];
+        for (var i = 0; i < dataCells.length; i++) {
+          rowData.push(dataCells[i].textContent.trim());
+          if ((i + 1) % headers.length === 0) {
+            rows.push(rowData);
+            rowData = [];
+          }
+        }
+        
+        // Add the table to the PDF
+        doc.autoTable({
+          html: `#rendered-data-${exportType_temp}`,
+          startY: 20
         });
+        doc.save('my-table.pdf');
       } else if (exportType === 'csvone') {
         exportType_temp = name.replace('exportype', '')
         // Export the table as CSV
