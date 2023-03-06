@@ -183,35 +183,42 @@
       } else if (exportType === 'csvone') {
         exportType_temp = name.replace('exportype', '')
         // Export the table as CSV
-        var table = document.querySelector(`#rendered-data-${exportType_temp}`);
-        var csvContent = 'data:text/csv;charset=utf-8,';
-        
-        // Get the column headers
+        var data = [];
         var headers = [];
-        var headerCells = table.querySelectorAll('thead th');
-        for (var i = 0; i < headerCells.length; i++) {
-          headers.push(headerCells[i].textContent.trim());
-        }
-        csvContent += headers.join(',') + '\n';
-        
-        // Get the table rows
-        var dataCells = table.querySelectorAll('tbody tr');
-        var rowData = [];
-        for (var i = 0; i < dataCells.length; i++) {
-          rowData.push(dataCells[i].textContent.trim());
-          if ((i + 1) % headers.length === 0) {
-            csvContent += rowData.join(',') + '\n';
-            rowData = [];
-          }
-        }
-        
-        // Download the CSV file
+        var table = document.getElementById(`rendered-data-${exportType_temp}`);
+        var rows = table.querySelectorAll("tbody tr");
+
+        // Get the header cells and add them to the headers array
+        var headerCells = table.querySelectorAll("thead th");
+        headerCells.forEach(function(cell) {
+          headers.push(cell.textContent);
+        });
+
+        // Loop through the rows of the table and add each row's data to the data array
+        rows.forEach(function(row) {
+          var rowData = [];
+          var cells = row.querySelectorAll("th, td");
+          cells.forEach(function(cell) {
+            rowData.push(cell.textContent.trim());
+          });
+          data.push(rowData);
+        });
+
+        // Create the CSV content
+        var csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += headers.join(",") + "\n";
+        data.forEach(function(row) {
+          csvContent += row.join(",") + "\n";
+        });
+
+        // Create a link element and download the CSV file
         var encodedUri = encodeURI(csvContent);
-        var link = document.createElement('a');
-        link.setAttribute('href', encodedUri);
-        link.setAttribute('download', 'my-table.csv');
-        document.body.appendChild(link);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `${exportType_temp}.csv`);
+        document.body.appendChild(link); // Required for FF
         link.click();
+        document.body.removeChild(link);
       }
     }
 
