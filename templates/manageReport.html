@@ -179,7 +179,7 @@
           html: `#rendered-data-${exportType_temp}`,
           startY: 20
         });
-        doc.save('my-table.pdf');
+        doc.save(`${exportType_temp}.pdf`);
       } else if (exportType === 'csvone') {
         exportType_temp = name.replace('exportype', '')
         // Export the table as CSV
