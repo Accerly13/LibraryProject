@@ -9,14 +9,14 @@
     {% for item in usertype %}
       <input class="radio" id="tab-num{{forloop.counter}}" name="group" type="radio">
     {% endfor %}
-    <!-- <div class="flex-tab"> -->
+    <div class="flex-tab">
       <div class="tabs flex-tab">
         <label class="tab" onclick="switchTab('tab0')" data-tab="tab5" id="tab-num" for="four">Overall</label>
         {% for item in usertype %}
           <label class="tab" onclick="switchTab('tab{{forloop.counter}}')" data-tab="tab{{forloop.counter}}" id="tab-num{{forloop.counter}}" for="tab-num{{forloop.counter}}">{{item.type_name|title}}</label>
         {% endfor %}
         </div>
-    <!-- </div> -->
+    </div>
     <div class="panels panel-relative mx-auto mb-5">
       {% for item in usertype %}
         <div class="panel" id="tab{{forloop.counter}}">
@@ -123,6 +123,19 @@
           </div>
       </div>
       </div>
+
+      <style>
+        .tab:hover {
+          background: #4488aa;
+        }
+
+        .tab.active {
+          background: #ffffff;
+          color: #336699;
+          border-top: 3px solid #336699;
+        }
+        
+      </style>
      
       <script>
       window.jsPDF = window.jspdf.jsPDF;
@@ -230,13 +243,16 @@
     }
 
     // Function to switch tabs
-    function switchTab(tabId) {
+      function switchTab(tabId) {
+      document.getElementById(activeTab).classList.remove('active');
+      document.getElementById(tabId).classList.add('active');
       document.getElementById(activeTab).style.display = "none";
       document.getElementById(tabId).style.display = "block";
       document.getElementById(tabId).checked = true;
       activeTab = tabId;
       sessionStorage.setItem("activeTabManageReport", activeTab);
     }
+      
 
       $(document).ready(function() {
         var dataLength = "{{ usertype|length }}";
