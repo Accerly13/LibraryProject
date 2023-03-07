@@ -11,7 +11,9 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.db.models.functions import Lower, Upper, Substr
 from django.forms.models import model_to_dict
+# from flask import Flask, request, render_template
 
+# app = Flask(__name__)
 
 @login_required
 def protected_view(request):
@@ -141,6 +143,20 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
 
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
+
+    # @app.route('/', methods=['GET', 'POST'])
+    # def upload_file():
+    #     if request.method == 'POST':
+    #         file = request.files['image'] # access the uploaded file using the 'image' key
+    #         # save the uploaded file to disk
+    #         file.save('uploads/' + file.filename)
+    #         return 'Image uploaded successfully!'
+    #     else:
+    #         return render_template('upload.html')
+
+    # if __name__ == '__main__':
+    #     app.run(debug=True)
+
     def __init__(self):
         self.colleges = College.objects.all()
         self.dept = Department.objects.all()
