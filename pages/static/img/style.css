@@ -93,17 +93,6 @@ h2 {
   border-top: 3px solid #336699;
 }
 
-#one:checked ~ .tabs #one-tab,
-#two:checked ~ .tabs #two-tab,
-#three:checked ~ .tabs #three-tab,
-#four:checked ~ .tabs #four-tab,
-#five:checked ~ .tabs #five-tab {
-  background: #fffffff6;
-  color: #336699;
-  border-top: 3px solid #336699;
-}
-
-
 /* medium */
 @media all and (min-width: 768px) {
   .grid-2-column-2 {
@@ -482,7 +471,6 @@ img {
 .container-timeout {
   align-items: center;
 }
-
 
 input {
   padding: 10px 10px !important;
