@@ -181,18 +181,17 @@ footer {
                       
                           <div class="col-4 d-flex align-items-center justify-content-center flex-column">
                             <div class="card-body">
+                              {% if userinfo.user_idno == student_id and userinfo.image.url != "" %}
                               <div class="container-fluid">
                                 <div class="text-center">
                                   <div class="row">
-                                    <div class="row-sm-6">
-                                      {% if userinfo.user_idno == student_id %}
-                                        <img src="{{ userinfo.image.url }}" class="img-fluid profile img-thumbnail rounded-circle my-3 hover-shadow">
-                                      {% endif %}
-                                    </div>
+                                      <div class="row-sm-6">
+                                          <img src="{{ userinfo.image.url }}" class="img-fluid profile img-thumbnail rounded-circle my-3 hover-shadow">
+                                      </div>
                                   </div>
                                 </div>
                               </div>
-                              
+                              {% endif %}
                               <p class="card-text mb-2">
                                 {% if userinfo.user_idno == student_id %}
                                   <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
