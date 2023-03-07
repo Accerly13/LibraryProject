@@ -5,13 +5,13 @@
     <h1 class="text-style">Manage Reports</h1>  
   </header>
   <div class="wrapper" style="background-color: #ECF0F1">
-    <input class="radio" id="tab-num" name="group" type="radio">
+    <input class="radio" id="tab-num-radio0" name="group" type="radio">
     {% for item in usertype %}
-      <input class="radio" id="tab-num{{forloop.counter}}" name="group" type="radio">
+      <input class="radio" id="tab-num-radio{{forloop.counter}}" name="group" type="radio">
     {% endfor %}
     <div class="flex-tab">
       <div class="tabs flex-tab">
-        <label class="tab" onclick="switchTab('tab0')" data-tab="tab5" id="tab-num" for="four">Overall</label>
+        <label class="tab" onclick="switchTab('tab0')" data-tab="tab5" id="tab-num0" for="tab-num0" >Overall</label>
         {% for item in usertype %}
           <label class="tab" onclick="switchTab('tab{{forloop.counter}}')" data-tab="tab{{forloop.counter}}" id="tab-num{{forloop.counter}}" for="tab-num{{forloop.counter}}">{{item.type_name|title}}</label>
         {% endfor %}
@@ -132,14 +132,39 @@
         }
 
         .tab.active {
-          background: #fffffff6;
-          color: #336699;
-          border-top: 3px solid #336699;
+          background: #fffffff6 !important;
+          color: #336699 !important;
+          border-top: 3px solid #336699 !important;
         }
         
       </style>
      
       <script>
+        var activeTab = sessionStorage.getItem("activeTabManageReport");
+
+        // If there is no active tab, set the first tab as the active tab
+        var radios = document.getElementsByName("group");
+        for (var i = 0; i < radios.length; i++) {
+          var element = document.getElementById("tab-num"+i);
+          if (!activeTab) {
+            activeTab = "tab0";
+            document.getElementById("tab-num-radio0").checked = true;
+            sessionStorage.setItem("activeTabManageReport", activeTab);
+            element.classList.add("active");
+          }
+          if (activeTab == "tab"+i) {
+            document.getElementById("tab-num-radio"+i).checked = true; 
+            element.classList.add("active");
+          }       
+        }
+
+        // Show the active tab and hide the other tabs
+        document.getElementById(activeTab).style.display = "block";
+        for (var i = 1; i < radios.length; i++) {
+          if ("tab" + i != activeTab) {
+            document.getElementById("tab" + i).style.display = "none";
+          }   
+        }
 
 
       const tabs = document.querySelectorAll('.tab');
@@ -237,41 +262,9 @@
       }
     }
 
-    var activeTab = sessionStorage.getItem("activeTabManageReport");
-
-    // If there is no active tab, set the first tab as the active tab
-    if (!activeTab) {
-      activeTab = "tab0";
-      document.getElementById("tab-num1").checked = true;
-      sessionStorage.setItem("activeTabManageReport", activeTab);
-    }
-    if (activeTab == "tab0") {
-      document.getElementById("tab-num").checked = true;
-    
-    }
-    else if (activeTab == "tab1") {
-      document.getElementById("tab-num1").checked = true;
-    
-    }else if (activeTab == "tab2"){ 
-      document.getElementById("tab-num2").checked = true;
-    
-    }else if (activeTab == "tab3" ){ 
-      document.getElementById("tab-num3").checked = true;
-    
-    }else{ 
-      document.getElementById("tab-num4").checked = true;
-    }
-
-    // Show the active tab and hide the other tabs
-    document.getElementById(activeTab).style.display = "block";
-    for (var i = 1; i < 5; i++) {
-      if ("tab" + i != activeTab) {
-        document.getElementById("tab" + i).style.display = "none";
-      }
-    }
 
     // Function to switch tabs
-      function switchTab(tabId) {
+    function switchTab(tabId) {
       document.getElementById(activeTab).classList.remove('active');
       document.getElementById(tabId).classList.add('active');
       document.getElementById(activeTab).style.display = "none";

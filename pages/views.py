@@ -63,7 +63,6 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
 
     def __init__(self):
         self.dept = Department.objects.all()
-        self.users = UserInfo.objects.all()
 
     def post(self, request):
         student_id = request.POST['student_id']
@@ -72,7 +71,8 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
             now = datetime.now()
             DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
             messages.success(request, ("Succesfully Recorded!"))
-            return render(request, 'studentdashboard.html', {'student_id': student_id, 'users':self.users})
+            print(userinfo.image.url)
+            return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo})
         except:
             messages.success(request, ("Intruder Alert!"))
             return redirect('/dashboard/')	
@@ -248,6 +248,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 course = request.POST['courses1']
             usertype = request.POST['usertype_select']
             comments = request.POST['comments']
+            picture = request.FILES['picture']
             try: 
                 user_check = UserInfo.objects.get(user_idno = idnum)
                 messages.success(request, ("User is Already Registered!"))
@@ -255,7 +256,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             except:
                 dept_check = Department.objects.get(department_name = dept_select)
                 usertype = UserType.objects.get(type_id = usertype)
-                UserInfo.objects.create(user_idno=idnum, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
+                UserInfo.objects.create(user_idno=idnum, image=picture, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('input_user_samp'):

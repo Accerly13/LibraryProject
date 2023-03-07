@@ -185,20 +185,21 @@ footer {
                                 <div class="text-center">
                                   <div class="row">
                                     <div class="row-sm-6">
-                                      <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" class="img-fluid profile img-thumbnail rounded-circle my-3 hover-shadow">
+                                      {% if userinfo.user_idno == student_id %}
+                                        <img src="{{ userinfo.image.url }}" class="img-fluid profile img-thumbnail rounded-circle my-3 hover-shadow">
+                                      {% endif %}
                                     </div>
                                   </div>
                                 </div>
                               </div>
                               
                               <p class="card-text mb-2">
-                                {% for item in users %}
-                                  {% if item.user_idno == student_id %}
-                                    <div class="infoName">{{ item.first_name }} {{item.middle_name }} {{ item.last_name }}</div>
-                                    <div class="info"> {{item.department.department_name}} </div>
-                                    <div class="info">{{item.course_user.course_name}}</div>
-                                  {% endif %}
-                                {% endfor %}
+                                {% if userinfo.user_idno == student_id %}
+                                  <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
+                                  <div class="info"> {{userinfo.department.department_name}} </div>
+                                  <div class="info">{{userinfo.course}}</div>
+                                  <div class="info">{{userinfo.comment}}</div>
+                                {% endif %}
                               </p>
                             </div>
                             <div class="card">
