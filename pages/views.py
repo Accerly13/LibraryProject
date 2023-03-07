@@ -72,6 +72,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
             DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
             messages.success(request, ("Succesfully Recorded!"))
             print(userinfo.image.url)
+            print(userinfo.image.path)
             return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo})
         except:
             messages.success(request, ("Intruder Alert!"))
