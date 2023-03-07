@@ -126,11 +126,13 @@
 
       <style>
         .tab:hover {
-          background: #4488aa;
+          background: #fffffff6;
+          color: #336699;
+          border-top: 3px solid #336699;
         }
 
         .tab.active {
-          background: #ffffff;
+          background: #fffffff6;
           color: #336699;
           border-top: 3px solid #336699;
         }
@@ -138,6 +140,19 @@
       </style>
      
       <script>
+
+
+      const tabs = document.querySelectorAll('.tab');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remove the active class from all tabs
+          tabs.forEach(tab => tab.classList.remove('active'));
+
+          // Add the active class to the clicked tab
+          tab.classList.add('active');
+        });
+      });
       window.jsPDF = window.jspdf.jsPDF;
     
     
