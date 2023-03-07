@@ -66,15 +66,15 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
 
     def post(self, request):
         student_id = request.POST['student_id']
-        # try:
-        userinfo = UserInfo.objects.get(user_idno = student_id)
-        now = datetime.now()
-        DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
-        messages.success(request, ("Succesfully Recorded!"))
-        return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo})
-        # except:
-        #     messages.success(request, ("Intruder Alert!"))
-        #     return redirect('/dashboard/')	
+        try:
+            userinfo = UserInfo.objects.get(user_idno = student_id)
+            now = datetime.now()
+            DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
+            messages.success(request, ("Succesfully Recorded!"))
+            return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo})
+        except:
+            messages.success(request, ("Intruder Alert!"))
+            return redirect('/dashboard/')	
 
         # try: 
         #     college_check = College.objects.get(college_name = college)
