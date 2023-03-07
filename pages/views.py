@@ -11,6 +11,9 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.db.models.functions import Lower, Upper, Substr
 from django.forms.models import model_to_dict
+import os
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 # from flask import Flask, request, render_template
 
 # app = Flask(__name__)
@@ -256,6 +259,22 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 dept_check = Department.objects.get(department_name = dept_select)
                 usertype = UserType.objects.get(type_id = usertype)
                 UserInfo.objects.create(user_idno=idnum, image=picture, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
+                userinfo = UserInfo.objects.get(user_idno = idnum)
+                current_filename = userinfo.image.name
+
+                # Define the new filename
+                new_filename = f"{idnum}{current_filename[current_filename.rfind('.'):]}"
+
+                # Get the full path of the current file in the media folder
+                current_path = os.path.join(settings.MEDIA_ROOT, current_filename)
+
+                # Get the full path of the new file in the media folder
+                new_path = os.path.join(settings.MEDIA_ROOT, new_filename)
+
+                # Rename the file
+                os.rename(current_path, new_path)
+                userinfo.image.name = new_filename
+                userinfo.save()
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('input_user_samp'):
