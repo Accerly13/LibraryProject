@@ -37,7 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     {% load static %}
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
     <link rel="stylesheet" href="{% static 'img/style.css' %}" type="text/css" />
     <title>JOBL Userstat</title>
 
@@ -57,7 +57,11 @@
       <div>
         <div class="sidenav show-in-laptop">
           <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" width="150" height="150" />
-          <div style="font-family: Arial; text-align: center; font-size: 15px; color: white; margin-top: 2rem; margin-bottom: 2rem">System Administrator</div>
+          <div style="font-family: Arial; text-align: center; font-size: 15px; color: white; margin-top: 2rem; margin-bottom: 1rem">System Administrator</div>
+          <div class="d-flex justify-content-center"style="padding-bottom: 2rem;"> 
+            
+          <button class="btn btn-primary">Edit profile</button>
+        </div>
           <a class="navHover" style="font-family: Arial; font-weight: bold; font-size: 15px; color: white" href="/admin/dashboard">
             &nbsp;&nbsp;<i class="fa fa-home" style="color: white"></i> &nbsp;&nbsp;Home
           </a>
