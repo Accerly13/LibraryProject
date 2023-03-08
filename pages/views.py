@@ -48,9 +48,6 @@ class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 class StudentDashboardOut(LoginRequiredMixin, TemplateView):
     template_name = 'dashboardout.html'
 
-class SystemAdminProfile(LoginRequiredMixin, TemplateView):
-    template_name = 'sysadprofile.html'
-
     def post(self, request):
         student_id = request.POST['student_id']
         try:
@@ -63,6 +60,10 @@ class SystemAdminProfile(LoginRequiredMixin, TemplateView):
         except:
             messages.success(request, ("You didn't log in!"))
             return redirect('/dashboardout/')	
+
+
+class SystemAdminProfile(LoginRequiredMixin, TemplateView):
+    template_name = 'sysadprofile.html'
 
 class StudentDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'studentdashboard.html'
