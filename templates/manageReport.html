@@ -380,7 +380,7 @@
             var department_col = document.createElement('th');
             department_col.textContent = "Department";
             var total_col = document.createElement('th');
-            total_col.textContent = "Total Number of " + type_name
+            total_col.textContent = "Total Number of visits"
 
 
             // Append the td elements to the tr element
@@ -399,10 +399,8 @@
             for (var department in data_user) {
                 var college_counts = data_user[department];
                 for (var college in college_counts) {
+                  var count = college_counts[college];
 
-                  var users = college_counts[college];
-                  var count = Object.values(users).reduce((a, b) => a + b, 0);
-                  
                   // Create a new tr element  
                   newRow = document.createElement('tr');
                   newRow.className = 'text-center'
@@ -426,8 +424,7 @@
             }
           })
           .catch(error => console.error(error));
-        
-       
+    
       }
       </script>
     </div>
