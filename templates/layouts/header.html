@@ -60,7 +60,7 @@
           <div style="font-family: Arial; text-align: center; font-size: 15px; color: white; margin-top: 2rem; margin-bottom: 1rem">System Administrator</div>
           <div class="d-flex justify-content-center"style="padding-bottom: 2rem;"> 
             
-          <button class="btn btn-primary">Edit profile</button>
+          <button onclick="editProfile()" class="btn btn-primary">Edit profile</button>
         </div>
           <a class="navHover" style="font-family: Arial; font-weight: bold; font-size: 15px; color: white" href="/admin/dashboard">
             &nbsp;&nbsp;<i class="fa fa-home" style="color: white"></i> &nbsp;&nbsp;Home
@@ -108,6 +108,11 @@
     ></script>
 
     <script>
+
+      function editProfile() {
+        window.location = '/systemadminprofile'
+      }
+
       document.getElementById("logout").addEventListener("click", function () {
         fetch("/logout_view/").then(function (response) {
           if (response.ok) {

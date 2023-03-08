@@ -48,6 +48,9 @@ class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 class StudentDashboardOut(LoginRequiredMixin, TemplateView):
     template_name = 'dashboardout.html'
 
+class SystemAdminProfile(LoginRequiredMixin, TemplateView):
+    template_name = 'sysadprofile.html'
+
     def post(self, request):
         student_id = request.POST['student_id']
         try:
