@@ -15,10 +15,10 @@
   <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
   <body>
     <header mb-3>
-      <h2 class=" visitor text-center text-stroke">VISITOR INFORMATION</h2>
+      <h2 class=" visitor text-center ">VISITOR INFORMATION</h2>
       <nav>
-        <a href="/visitor/">Home</a> |
-        <a href="/visitor/about/">About</a>
+        <a class="link" href="/visitor/">Home</a> |
+        <a class="link" href="/visitor/about/">About</a>
       </nav>
     </header>
 
@@ -176,10 +176,10 @@ document.getElementById("about-btn").addEventListener("click", function() {
         }
         
         /* Center align text and set font size for h2 */
-        h2 {
+        /* h2 {
             text-align: center;
             font-size: 1.5rem;
-        }
+        } */
         
         /* Set font size for the mission and vision paragraphs */
         .mission p, .vision p {
@@ -243,11 +243,11 @@ input{
   color: aliceblue;
 }
  header {
-        background-color: #333;
+        background-color: #336699;
         color: white;
         padding: 10px;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 0.5rem;
       }
 
 body {
@@ -279,6 +279,15 @@ body {
 .vision{
   margin-left: 5%;
 }
+
+.link {
+  color: white;
+}
+
+.link:hover {
+  color: #52a6e6;
+}
+
 
 
 </style>

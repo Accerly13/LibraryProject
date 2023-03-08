@@ -15,15 +15,15 @@
   <link rel='stylesheet' href="{% static 'img/style.css' %}" type='text/css'>
   <body>
     <header mb-3>
-      <h2 class=" visitor text-center text-stroke">VISITOR INFORMATION</h2>
+      <h2 class=" visitor text-center ">VISITOR INFORMATION</h2>
       <nav>
-        <a style="color:white" href="/visitor/">Home</a> |
-        <a style="color:white" href="/visitor/about/">About</a>
+        <a class="link" href="/visitor/">Home</a> |
+        <a class="link" href="/visitor/about/">About</a>
       </nav>
     </header>
 
     <div style="display: flex; justify-content: center;">
-      <div class="wrapper mt-1">
+      <div class="wrapper mt-1" style="padding-top:1rem"> 
         <div class="form-border">
           <div class="text-center">
             <img src="{% static 'img/Ateneo_de_Naga_University_logo.png' %}" class="img-fluid logo img-thumbnail rounded-circle my-3 hover-shadow" alt="profile">
@@ -66,7 +66,7 @@
       </div>
       
       <footer class="text-center mt-3 fixed-bottom">
-        <p>Copyright &copy; 2023 Regina Mae Bulawan</p>
+        <!-- <p>Copyright &copy; 2023 Regina Mae Bulawan</p> -->
       </footer>   
     </div>
   
@@ -97,6 +97,15 @@ document.getElementById("about-btn").addEventListener("click", function() {
 </html>
 
 <style>
+
+
+.link {
+  color: white;
+}
+
+.link:hover {
+  color: #52a6e6;
+}
 
 .wrapper{
   width: 40%;
@@ -159,7 +168,7 @@ a{
 }
 
 .form-border {
-    border: 2px solid black;
+    border: 2px solid #336699;
     padding: 10px;
     border-radius: 2em;
     width: 100%;
