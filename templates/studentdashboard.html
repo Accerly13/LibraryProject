@@ -201,26 +201,26 @@ footer {
                                 {% endif %}
                               </p>
                             </div>
-                            <div class="card">
-                              <form method="post">
-                                {% csrf_token %}
-                              <div class="form-group">
-                                <label style="font-size: 1.5rem; display: flex; justify-content: center; padding-top:2rem" for="studentID">Student ID Number</label>
-                                <div class="student-input">
-                                    <input id="studentID" class="form-control big-text-field mb-3" placeholder="ex. CO2019-1-1190" name="student_id">
-                                </div>
-                              </div>
-                              <input type="submit" hidden />
-                            </form>
                             {% if messages %}
                             <p class="messages">
                                 {% for message in messages %}
-                                <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+                                    <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
                                 {% endfor %}
                             </p>
-                            {% endif %}
-
-                            </div>                 
+                        {% endif %}
+                        
+                        <div class="card">
+                            <form method="post" onsubmit="speak();">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label style="font-size: 1.5rem; display: flex; justify-content: center; padding-top:2rem" for="studentID">Student ID Number</label>
+                                    <div class="student-input">
+                                        <input id="studentID" class="form-control big-text-field mb-3" placeholder="ex. CO2019-1-1190" name="student_id">
+                                    </div>
+                                </div>
+                                <input type="submit" hidden />
+                            </form>
+                        </div>                 
                           </div>
                         </div>
                       </div>
@@ -234,6 +234,14 @@ footer {
     </div>
 </body>
 <script>
+
+function speak() {
+        const message = new SpeechSynthesisUtterance();
+        message.lang = 'en-US';
+        message.text = 'Successfully Recorded';
+        speechSynthesis.speak(message);
+    }
+
   if (sessionStorage.getItem("activeTabSearch")) {
     sessionStorage.removeItem("activeTabSearch");
   }
