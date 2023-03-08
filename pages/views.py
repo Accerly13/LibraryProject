@@ -281,9 +281,11 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_searched = request.POST.get('input_user_samp')
             user_searched_details = UserInfo.objects.get(user_idno=user_searched)
             user_details = model_to_dict(user_searched_details)
+            user_details.pop('image', None)
             return JsonResponse({'user_searched': user_details, 
-                                 'department':user_searched_details.department.department_name,
-                                 'usertype': user_searched_details.type.type_name})   
+                                'department':user_searched_details.department.department_name,
+                                'usertype': user_searched_details.type.type_name})
+
 
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
