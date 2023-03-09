@@ -193,11 +193,20 @@ footer {
                               </div>
                               {% endif %}
                               <p class="card-text mb-2">
-                                {% if userinfo.user_idno == student_id %}
+                                {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno %}
                                   <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
                                   <div class="info"> {{userinfo.department.department_name}} </div>
                                   <div class="info">{{userinfo.course}}</div>
                                   <div class="info">{{userinfo.comment}}</div>
+                                  <script>
+                                    function speak() {
+                                        const message = new SpeechSynthesisUtterance();
+                                        message.lang = 'en-US';
+                                        message.text = 'Successfully Recorded';
+                                        speechSynthesis.speak(message);
+                                    }
+                                    speak()
+                                  </script>
                                 {% endif %}
                               </p>
                             </div>
@@ -210,7 +219,7 @@ footer {
                         {% endif %}
                         
                         <div class="card">
-                            <form method="post" onsubmit="speak();">
+                            <form method="post" >
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label style="font-size: 1.5rem; display: flex; justify-content: center; padding-top:2rem" for="studentID">Student ID Number</label>
@@ -234,14 +243,6 @@ footer {
     </div>
 </body>
 <script>
-
-function speak() {
-        const message = new SpeechSynthesisUtterance();
-        message.lang = 'en-US';
-        message.text = 'Successfully Recorded';
-        speechSynthesis.speak(message);
-    }
-
   if (sessionStorage.getItem("activeTabSearch")) {
     sessionStorage.removeItem("activeTabSearch");
   }
