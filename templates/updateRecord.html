@@ -120,7 +120,6 @@
                   {% endfor %}
                   <option value="add-new-course">Add New </option>
                 </select>
-                <div id="inputnew"></div> 
                 {% else %}
                   <div>
                     <input class="form-control" type="text" id="course" name="courses" required>
@@ -187,39 +186,36 @@
         </div>  
 
         <div id="content-eye" style="display: none;">
-          <div class="container-fluid">
-            
-            <div class="text-center">
-                  <div class="row-sm-6">
-                    <img id="profile-picture" src="" class="img-fluid profile img-thumbnail rounded-circle my-3 hover-shadow">
-                  </div>
-            </div>
+          <div style="display:flex; justify-content: end">
+            <button class="btn-delete btn-primary me-md-2" id="myBtn" type="button">Delete</button>
+            <form id="delete-user" method="post">
+              {% csrf_token %}
+              <input type="text" id="confirmation1" name="confirmation1" value="" hidden>
+              <input class="form-control" type="text" id="idnum-delete" name="idnum-delete" required hidden>
+            </form>
           </div>
-          <form class="panel-margin" method="post">
-            <div style="display:flex; justify-content: end">
-              <button class="btn-delete btn-primary me-md-2" id="myBtn" type="button">Delete</button>
-            </div>
-            <div id="myModal" class="modal">
-              <!-- Modal content -->
-              <div class="modal-content">
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button id="close-modal" type="button" class="btn-close" id="close-modal" aria-label="Close"></button>
-                  </div>
-                <div class="confirm-message">Are you sure you want to delete the USER?</div>
-                <div class="confirm-actions">
-                  <button class="btn-delete mr-2 btn-primary" type="submit">Yes</button>
-          
-                  <button class="btn btn-primary" id="close-modal" type="submit">No</button>
+          <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button id="close-modal" type="button" class="btn-close" id="close-modal" aria-label="Close"></button>
                 </div>
+              <div class="confirm-message">Are you sure you want to delete the USER?</div>
+              <div class="confirm-actions">
+                <button class="btn-delete mr-2 btn-primary" onclick="DeleteRecords()">Yes</button>
+        
+                <button class="btn btn-primary" id="close-modal" onclick="noButton()">No</button>
               </div>
-          
             </div>
+        
+          </div>
+          <form class="panel-margin" method="post" enctype="multipart/form-data">
             <hr>
             {% csrf_token %}
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="profile-picture1">Upload Picture</label>
               <div class="col-sm-10">
-                <input type="file" class="form-control" id="profile-picture1" accept="image/*" required name="picture"/>
+                <input type="file" class="form-control" id="profile-picture1" accept="image/*" required name="picture1"/>
               </div>
               <img id="preview1" src="" alt="Preview">
             </div>
@@ -270,7 +266,7 @@
             <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="department">Department:</label>
               <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example" name="data_list" id="department-list">
+                <select class="form-select" aria-label="Default select example" name="data_list1" id="department-list">
                   {% for item in dept %}
                     <option value="{{item.department_name}}"> {{ item.department_name }} </option>
                   {% endfor %}
@@ -287,7 +283,6 @@
                     {% endfor %}
                     <option value="add-new-course">Add New </option>
                   </select>
-                  <div id="inputnew"></div> 
                   {% else %}
                     <div>
                       <input class="form-control" type="text" id="course" name="courses-update" required>
@@ -300,13 +295,13 @@
                   <div class="col-sm-10">
                     <select id="usertype-select" class="form-select" aria-label="Default select example" name="usertype_select-update">
                       {% for item in usertype %}
-                        <option value="{{item.type_name}}"> {{ item.type_name }} </option>
+                        <option value="{{item.type_id}}"> {{ item.type_name }} </option>
                       {% endfor %}
                     </select>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label" for="comment">Comment:</label>
+                  <label class="col-sm-2 col-form-label" for="comments-update">Comment:</label>
                     <div class="col-sm-10">
                       <div class="form-floating">
                         <textarea class="form-control" placeholder="Leave a comment here" id="comments-update" name="comments-update"></textarea>
@@ -635,6 +630,7 @@ option:hover,  .active{
 sessionStorage?.removeItem("activeTabSearch");
 sessionStorage?.removeItem("activeTabManageReport");
 
+
 var fileInput = document.getElementById("profile-picture");
 var previewImg = document.getElementById("preview");
 fileInput.addEventListener("change", function() {
@@ -691,9 +687,6 @@ fileInput1.addEventListener("change", function() {
     previewImg1.style.display = "none";
   }
 });
-
-
-
 
 document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("[id^='icon-eye']").forEach(function(el) {
@@ -862,17 +855,7 @@ function searchTable() {
         }
     }
   }
-  function checkAndAddOption(selectElement) {
-      if (selectElement.value === "") {
-        var div1=document.getElementById("inputnew");
-        div1.innerHTML="<input type='text' name='courses1' id='courses1'/>";
-        
-      }
-      else {
-        var div1=document.getElementById("inputnew");
-        div1.innerHTML="";
-      }
-  }
+  
 
   function handleSelectChange(select) {
   if (select.value === "add-new-course") {
@@ -970,7 +953,7 @@ function addActive(x) {
   }
 
    // Get the modal
-   var modal = document.getElementById("myModal");
+  var modal = document.getElementById("myModal");
   
   // Get the button that opens the modal
   var btn = document.getElementById("myBtn");
@@ -980,6 +963,7 @@ function addActive(x) {
   
   // When the user clicks the button, open the modal 
   btn.onclick = function() {
+    document.getElementById("idnum-delete").value = document.getElementById("idnum-update").value
     modal.style.display = "block";
   }
   
@@ -993,6 +977,25 @@ function addActive(x) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
+  }
+  function DeleteRecords() {
+    document.getElementById("confirmation1").value = "Yes"
+    event.preventDefault();
+      var myForm = document.querySelector('#delete-user');
+      var formData = new FormData(myForm);
+      fetch('/admin/dashboard/updaterecord/', {
+        method: 'POST',
+        body: formData
+      })
+      modal.style.display = "none";
+      $("#record_rendered tbody tr").remove(); 
+      $("#record_rendered thead tr").remove();
+      document.querySelector("#table-click").style.display = "none"
+
+  }
+  function noButton() {
+    modal.style.display = "none";
+    event.preventDefault()
   }
 </script>
 </div>

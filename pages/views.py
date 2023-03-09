@@ -238,8 +238,6 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             gender = request.POST['gender']
             dept_select = request.POST['data_list']
             course = request.POST['courses']
-            if course == "":
-                course = request.POST['courses1']
             usertype = request.POST['usertype_select']
             comments = request.POST['comments']
             picture = request.FILES['picture']
@@ -283,6 +281,61 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                                 'department':user_searched_details.department.department_name,
                                 'usertype': user_searched_details.type.type_name,
                                 'image_url': image_url})
+        elif request.POST.get('idnum-update'):
+            idnum = request.POST['idnum-update']
+            fname = request.POST['fname-update']
+            mname = request.POST['mname-update']
+            lname = request.POST['lname-update']
+            gender = request.POST['gender-update']
+            dept_select = request.POST['data_list1']
+            course = request.POST['courses-update']
+            usertype = request.POST['usertype_select-update']
+            comments = request.POST['comments-update']
+            picture = request.FILES['picture1']
+    
+            user_check = UserInfo.objects.get(user_idno = idnum)
+            file_path_delete = user_check.image.path
+
+            # Delete the file
+            os.remove(file_path_delete)
+            dept_check = Department.objects.get(department_name = dept_select)
+            usertype = UserType.objects.get(type_id = usertype)
+            user_check.user_idno = idnum
+            user_check.image = picture
+            user_check.first_name = fname
+            user_check.middle_name = mname
+            user_check.last_name = lname
+            user_check.gender = gender
+            user_check.comment = comments
+            user_check.course = course
+            user_check.department = dept_check
+            user_check.type = usertype
+            user_check.save()
+            userinfo = UserInfo.objects.get(user_idno = idnum)
+            current_filename = userinfo.image.name
+
+            # Define the new filename
+            new_filename = f"{idnum}{current_filename[current_filename.rfind('.'):]}"
+
+            # Get the full path of the current file in the media folder
+            current_path = os.path.join(settings.MEDIA_ROOT, current_filename)
+
+            # Get the full path of the new file in the media folder
+            new_path = os.path.join(settings.MEDIA_ROOT, new_filename)
+
+            # Rename the file
+            os.rename(current_path, new_path)
+            userinfo.image.name = new_filename
+            userinfo.save()
+            messages.success(request, ("The data has been updated!"))	
+            return redirect('/admin/dashboard/updaterecord/')
+        
+        elif request.POST.get('confirmation1'):
+            id_delete = request.POST['idnum-delete']
+            user_check = UserInfo.objects.get(user_idno=id_delete)
+            user_check.delete()
+            messages.success(request, ("Records Deleted!"))
+            return redirect('/admin/dashboard/updaterecord/')
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
