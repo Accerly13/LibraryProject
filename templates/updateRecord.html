@@ -986,12 +986,9 @@ function addActive(x) {
       fetch('/admin/dashboard/updaterecord/', {
         method: 'POST',
         body: formData
-      })
-      modal.style.display = "none";
-      $("#record_rendered tbody tr").remove(); 
-      $("#record_rendered thead tr").remove();
-      document.querySelector("#table-click").style.display = "none"
-
+      }).then(
+        window.location.reload()
+      )
   }
   function noButton() {
     modal.style.display = "none";
