@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.db.models.functions import Lower, Upper, Substr
 from django.forms.models import model_to_dict
 import os
+import base64
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 # from flask import Flask, request, render_template
@@ -150,19 +151,6 @@ class SearchRecord(LoginRequiredMixin, TemplateView):
 class UpdateRecord(LoginRequiredMixin, TemplateView):
     template_name = 'updateRecord.html'
 
-    # @app.route('/', methods=['GET', 'POST'])
-    # def upload_file():
-    #     if request.method == 'POST':
-    #         file = request.files['image'] # access the uploaded file using the 'image' key
-    #         # save the uploaded file to disk
-    #         file.save('uploads/' + file.filename)
-    #         return 'Image uploaded successfully!'
-    #     else:
-    #         return render_template('upload.html')
-
-    # if __name__ == '__main__':
-    #     app.run(debug=True)
-
     def __init__(self):
         self.colleges = College.objects.all()
         self.dept = Department.objects.all()
@@ -284,13 +272,17 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         elif request.POST.get('input_user_samp'):
             user_searched = request.POST.get('input_user_samp')
             user_searched_details = UserInfo.objects.get(user_idno=user_searched)
+            try:
+                image_url = user_searched_details.image.url
+            except:
+                image_url = ""
+
             user_details = model_to_dict(user_searched_details)
             user_details.pop('image', None)
             return JsonResponse({'user_searched': user_details, 
                                 'department':user_searched_details.department.department_name,
-                                'usertype': user_searched_details.type.type_name})
-
-
+                                'usertype': user_searched_details.type.type_name,
+                                'image_url': image_url})
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'

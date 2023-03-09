@@ -186,6 +186,14 @@
         </div>  
 
         <div id="content-eye" style="display: none;">
+          <div class="container-fluid">
+            
+            <div class="text-center">
+                  <div class="row-sm-6">
+                    <img id="profile-picture" src="" class="img-fluid profile img-thumbnail rounded-circle my-3 hover-shadow">
+                  </div>
+            </div>
+          </div>
           <form class="panel-margin" method="post">
             <div style="display:flex; justify-content: end">
               <button class="btn-delete btn-primary me-md-2" id="myBtn" type="button">Delete</button>
@@ -689,6 +697,12 @@ document.addEventListener("DOMContentLoaded", function() {
                   radio.checked = true;
                 }
               }
+              alert(data.image_url)
+              var img = document.getElementById("profile-picture");
+
+              // Set the src attribute
+              img.src = data.image_url
+              
               comment.value = data.user_searched.comment
               userId.value = data.user_searched.user_idno;
               nameInput.value = data.user_searched.first_name;
