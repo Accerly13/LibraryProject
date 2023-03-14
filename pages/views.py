@@ -181,7 +181,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 messages.success(request, ("The College Name is Changed!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             else:
-                messages.success(request, ("Pareho man lang, inedit mo pa!"))
+                messages.success(request, ("College Name is the same with the old one!"))
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('delete_college'):
             college_name = request.POST['delete_college']
@@ -211,7 +211,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 messages.success(request, ("The Department Name is Changed!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             else:
-                messages.success(request, ("Pareho man lang, inedit mo pa!"))
+                messages.success(request, ("Delete Name is the same with the old one!"))
                 return redirect('/admin/dashboard/updaterecord/')	
 
         elif request.POST.get('delete_dept'):
@@ -334,6 +334,8 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             id_delete = request.POST['idnum-delete']
             user_check = UserInfo.objects.get(user_idno=id_delete)
             user_check.delete()
+            user_check_logins = DatesLogin.objects.get(user=id_delete)
+            user_check_logins.delete()
             messages.success(request, ("Records Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
         
@@ -370,30 +372,43 @@ class ManageReport(LoginRequiredMixin, TemplateView):
         return render(request, 'manageReport.html', {'usertype': self.usertype})
     
     def post(self, request):
-        user_type = request.POST['name']
-        start_time =  datetime.strptime(request.POST['start-time-'+user_type], '%H:%M')
-        end_time =  datetime.strptime(request.POST['end-time-'+user_type], '%H:%M')
-        start_date = datetime.strptime(request.POST['start-date-'+user_type], '%m/%d/%Y')
-        end_date = datetime.strptime(request.POST['end-date-'+user_type], '%m/%d/%Y')
-        tempObject = []
-        dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
-        for item in dates_login:
-            usertype_query = UserType.objects.get(type_name__iexact=user_type)
-            user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
-            if user_query:
-                data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
-                tempObject.append(data)
-        department_counts = {}
-        for item in tempObject:
-            department = item['department']
-            college = item['college']
-            if department not in department_counts:
-                department_counts[department] = {}
-            if college not in department_counts[department]:
-                department_counts[department][college] = 0
-            department_counts[department][college] += 1
-
-        return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':department_counts})
+        if request.POST.get('schoolyear'):
+            
+            start_year_report = request.POST['start-year-report']
+            end_year_report = request.POST['end-year-report']
+            if request.POST['schoolyear'] == 'intersession':
+                dates_login = DatesLogin.objects.filter(dates__range=[6, 7])
+            elif request.POST['schoolyear'] == 'firstsem':
+                dates_login = DatesLogin.objects.filter(dates__range=[8, 12])
+            else: 
+                dates_login = DatesLogin.objects.filter(dates__range=[1, 5])
+            dates_login_context = {'dates_login': list(dates_login.values())}
+            return JsonResponse({'dates_report': dates_login_context})
+        else:
+            user_type = request.POST['name']
+            start_time =  datetime.strptime(request.POST['start-time-'+user_type], '%H:%M')
+            end_time =  datetime.strptime(request.POST['end-time-'+user_type], '%H:%M')
+            start_date = datetime.strptime(request.POST['start-date-'+user_type], '%m/%d/%Y')
+            print(start_date)
+            end_date = datetime.strptime(request.POST['end-date-'+user_type], '%m/%d/%Y')
+            tempObject = []
+            dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
+            for item in dates_login:
+                usertype_query = UserType.objects.get(type_name__iexact=user_type)
+                user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
+                if user_query:
+                    data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
+                    tempObject.append(data)
+            department_counts = {}
+            for item in tempObject:
+                department = item['department']
+                college = item['college']
+                if department not in department_counts:
+                    department_counts[department] = {}
+                if college not in department_counts[department]:
+                    department_counts[department][college] = 0
+                department_counts[department][college] += 1
+            return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':department_counts})
 
 class TableSample(LoginRequiredMixin, TemplateView):
     template_name = 'tablesample.html'
