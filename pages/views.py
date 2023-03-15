@@ -370,35 +370,22 @@ class ManageReport(LoginRequiredMixin, TemplateView):
         
     def get(self, request):
         return render(request, 'manageReport.html', {'usertype': self.usertype})
-    
     def post(self, request):
-        if request.POST.get('schoolyear'):
-            
-            start_year_report = request.POST['start-year-report']
-            end_year_report = request.POST['end-year-report']
-            if request.POST['schoolyear'] == 'intersession':
-                dates_login = DatesLogin.objects.filter(dates__range=[6, 7])
-            elif request.POST['schoolyear'] == 'firstsem':
-                dates_login = DatesLogin.objects.filter(dates__range=[8, 12])
-            else: 
-                dates_login = DatesLogin.objects.filter(dates__range=[1, 5])
-            dates_login_context = {'dates_login': list(dates_login.values())}
-            return JsonResponse({'dates_report': dates_login_context})
-        else:
-            user_type = request.POST['name']
-            start_time =  datetime.strptime(request.POST['start-time-'+user_type], '%H:%M')
-            end_time =  datetime.strptime(request.POST['end-time-'+user_type], '%H:%M')
-            start_date = datetime.strptime(request.POST['start-date-'+user_type], '%m/%d/%Y')
-            print(start_date)
-            end_date = datetime.strptime(request.POST['end-date-'+user_type], '%m/%d/%Y')
+        def report_check(user_type, dates_login):
             tempObject = []
-            dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
-            for item in dates_login:
-                usertype_query = UserType.objects.get(type_name__iexact=user_type)
-                user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
-                if user_query:
-                    data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
-                    tempObject.append(data)
+            if user_type != "":
+                for item in dates_login:
+                    usertype_query = UserType.objects.get(type_name__iexact=user_type)
+                    user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
+                    if user_query:
+                        data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
+                        tempObject.append(data)
+            else:
+                for item in dates_login:
+                    user_query = UserInfo.objects.get(user_idno=item.user)
+                    if user_query:
+                        data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
+                        tempObject.append(data)
             department_counts = {}
             for item in tempObject:
                 department = item['department']
@@ -408,7 +395,81 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                 if college not in department_counts[department]:
                     department_counts[department][college] = 0
                 department_counts[department][college] += 1
-            return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':department_counts})
+            return department_counts
+        if request.POST.get('schoolyear'):
+            start_year_report = request.POST['start-year-report']
+            end_year_report = request.POST['end-year-report']
+            jan_login = DatesLogin.objects.none()
+            feb_login = DatesLogin.objects.none()
+            march_login = DatesLogin.objects.none()
+            april_login = DatesLogin.objects.none()
+            may_login = DatesLogin.objects.none()
+            june_login = DatesLogin.objects.none()
+            july_login = DatesLogin.objects.none()
+            aug_login = DatesLogin.objects.none()
+            sept_login = DatesLogin.objects.none()
+            oct_login = DatesLogin.objects.none()
+            nov_login = DatesLogin.objects.none()
+            dec_login = DatesLogin.objects.none()
+            if request.POST['schoolyear'] == 'intersession':
+                for year in range(int(start_year_report), int(end_year_report) + 1):
+                    qs = DatesLogin.objects.filter(dates__range=[datetime.strptime('06/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('06/30/'+str(year), '%m/%d/%Y').date()])
+                    qs1 = DatesLogin.objects.filter(dates__range=[datetime.strptime('07/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('07/31/'+str(year), '%m/%d/%Y').date()])
+                    june_login = june_login | qs 
+                    july_login = july_login | qs1
+                june_login_list = report_check("", june_login)
+                july_login_list = report_check("", july_login)
+                return JsonResponse({'data_june': june_login_list, 'data_july': july_login_list})
+            elif request.POST['schoolyear'] == 'firstsem':
+                for year in range(int(start_year_report), int(end_year_report) + 1):
+                    qs = DatesLogin.objects.filter(dates__range=[datetime.strptime('08/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('08/31/'+str(year), '%m/%d/%Y').date()])
+                    qs1 = DatesLogin.objects.filter(dates__range=[datetime.strptime('09/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('09/30/'+str(year), '%m/%d/%Y').date()])
+                    qs2 = DatesLogin.objects.filter(dates__range=[datetime.strptime('10/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('10/31/'+str(year), '%m/%d/%Y').date()])
+                    qs3 = DatesLogin.objects.filter(dates__range=[datetime.strptime('11/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('11/30/'+str(year), '%m/%d/%Y').date()])
+                    qs4 = DatesLogin.objects.filter(dates__range=[datetime.strptime('12/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('12/31/'+str(year), '%m/%d/%Y').date()])
+                    aug_login = aug_login | qs 
+                    sept_login = sept_login | qs1
+                    oct_login = oct_login | qs2
+                    nov_login = nov_login | qs3
+                    dec_login = dec_login | qs4
+                aug_login_list = report_check("", aug_login)
+                sept_login_list = report_check("", sept_login)
+                oct_login_list = report_check("", oct_login)
+                nov_login_list = report_check("", nov_login)
+                dec_login_list = report_check("", dec_login)
+                return JsonResponse({'data_aug': aug_login_list, 'data_sept': sept_login_list, 'data_oct': oct_login_list, 'data_nov': nov_login_list, 'data_dec': dec_login_list})
+            else: 
+                for year in range(int(start_year_report), int(end_year_report) + 1):
+                    qs = DatesLogin.objects.filter(dates__range=[datetime.strptime('01/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('01/31/'+str(year), '%m/%d/%Y').date()])
+                    if year % 4 == 0:
+                        qs1 = DatesLogin.objects.filter(dates__range=[datetime.strptime('02/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('02/29/'+str(year), '%m/%d/%Y').date()])
+                    else: 
+                        qs1 = DatesLogin.objects.filter(dates__range=[datetime.strptime('02/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('02/28/'+str(year), '%m/%d/%Y').date()])
+                    qs2 = DatesLogin.objects.filter(dates__range=[datetime.strptime('03/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('03/31/'+str(year), '%m/%d/%Y').date()])
+                    qs3 = DatesLogin.objects.filter(dates__range=[datetime.strptime('04/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('04/30/'+str(year), '%m/%d/%Y').date()])
+                    qs4 = DatesLogin.objects.filter(dates__range=[datetime.strptime('05/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('05/31/'+str(year), '%m/%d/%Y').date()])
+                    jan_login = jan_login | qs 
+                    feb_login = feb_login | qs1
+                    march_login = march_login | qs2
+                    april_login = april_login | qs3
+                    may_login = may_login | qs4
+                jan_login_list = report_check("", jan_login)
+                feb_login_list = report_check("", feb_login)
+                march_login_list = report_check("", march_login)
+                april_login_list = report_check("", april_login)
+                may_login_list = report_check("", may_login)
+                return JsonResponse({'data_jan': jan_login_list, 'data_feb': feb_login_list, 'data_march': march_login_list, 'data_april': april_login_list,
+                                 'data_may': may_login_list})
+        else:
+            user_type = request.POST['name']
+            start_time =  datetime.strptime(request.POST['start-time-'+user_type], '%H:%M')
+            end_time =  datetime.strptime(request.POST['end-time-'+user_type], '%H:%M')
+            start_date = datetime.strptime(request.POST['start-date-'+user_type], '%m/%d/%Y')
+            end_date = datetime.strptime(request.POST['end-date-'+user_type], '%m/%d/%Y')
+            dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
+            tempObject = report_check(user_type, dates_login)
+            return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':tempObject})
+
 
 class TableSample(LoginRequiredMixin, TemplateView):
     template_name = 'tablesample.html'

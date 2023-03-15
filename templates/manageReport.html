@@ -91,7 +91,7 @@
         <div class="row">
           <div class="col-md-6 offset-md-3">
           <div class="form-group">
-            <input type="radio" name="schoolyear" value="intersession" checked required> Intersession &nbsp&nbsp
+            <input type="radio" name="schoolyear" value="intersession" required> Intersession &nbsp&nbsp
             <input type="radio" name="schoolyear" value="firstsem" required> First semester &nbsp&nbsp
             <input type="radio" name="schoolyear" value="secondsem" required> Second semester &nbsp&nbsp
           </div>
@@ -344,7 +344,24 @@
           body: formData
         }).then(response => response.json())
         .then(data => {
-          console(data.dates_report)
+          if (document.getElementsByName("schoolyear")[0].checked) {
+            console.log(data.data_june)
+            console.log(data.data_july)
+          }
+          else if (document.getElementsByName("schoolyear")[1].checked) {
+            console.log(data.data_aug)
+            console.log(data.data_sept)
+            console.log(data.data_oct)
+            console.log(data.data_nov)
+            console.log(data.data_dec)
+          }
+          else if (document.getElementsByName("schoolyear")[2].checked){
+            console.log(data.data_jan)
+            console.log(data.data_feb)
+            console.log(data.data_march)
+            console.log(data.data_april)
+            console.log(data.data_may)
+          }
 
         })
       }
