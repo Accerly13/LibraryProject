@@ -67,6 +67,20 @@ class StudentDashboardOut(LoginRequiredMixin, TemplateView):
 class SystemAdminProfile(LoginRequiredMixin, TemplateView):
     template_name = 'sysadprofile.html'
 
+    def post(self, request):
+        admin_user = AdminUser.objects.get(pk=1)
+        admin_user.admin_username = request.POST['username']
+        admin_user.admin_password = request.POST['password']
+        admin_user.save()
+        messages.success(request, ("Username and Password Changed!"))
+        return render(request, 'sysadprofile.html'	)
+    
+        
+
+        
+
+
+
 class StudentDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'studentdashboard.html'
 
