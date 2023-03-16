@@ -345,25 +345,45 @@
         }).then(response => response.json())
         .then(data => {
           if (document.getElementsByName("schoolyear")[0].checked) {
-            console.log(data.data_june)
-            console.log(data.data_july)
+            exportToCSV(data.final_output, "Intersession", document.getElementById("startyear").value, document.getElementById("endyear").value)
           }
           else if (document.getElementsByName("schoolyear")[1].checked) {
-            console.log(data.data_aug)
-            console.log(data.data_sept)
-            console.log(data.data_oct)
-            console.log(data.data_nov)
-            console.log(data.data_dec)
+            exportToCSV(data.final_output, "First Semester", document.getElementById("startyear").value, document.getElementById("endyear").value)
           }
           else if (document.getElementsByName("schoolyear")[2].checked){
-            console.log(data.data_jan)
-            console.log(data.data_feb)
-            console.log(data.data_march)
-            console.log(data.data_april)
-            console.log(data.data_may)
+            exportToCSV(data.final_output, "Second Semester", document.getElementById("startyear").value, document.getElementById("endyear").value)
           }
 
         })
+      }
+
+      function exportToCSV(data_dict, semester, start_year, end_year) {
+        const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        final_output = semester + " " +start_year+"-"+end_year
+        var data = [];
+        Object.values(data_dict).forEach(function(row) {
+          var rowArray = Object.values(row);
+          data.push(rowArray);
+        });
+
+        // Create the CSV content
+        var csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += ",Ateneo de Naga University\r\n,Library Users Login System\r\n,Overall Summary Report\r\n,As of "+today.replace(',', '')+"\r\n\n"
+
+        csvContent += ",USERS OVERALL SUMMARY REPORTS\r\n,For "+semester+" "+start_year+"-"+end_year+"\r\n\r\n";
+        csvContent += Object.keys(data_dict[Object.keys(data_dict)[0]]).join(",") + "\n";
+        data.forEach(function(row) {
+          csvContent += row.join(",") + "\n";
+        });
+
+        // Create a link element and download the CSV file
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `${final_output}.csv`);
+        document.body.appendChild(link); // Required for FF
+        link.click();
+        document.body.removeChild(link);
       }
 
       function generateButton(type_name) {

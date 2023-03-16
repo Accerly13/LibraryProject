@@ -15,6 +15,7 @@ import os
 import base64
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+import csv
 # from flask import Flask, request, render_template
 
 # app = Flask(__name__)
@@ -373,29 +374,49 @@ class ManageReport(LoginRequiredMixin, TemplateView):
     def post(self, request):
         def report_check(user_type, dates_login):
             tempObject = []
-            if user_type != "":
+            check_user_type = UserType.objects.filter(type_name=user_type)
+            if check_user_type.exists():
                 for item in dates_login:
                     usertype_query = UserType.objects.get(type_name__iexact=user_type)
                     user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
                     if user_query:
                         data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
                         tempObject.append(data)
+                department_counts = {}
+                for item in tempObject:
+                    department = item['department']
+                    college = item['college']
+                    if department not in department_counts:
+                        department_counts[department] = {}
+                    if college not in department_counts[department]:
+                        department_counts[department][college] = 0
+                    department_counts[department][college] += 1
+                return department_counts
             else:
                 for item in dates_login:
                     user_query = UserInfo.objects.get(user_idno=item.user)
                     if user_query:
-                        data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
-                        tempObject.append(data)
-            department_counts = {}
-            for item in tempObject:
-                department = item['department']
-                college = item['college']
-                if department not in department_counts:
-                    department_counts[department] = {}
-                if college not in department_counts[department]:
-                    department_counts[department][college] = 0
-                department_counts[department][college] += 1
-            return department_counts
+                        data = {'Department': user_query.department.department_name, 'College': user_query.department.college.college_name, 'month_name': user_type}
+                    return data
+        def csvfile(tempObject, semesters):
+            data_dict = {}
+            for obj in tempObject:
+                dept = obj['Department']
+                college = obj['College']
+                month = obj['month_name']
+                key = f'{dept}_{college}'
+                if key not in data_dict:
+                    if semesters == "intersession":
+                        data_dict[key] = {'Department': dept, 'College': college, 'June': 0, 'July': 0, 'Overall': 0}
+                    elif semesters == "first_sem":
+                        data_dict[key] = {'Department': dept, 'College': college, 'August': 0, 'September': 0, 'October': 0, 'November': 0, 'December': 0, 'Overall': 0}
+                    else:
+                        data_dict[key] = {'Department': dept, 'College': college, 'January': 0, 'February': 0, 'March': 0, 'April': 0, 'May': 0, 'Overall': 0}
+                data_dict[key][month] += 1
+                data_dict[key]['Overall'] += 1
+            
+            return data_dict
+
         if request.POST.get('schoolyear'):
             start_year_report = request.POST['start-year-report']
             end_year_report = request.POST['end-year-report']
@@ -417,9 +438,12 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                     qs1 = DatesLogin.objects.filter(dates__range=[datetime.strptime('07/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('07/31/'+str(year), '%m/%d/%Y').date()])
                     june_login = june_login | qs 
                     july_login = july_login | qs1
-                june_login_list = report_check("", june_login)
-                july_login_list = report_check("", july_login)
-                return JsonResponse({'data_june': june_login_list, 'data_july': july_login_list})
+                final_array = []
+                for query in june_login:
+                    final_array.append(report_check("June", june_login))
+                for query in july_login:
+                    final_array.append(report_check("July", july_login))
+                output = csvfile(final_array, 'intersession')
             elif request.POST['schoolyear'] == 'firstsem':
                 for year in range(int(start_year_report), int(end_year_report) + 1):
                     qs = DatesLogin.objects.filter(dates__range=[datetime.strptime('08/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('08/31/'+str(year), '%m/%d/%Y').date()])
@@ -432,12 +456,18 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                     oct_login = oct_login | qs2
                     nov_login = nov_login | qs3
                     dec_login = dec_login | qs4
-                aug_login_list = report_check("", aug_login)
-                sept_login_list = report_check("", sept_login)
-                oct_login_list = report_check("", oct_login)
-                nov_login_list = report_check("", nov_login)
-                dec_login_list = report_check("", dec_login)
-                return JsonResponse({'data_aug': aug_login_list, 'data_sept': sept_login_list, 'data_oct': oct_login_list, 'data_nov': nov_login_list, 'data_dec': dec_login_list})
+                final_array = []
+                for query in aug_login:
+                    final_array.append(report_check("August", aug_login))
+                for query in sept_login:
+                    final_array.append(report_check("September", sept_login))
+                for query in oct_login:
+                    final_array.append(report_check("October", oct_login))
+                for query in nov_login:
+                    final_array.append(report_check("November", nov_login))
+                for query in dec_login:
+                    final_array.append(report_check("December", dec_login))
+                output = csvfile(final_array, 'first_sem')
             else: 
                 for year in range(int(start_year_report), int(end_year_report) + 1):
                     qs = DatesLogin.objects.filter(dates__range=[datetime.strptime('01/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('01/31/'+str(year), '%m/%d/%Y').date()])
@@ -453,13 +483,19 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                     march_login = march_login | qs2
                     april_login = april_login | qs3
                     may_login = may_login | qs4
-                jan_login_list = report_check("", jan_login)
-                feb_login_list = report_check("", feb_login)
-                march_login_list = report_check("", march_login)
-                april_login_list = report_check("", april_login)
-                may_login_list = report_check("", may_login)
-                return JsonResponse({'data_jan': jan_login_list, 'data_feb': feb_login_list, 'data_march': march_login_list, 'data_april': april_login_list,
-                                 'data_may': may_login_list})
+                final_array = []
+                for query in jan_login:
+                    final_array.append(report_check("January", jan_login))
+                for query in feb_login:
+                    final_array.append(report_check("February", feb_login))
+                for query in march_login:
+                    final_array.append(report_check("March", march_login))
+                for query in april_login:
+                    final_array.append(report_check("April", april_login))
+                for query in may_login:
+                    final_array.append(report_check("May", may_login))
+                output = csvfile(final_array, 'second_sem')
+            return JsonResponse({'final_output':output})
         else:
             user_type = request.POST['name']
             start_time =  datetime.strptime(request.POST['start-time-'+user_type], '%H:%M')
