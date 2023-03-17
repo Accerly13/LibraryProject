@@ -41,8 +41,14 @@
           {% endif %}
           <div class="panel-title">Add New Data</div>
           <div class="d-grid-md-flex justify-content-md-end">
-            <button class="btn btn-primary me-md-2" type="button" onclick="document.getElementById('file-input').click()">Batch Upload</button>
-            <input id="file-input" type="file" multiple>
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <button class="btn btn-primary me-md-2" type="button" onclick="document.getElementById('file-input').click()">Batch Upload</button>
+              <label for="csv_file">Select a CSV file:</label>
+              <input type="file" name="csv_file" id="csv_file">
+              <br><br>
+              <input type="submit" value="Upload">
+            </form>
           </div>
         </div>
         <hr>
