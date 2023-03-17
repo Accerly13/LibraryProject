@@ -40,16 +40,18 @@
           </p>
           {% endif %}
           <div class="panel-title">Add New Data</div>
-          <div class="d-grid-md-flex justify-content-md-end">
-            <form method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-              <button class="btn btn-primary me-md-2" type="button" onclick="document.getElementById('file-input').click()">Batch Upload</button>
-              <label for="csv_file">Select a CSV file:</label>
-              <input type="file" name="csv_file" id="csv_file">
-              <br><br>
-              <input type="submit" value="Upload">
-            </form>
-          </div>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="csv_file">Select a CSV file for batch upload:</label>
+              <div class="input-group">
+                <input type="file" class="form-control-file" id="csv_file" name="csv_file" onchange="showUploadButton()" accept=".csv">
+              </div>
+            </div>
+            <div id="upload-button" style="text-align: center; display: none" class="form-group">
+              <button class="btn btn-primary" type="submit">Upload</button>
+            </div>
+          </form>
         </div>
         <hr>
         <form class="panel-margin" method="post" enctype="multipart/form-data">
@@ -642,6 +644,15 @@ option:hover,  .active{
 <script>
 sessionStorage?.removeItem("activeTabSearch");
 sessionStorage?.removeItem("activeTabManageReport");
+
+function showUploadButton() {
+  console.log('showUploadButton called');
+  var fileInput = document.getElementById('csv_file');
+  var uploadButton = document.getElementById('upload-button');
+  if (fileInput.files && fileInput.files.length > 0) {
+    uploadButton.style.display = 'block';
+  }
+}
 
 function showFileInput() {
   document.getElementById('file-input').style.display = 'block';
