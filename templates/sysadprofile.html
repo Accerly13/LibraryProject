@@ -32,23 +32,59 @@
           {% endfor %}
       </p>
   {% endif %}
-  <div class="warpper">
-    <div class="container-fluid" style="background-color: #ECF0F1">
-        <h3 class="text-center mb-4"></h3>
-        <div class="formbox">
+
+  <div class="container-fluid py-5" style="background-color: #f7f7f7;">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8 col-sm-10">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h3 class="text-center mb-4">System Administrator</h3>
             <form method="post">
               {% csrf_token %}
-                <label for="changeusername">Change username</label>
-                <input type="text" id="changeusername" name="username" placeholder="Enter new username">
-                <label for="changeusername">Change password</label>
-                <input type="text" id="changepassword" name="password" placeholder="Enter new password">
-                <div class="d-grid col-4 mx-auto">
-                    <button class="btn btn-primary" type="submit">Save</button>
-                  </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="changeusername" name="username" placeholder=" " autocomplete="off">
+                <label for="changeusername">New username</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="changepassword" name="password" placeholder=" " autocomplete="off">
+                <label for="changepassword">New password</label>
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-primary" type="submit">Save</button>
+              </div>
             </form>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+
+    <div class="container-fluid py-5" style="background-color: #f7f7f7;">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h3 class="text-center mb-4">Student</h3>
+              <form>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="changeusername" name="username" placeholder=" " autocomplete="off">
+                  <label for="changeusername">New username</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" id="changepassword" name="password" placeholder=" " autocomplete="off">
+                  <label for="changepassword">New password</label>
+                </div>
+                <div class="d-grid">
+                  <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
   <main class="grid-2-column-2 h-[100%]"> </main>
 </div>
 {% endblock content %}
