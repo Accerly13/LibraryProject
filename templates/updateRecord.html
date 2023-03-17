@@ -632,10 +632,6 @@ option:hover,  .active{
   background-color: rgb(225, 225, 225);
 }
 
-#file-input {
-    display: none;
-  }
-
   #preview {
     display: none;
   }
@@ -652,10 +648,6 @@ function showUploadButton() {
   if (fileInput.files && fileInput.files.length > 0) {
     uploadButton.style.display = 'block';
   }
-}
-
-function showFileInput() {
-  document.getElementById('file-input').style.display = 'block';
 }
 
 var fileInput = document.getElementById("profile-picture");
