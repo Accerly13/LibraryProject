@@ -41,9 +41,8 @@
           {% endif %}
           <div class="panel-title">Add New Data</div>
           <div class="d-grid-md-flex justify-content-md-end">
-           
-            <button class="btn btn-primary me-md-2" type="button">Batch Upload</button>
-            
+            <button class="btn btn-primary me-md-2" type="button" onclick="document.getElementById('file-input').click()">Batch Upload</button>
+            <input id="file-input" type="file" multiple>
           </div>
         </div>
         <hr>
@@ -624,12 +623,23 @@ option {
 option:hover,  .active{
   background-color: rgb(225, 225, 225);
 }
+
+#file-input {
+    display: none;
+  }
+
+  #preview {
+    display: none;
+  }
 </style>
 
 <script>
 sessionStorage?.removeItem("activeTabSearch");
 sessionStorage?.removeItem("activeTabManageReport");
 
+function showFileInput() {
+  document.getElementById('file-input').style.display = 'block';
+}
 
 var fileInput = document.getElementById("profile-picture");
 var previewImg = document.getElementById("preview");
