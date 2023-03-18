@@ -16,6 +16,7 @@ import base64
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import csv
+from django.db import connection
 # from flask import Flask, request, render_template
 
 # app = Flask(__name__)
@@ -344,7 +345,6 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             userinfo.save()
             messages.success(request, ("The data has been updated!"))	
             return redirect('/admin/dashboard/updaterecord/')
-        
         elif request.POST.get('confirmation1'):
             id_delete = request.POST['idnum-delete']
             user_check = UserInfo.objects.get(user_idno=id_delete)
@@ -353,6 +353,23 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_check_logins.delete()
             messages.success(request, ("Records Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
+        elif request.FILES['csv_file']:
+            csv_file = request.FILES['csv_file']
+            # Read the CSV file
+            csv_data = csv_file.read().decode('utf-8').splitlines()
+            # Create a CSV reader object
+            reader = csv.reader(csv_data)
+            # Skip the header row
+            next(reader)
+            # Insert data into the database
+            with connection.cursor() as cursor:
+                for row in reader:
+                    users = UserInfo(user_idno=row[0], first_name=row[1], middle_name=row[2], last_name=row[3], gender=row[4],
+                                    course=row[5], comment=row[6], type_id=row[7], department_id=row[8])
+                    users.save()
+            messages.success(request, "Users are Registered!")
+            return redirect('/admin/dashboard/updaterecord/')
+
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
