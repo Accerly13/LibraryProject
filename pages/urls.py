@@ -3,7 +3,7 @@ from . import views
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 from django.conf import settings
-
+from django.conf.urls.static import static
 
 app_name = 'pages'
 
@@ -28,3 +28,6 @@ urlpatterns = [
    path('sysadprofile/settings', views.SystemAdminProfile.as_view(), name='sysadprofile'),
 
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

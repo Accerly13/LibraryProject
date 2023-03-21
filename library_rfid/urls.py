@@ -24,5 +24,3 @@ urlpatterns = [
     path('admin/', include('django.contrib.auth.urls'),  kwargs={'methods': ['GET', 'POST']}),
 
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
