@@ -72,11 +72,15 @@
             <div id="exportPdf{{item.type_name|lower}}" class="row" style="display: none; justify-content: space-evenly;">
               Choose where to export:
               <div class="col-md-6 offset-md-1">
+              <form id="exportIndividualUsers">
+                {% csrf_token %}
                 <div class="form-group">
+                  <input type="text" class="form-control" name="exportIndividualUsers" value="1" hidden>
                   <input type="radio" name="exportype{{item.type_name|lower}}" value="pdfone" checked> PDF &nbsp&nbsp
                   <input type="radio" name="exportype{{item.type_name|lower}}" value="csvone"> CSV &nbsp&nbsp
                   <button class="btn btn-primary" onclick="exportToPdf('exportype{{item.type_name|lower}}')">Export report</button>
                 </div>
+              </form>
               </div>
             </div>
 
@@ -142,6 +146,10 @@
       </style>
      
       <script>
+        var startdateTemp = ""
+        var starttimeTemp = ""
+        var enddateTemp = ""
+        var endtimeTemp = ""
         var activeTab = sessionStorage.getItem("activeTabManageReport");
 
         // If there is no active tab, set the first tab as the active tab
@@ -188,8 +196,11 @@
     }
 
     function exportToPdf(name) {
+      event.preventDefault();
       var exportType = document.querySelector('input[name="'+name+'"]:checked').value;
+      var kindOfReport = ""
       if (exportType === 'pdfone') {
+        kindOfReport = "PDF File"
       
         exportType_temp = name.replace('exportype', '')
         // Select the table to export
@@ -223,6 +234,7 @@
         });
         doc.save(`${exportType_temp}.pdf`);
       } else if (exportType === 'csvone') {
+        kindOfReport = "CSV File"
         exportType_temp = name.replace('exportype', '')
         // Export the table as CSV
         var data = [];
@@ -262,6 +274,21 @@
         link.click();
         document.body.removeChild(link);
       }
+      var myForm = document.querySelector('#exportIndividualUsers');
+            var formData = new FormData(myForm);
+            formData.append('report_for_user', exportType_temp);
+            formData.append('kind_of_report', kindOfReport)
+            formData.append('start_time_report', starttimeTemp)
+            formData.append('end_time_report', endtimeTemp)
+            formData.append('start_date_report', startdateTemp)
+            formData.append('end_date_report', enddateTemp)
+            fetch('/admin/dashboard/managereport/', {
+              method: 'POST',
+              body: formData
+            }).then(response => response.json())
+            .then(data => {
+              console.log(data)
+            })
     }
 
 
@@ -405,6 +432,20 @@
             var newRowHead = document.createElement('tr');
             var start_time = new Date(data.start_time)
             var end_time = new Date(data.end_time)
+            startdateTemp = new Date(data.start_date).toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+            })
+            enddateTemp = new Date(data.end_date).toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+            })
+            starttimeTemp = start_time.toLocaleTimeString('en-US', {hour: '2-digit',
+                  minute: '2-digit'
+            });
+            endtimeTemp = end_time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
             var formattedTimeStart = start_time.toLocaleTimeString('en-US', {hour: '2-digit',
                   minute: '2-digit'
             });

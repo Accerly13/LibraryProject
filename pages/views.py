@@ -20,7 +20,7 @@ from django.db import connection
 # from flask import Flask, request, render_template
 
 # app = Flask(__name__)
-
+now = datetime.now()
 @login_required
 def protected_view(request):
     # Your protected view logic here
@@ -62,7 +62,7 @@ class StudentDashboardOut(LoginRequiredMixin, TemplateView):
         student_id = request.POST['student_id']
         try:
             userinfo = DatesLogin.objects.get(user = student_id, time_out=None)
-            now = datetime.now()
+            
             userinfo.time_out = now.time().replace(second=0, microsecond=0) 
             userinfo.save()
             messages.success(request, ("You have successfully been logged out. Thank you for using our service."))
@@ -93,7 +93,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
         student_id = request.POST['student_id']
         try:
             userinfo = UserInfo.objects.get(user_idno = student_id)
-            now = datetime.now()
+            
             DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
             messages.success(request, ("Succesfully Recorded!"))
             return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo})
@@ -186,6 +186,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
                 College.objects.create(college_name=college)
+                report_title = f"Add a college named {college}."
+            
+                Transactions.objects.create(dates=now.date(), title=report_title)
                 messages.success(request, ("New College is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('new_college_name'):
@@ -195,6 +198,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 college_check = College.objects.get(college_name = college_name)
                 college_check.college_name = new_college_name
                 college_check.save()
+                report_title = f"Updated a college named {college_name} to {new_college_name}."
+            
+                Transactions.objects.create(dates=now.date(), title=report_title)
                 messages.success(request, ("The College Name is Changed!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             else:
@@ -204,6 +210,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             college_name = request.POST['delete_college']
             college_check = College.objects.get(college_name = college_name)
             college_check.delete()
+            report_title = f"Deleted a college named {college_name}."
+            
+            Transactions.objects.create(dates=now.date(), title=report_title)
             messages.success(request, ("Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('dept'):
@@ -216,6 +225,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             except:
                 college_check = College.objects.get(college_name = college_name)
                 Department.objects.create(department_name=dept, college=college_check)
+                report_title = f"Add a new department {dept}."
+            
+                Transactions.objects.create(dates=now.date(), title=report_title)
                 messages.success(request, ("New Department is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('new_department_name'):
@@ -225,6 +237,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 dept_check = Department.objects.get(department_name = department_name)
                 dept_check.department_name = new_department_name
                 dept_check.save()
+                report_title = f"Updated the department {department_name} to {new_department_name}!"
+            
+                Transactions.objects.create(dates=now.date(), title=report_title)
                 messages.success(request, ("The Department Name is Changed!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             else:
@@ -235,6 +250,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             department_name = request.POST['delete_dept']
             dept_check = Department.objects.get(department_name = department_name)
             dept_check.delete()
+            report_title = f"Deleted the department {department_name}!"
+            
+            Transactions.objects.create(dates=now.date(), title=report_title)
             messages.success(request, ("Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('usertype'):
@@ -246,6 +264,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             except:
                 UserType.objects.create(type_id=self.usertype.count()+1, type_name=usertype)
                 messages.success(request, ("New Usertype is Registered!"))	
+
+                report_title = f"Add a new usertype, {usertype}!"
+            
+                Transactions.objects.create(dates=now.date(), title=report_title)
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('idnum'):
             idnum = request.POST['idnum']
@@ -282,6 +304,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 os.rename(current_path, new_path)
                 userinfo.image.name = new_filename
                 userinfo.save()
+                report_title = f"Import a user data with an ID Number {idnum}!"
+            
+                Transactions.objects.create(dates=now.date(), title=report_title)
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('input_user_samp'):
@@ -344,6 +369,9 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             os.rename(current_path, new_path)
             userinfo.image.name = new_filename
             userinfo.save()
+            report_title = f"Updated a user data with an ID Number {idnum}!"
+            
+            Transactions.objects.create(dates=now.date(), title=report_title)
             messages.success(request, ("The data has been updated!"))	
             return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('confirmation1'):
@@ -352,7 +380,11 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_check.delete()
             user_check_logins = DatesLogin.objects.get(user=id_delete)
             user_check_logins.delete()
-            messages.success(request, ("Records Deleted!"))
+            report_title = f"Deleted a user with a ID Number {id_delete}!"
+            
+            Transactions.objects.create(dates=now.date(), title=report_title)
+            
+            messages.success(request, ("Record Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
         elif request.FILES['csv_file']:
             csv_file = request.FILES['csv_file']
@@ -368,6 +400,8 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     users = UserInfo(user_idno=row[0], first_name=row[1], middle_name=row[2], last_name=row[3], gender=row[4],
                                     course=row[5], comment=row[6], type_id=row[7], department_id=row[8])
                     users.save()
+            
+            Transactions.objects.create(dates=now.date(), title="Batch Import Users!")
             messages.success(request, "Users are Registered!")
             return redirect('/admin/dashboard/updaterecord/')
 
@@ -381,6 +415,9 @@ class DeleteRecord(LoginRequiredMixin, TemplateView):
             end_date = datetime.strptime(request.POST['end_date1'], '%m/%d/%Y')
             dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date])
             dates_login.delete()
+            report_title = f"Deleted a records from {start_date.strftime('%m/%d/%Y')} to {end_date.strftime('%m/%d/%Y')}"
+            
+            Transactions.objects.create(dates=now.date(), title=report_title)
             messages.success(request, ("Records Deleted!"))
             return redirect('/admin/dashboard/deleterecord/')
         else:
@@ -400,6 +437,10 @@ class ManageReport(LoginRequiredMixin, TemplateView):
 
     def __init__(self):
         self.usertype = UserType.objects.all()
+        self.start_date = ""
+        self.end_date = ""
+        self.start_time = ""
+        self.end_time = ""
         
     def get(self, request):
         return render(request, 'manageReport.html', {'usertype': self.usertype})
@@ -465,6 +506,7 @@ class ManageReport(LoginRequiredMixin, TemplateView):
             nov_login = DatesLogin.objects.none()
             dec_login = DatesLogin.objects.none()
             if request.POST['schoolyear'] == 'intersession':
+                semester = "Intersession"
                 for year in range(int(start_year_report), int(end_year_report) + 1):
                     qs = DatesLogin.objects.filter(dates__range=[datetime.strptime('06/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('06/30/'+str(year), '%m/%d/%Y').date()])
                     qs1 = DatesLogin.objects.filter(dates__range=[datetime.strptime('07/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('07/31/'+str(year), '%m/%d/%Y').date()])
@@ -477,6 +519,7 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                     final_array.append(report_check("July", july_login))
                 output = csvfile(final_array, 'intersession')
             elif request.POST['schoolyear'] == 'firstsem':
+                semester = "First Semester"
                 for year in range(int(start_year_report), int(end_year_report) + 1):
                     qs = DatesLogin.objects.filter(dates__range=[datetime.strptime('08/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('08/31/'+str(year), '%m/%d/%Y').date()])
                     qs1 = DatesLogin.objects.filter(dates__range=[datetime.strptime('09/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('09/30/'+str(year), '%m/%d/%Y').date()])
@@ -501,6 +544,7 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                     final_array.append(report_check("December", dec_login))
                 output = csvfile(final_array, 'first_sem')
             else: 
+                semester = "Second Semester"
                 for year in range(int(start_year_report), int(end_year_report) + 1):
                     qs = DatesLogin.objects.filter(dates__range=[datetime.strptime('01/01/'+str(year), '%m/%d/%Y').date(), datetime.strptime('01/31/'+str(year), '%m/%d/%Y').date()])
                     if year % 4 == 0:
@@ -527,10 +571,21 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                 for query in may_login:
                     final_array.append(report_check("May", may_login))
                 output = csvfile(final_array, 'second_sem')
-            now = datetime.now()
+            
             if bool(output):
-                Transactions.objects.create(dates=now.date(), title="Generated Report from "+request.POST['schoolyear']+" year "+start_year_report+" to "+end_year_report+".")
+                Transactions.objects.create(dates=now.date(), title="Generated Report from "+semester+" year "+start_year_report+" to "+end_year_report+".")
             return JsonResponse({'final_output':output})
+        elif request.POST.get('exportIndividualUsers'):
+            
+            start_time = datetime.strptime(request.POST['start_time_report'], '%I:%M %p')
+            end_time = datetime.strptime(request.POST['end_time_report'], '%I:%M %p')
+            start_date = datetime.strptime(request.POST['start_date_report'], '%m/%d/%Y')
+            end_date = datetime.strptime(request.POST['end_date_report'], '%m/%d/%Y')
+
+            report_title = f"Extracted a {request.POST['kind_of_report']} report of {request.POST['report_for_user']} visits from {start_date.strftime('%m/%d/%Y')} to {end_date.strftime('%m/%d/%Y')} from {start_time.strftime('%I:%M %p')} to {end_time.strftime('%I:%M %p')}."
+
+            Transactions.objects.create(dates=now.date(), title=report_title)
+            return JsonResponse({'success': True})
         else:
             user_type = request.POST['name']
             start_time =  datetime.strptime(request.POST['start-time-'+user_type], '%H:%M')
