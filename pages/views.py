@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College, Department, UserType, DatesLogin
+from .models import AdminUser, UserInfo, College, Department, UserType, DatesLogin, Transactions
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -48,6 +48,13 @@ class HomePageView(TemplateView):
 class DashBoardAdmin(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard.html'
 
+    def __init__(self):
+        self.transactions = Transactions.objects.all()
+
+    def get(self, request):
+        return render(request, 'dashboard.html', {'transact': self.transactions})
+        
+
 class StudentDashboardOut(LoginRequiredMixin, TemplateView):
     template_name = 'dashboardout.html'
 
@@ -75,12 +82,6 @@ class SystemAdminProfile(LoginRequiredMixin, TemplateView):
         admin_user.save()
         messages.success(request, ("Username and Password Changed!"))
         return render(request, 'sysadprofile.html'	)
-    
-        
-
-        
-
-
 
 class StudentDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'studentdashboard.html'
@@ -526,6 +527,9 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                 for query in may_login:
                     final_array.append(report_check("May", may_login))
                 output = csvfile(final_array, 'second_sem')
+            now = datetime.now()
+            if bool(output):
+                Transactions.objects.create(dates=now.date(), title="Generated Report from "+request.POST['schoolyear']+" year "+start_year_report+" to "+end_year_report+".")
             return JsonResponse({'final_output':output})
         else:
             user_type = request.POST['name']

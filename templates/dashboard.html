@@ -11,49 +11,18 @@
         <h3 class="text-center mb-4"></h3>
       
         <div class="row">
+          {% for item in transact %}
           <div class="col-md-11 mb-3 ml-5">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title text-center">Transaction History</h4>
+                <h4 class="card-title text-center">{{item.title}}</h4>
               </div>
               <div class="card-body">
                 
               </div>
             </div>
           </div>
-      
-          <div class="col-md-11 mb-3 ml-5">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title text-center">Transaction History</h4>
-              </div>
-              <div class="card-body">
-               
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-11 mb-3 ml-5">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title text-center">Transaction History</h4>
-              </div>
-              <div class="card-body">
-               
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-11 mb-3 ml-5">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title text-center">Transaction History</h4>
-              </div>
-              <div class="card-body">
-               
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
     </div>
