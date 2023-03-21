@@ -27,5 +27,4 @@ urlpatterns = [
    path('logout_view/', views.logout_view, name='logout_view'),
    path('sysadprofile/settings', views.SystemAdminProfile.as_view(), name='sysadprofile'),
 
-
 ]

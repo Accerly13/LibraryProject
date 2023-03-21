@@ -42,11 +42,11 @@
             <form method="post">
               {% csrf_token %}
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="changeusername" name="username" placeholder=" " autocomplete="off">
+                <input type="text" class="form-control" id="changeusername" name="username_admin" placeholder=" " autocomplete="off">
                 <label for="changeusername">New username</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="changepassword" name="password" placeholder=" " autocomplete="off">
+                <input type="password" class="form-control" id="changepassword" name="password_admin" placeholder=" " autocomplete="off">
                 <label for="changepassword">New password</label>
               </div>
               <div class="d-grid">
@@ -65,14 +65,15 @@
           <div class="card shadow-sm">
             <div class="card-body">
               <h3 class="text-center mb-4">Student</h3>
-              <form>
+              <form method="post">
+                {% csrf_token %}
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="changeusername" name="username" placeholder=" " autocomplete="off">
-                  <label for="changeusername">New username</label>
+                  <input type="text" class="form-control" id="changeusername1" name="username_admin1" placeholder=" " autocomplete="off">
+                  <label for="changeusername1">New username</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="changepassword" name="password" placeholder=" " autocomplete="off">
-                  <label for="changepassword">New password</label>
+                  <input type="password" class="form-control" id="changepassword1" name="password_admin1" placeholder=" " autocomplete="off">
+                  <label for="changepassword1">New password</label>
                 </div>
                 <div class="d-grid">
                   <button class="btn btn-primary" type="submit">Save</button>

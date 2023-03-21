@@ -76,12 +76,21 @@ class SystemAdminProfile(LoginRequiredMixin, TemplateView):
     template_name = 'sysadprofile.html'
 
     def post(self, request):
-        admin_user = AdminUser.objects.get(pk=1)
-        admin_user.admin_username = request.POST['username']
-        admin_user.admin_password = request.POST['password']
-        admin_user.save()
-        messages.success(request, ("Username and Password Changed!"))
-        return render(request, 'sysadprofile.html'	)
+        if request.POST['username_admin']:
+            admin_user = AdminUser.objects.get(pk=1)
+            admin_user.admin_username = request.POST['username_admin']
+            admin_user.admin_password = request.POST['password_admin']
+            admin_user.save()
+            messages.success(request, ("Username and Password Changed!"))  
+            return render(request, 'sysadprofile.html')
+        elif request.POST['username1']:
+            admin_user = AdminUser.objects.get(pk=2)
+            admin_user.admin_username = request.POST['username_admin1']
+            admin_user.admin_password = request.POST['password_admin1']
+            admin_user.save()
+            messages.success(request, ("Username and Password Changed!"))  
+            return render(request, 'sysadprofile.html')
+    
 
 class StudentDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'studentdashboard.html'
@@ -110,7 +119,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
         #     messages.success(request, ("New College is Registered!"))	
         #     return redirect('/admin/dashboard/updaterecord/')	
 
-class VisitorDashboard(LoginRequiredMixin, TemplateView):
+class VisitorDashboard(TemplateView):
     template_name = 'visitordashboard.html'
 class VisitorLoginPage(TemplateView):
     template_name = 'stat.html'
@@ -230,27 +239,27 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 Transactions.objects.create(dates=now.date(), title=report_title)
                 messages.success(request, ("New Department is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
-        elif request.POST.get('new_department_name'):
-            new_department_name = request.POST['new_department_name']
+        elif request.POST.get('new_dept_name'):
+            new_department_name = request.POST['new_dept_name']
             department_name = request.POST['update_dept_form']
             if department_name != new_department_name:
                 dept_check = Department.objects.get(department_name = department_name)
                 dept_check.department_name = new_department_name
                 dept_check.save()
-                report_title = f"Updated the department {department_name} to {new_department_name}!"
+                report_title = f"Updated the department {department_name} to {new_department_name}"
             
                 Transactions.objects.create(dates=now.date(), title=report_title)
                 messages.success(request, ("The Department Name is Changed!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             else:
-                messages.success(request, ("Delete Name is the same with the old one!"))
+                messages.success(request, ("Departname Name is the same with the old one!"))
                 return redirect('/admin/dashboard/updaterecord/')	
 
         elif request.POST.get('delete_dept'):
             department_name = request.POST['delete_dept']
             dept_check = Department.objects.get(department_name = department_name)
             dept_check.delete()
-            report_title = f"Deleted the department {department_name}!"
+            report_title = f"Deleted the department {department_name}"
             
             Transactions.objects.create(dates=now.date(), title=report_title)
             messages.success(request, ("Deleted!"))
@@ -265,7 +274,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 UserType.objects.create(type_id=self.usertype.count()+1, type_name=usertype)
                 messages.success(request, ("New Usertype is Registered!"))	
 
-                report_title = f"Add a new usertype, {usertype}!"
+                report_title = f"Add a new usertype, {usertype}"
             
                 Transactions.objects.create(dates=now.date(), title=report_title)
                 return redirect('/admin/dashboard/updaterecord/')	
@@ -304,7 +313,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 os.rename(current_path, new_path)
                 userinfo.image.name = new_filename
                 userinfo.save()
-                report_title = f"Import a user data with an ID Number {idnum}!"
+                report_title = f"Import a user data with an ID Number {idnum}"
             
                 Transactions.objects.create(dates=now.date(), title=report_title)
                 messages.success(request, ("New User is Registered!"))	
@@ -369,7 +378,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             os.rename(current_path, new_path)
             userinfo.image.name = new_filename
             userinfo.save()
-            report_title = f"Updated a user data with an ID Number {idnum}!"
+            report_title = f"Updated a user data with an ID Number {idnum}"
             
             Transactions.objects.create(dates=now.date(), title=report_title)
             messages.success(request, ("The data has been updated!"))	
@@ -380,7 +389,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_check.delete()
             user_check_logins = DatesLogin.objects.get(user=id_delete)
             user_check_logins.delete()
-            report_title = f"Deleted a user with a ID Number {id_delete}!"
+            report_title = f"Deleted a user with a ID Number {id_delete}"
             
             Transactions.objects.create(dates=now.date(), title=report_title)
             
