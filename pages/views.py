@@ -290,6 +290,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 UserInfo.objects.create(user_idno=idnum, image=picture, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
                 userinfo = UserInfo.objects.get(user_idno = idnum)
                 current_filename = userinfo.image.name
+                print(current_filename)
 
                 # Define the new filename
                 new_filename = f"{idnum}{current_filename[current_filename.rfind('.'):]}"
@@ -377,6 +378,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         elif request.POST.get('confirmation1'):
             id_delete = request.POST['idnum-delete']
             user_check = UserInfo.objects.get(user_idno=id_delete)
+            file_path_delete = user_check.image.path
+
+            # Delete the file
+            os.remove(file_path_delete)
             user_check.delete()
             user_check_logins = DatesLogin.objects.get(user=id_delete)
             user_check_logins.delete()
