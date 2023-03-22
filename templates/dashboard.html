@@ -1,71 +1,155 @@
 {% extends "layouts/header.html" %}
 {% block content %}
 <style>
-      * {
-      box-sizing: border-box;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
-    .box {
-      max-width: 70rem;
-    }
+  .box {
+    max-width: 70rem;
+  }
 
-    article {
-      max-width: 70rem;
-      margin: 0 auto;
-      border: 0.18rem solid lightgrey;
-      /* padding: clamp(1rem, 2vw, 3rem); */
-      border-radius: 0.5rem;
-    }
+  article {
+    max-width: 70rem;
+    margin: 0 auto;
+    border: 0.18rem solid lightgrey;
+    /* padding: clamp(1rem, 2vw, 3rem); */
+    border-radius: 0.5rem;
+  }
 
-    dl {
-      margin: 0;
-    }
+  dl {
+    margin: 0;
+  }
 
-    h1 {
-      margin: 0;
-      align-items: center;
-      font-size: 2rem;
-    }
+  h1 {
+    margin: 0;
+    align-items: center;
+    font-size: 2rem;
+  }
 
-    article > * + * {
-      margin-top: 1rem;
-    }
+  article > * + * {
+    margin-top: 1rem;
+  }
 
-      /* dl {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
-        gap: 1rem;
-      } */
+  /* dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: 1rem;
+  } */
 
-    dl > div {
-      background: white;
-      padding: 1rem;
-      max-width: 70%;
-      border-bottom-right-radius: .5rem;
-      border-bottom-left-radius: .5rem;
-    }
+  dl > div {
+    background: white;
+    padding: 1rem;
+    max-width: 70%;
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+  }
+
+  .header {
+    background: #486b8b;
+    color: white;
+    padding: 1rem;
+    max-width: 100%;
+    border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+    border-bottom-right-radius: none;
+    border-bottom-left-radius: none;
+  }
+
+  dt {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #142d47;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  #hide-transactions {
+  display: block;
+  margin-top: 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #0077cc;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#hide-transactions:hover {
+  background-color: #005ea6;
+}
+
+.transactions {
+  margin: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.transaction-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.delete-transaction {
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: #f44336;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-transaction:hover {
+  background-color: #c62828;
+}
+
+.hide-transactions,
+.clear-transactions {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #2196f3;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.hide-transactions:hover,
+.clear-transactions:hover {
+  background-color: #1565c0;
+}
 
 
-    .header {
-      background: #486b8b;
-      color: white;
-      padding: 1rem;
-      max-width: 100%;
-      border-top-right-radius: .5rem;
-      border-top-left-radius: .5rem;
-      border-bottom-right-radius: none;
-      border-bottom-left-radius: none;
-    }
-
-    dt {
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #142d47;
-    }
-
-    dd {
-      margin: 0;
-    }
 </style>
 
 <span></span>
@@ -77,53 +161,73 @@
 
   <div class="warpper">
     <div class="container-fluid" style="background-color: #ECF0F1">
-        <h3 class="text-center mb-4"></h3>
+      <h3 class="text-center mb-4"></h3>
       
-        <!-- <div class="row">
-          {% for item in transact %}
-          <div class="col-md-11 mb-3 ml-5">
-            <p> {{item.dates}} </p>
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title text-center">{{item.title}}</h4>
-              </div>
-              <div class="card-body">
-                
-              </div>
+      <!-- This section is commented out
+      <div class="row">
+        {% for item in transact %}
+        <div class="col-md-11 mb-3 ml-5">
+          <p> {{item.dates}} </p>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title text-center">{{item.title}}</h4>
+            </div>
+            <div class="card-body">
+              
             </div>
           </div>
-          {% endfor %}
-        </div> -->
+        </div>
+        {% endfor %}
+      </div>
+      -->
 
-        <article>
-          <!-- <h1>Sample date</h1>
-          {% for item in transact %}
-          <h1>{{item.dates}}</h1>
-          <dl>
-            <div class="box">
-              <dt>{{item.dates}} Reports</dt> 
-              <dd>{{item.title}}</dd>
+      <article>
+        <!-- This section is commented out
+        <h1>Sample date</h1>
+        {% for item in transact %}
+        <h1>{{item.dates}}</h1>
+        <dl>
+          <div class="box">
+            <dt>{{item.dates}} Reports</dt> 
+            <dd>{{item.title}}</dd>
+          </div>
+        </dl>
+        {% endfor %}
+        -->
+
+        <div class="transactions">
+          <div class="header">
+            <h1>Sample Date</h1>
+          </div>
+          <div class="box">
+            <div class="section">
+              <h2>Update Records Transactions</h2>
+              <ul class="transaction-list">
+                <li>Sample Transaction 1</li>
+                <li>Sample Transaction 2</li>
+              </ul>
             </div>
-          </dl>
-          {% endfor %} -->
-          <dl>
-                      <div class="header">
-                        <h1>Sample date</h1>
-                      </div>
-            <div class="box">
-              <dt>Update Records transactions</dt>
-              <dd>Sample transaction 1</dd>
-              <dd>Sample transaction 2</dd>
-              <hr>
-              <dt>Delete Records transactions</dt>
-              <dd>Sample transaction 1</dd>
-              <dd>Sample transaction 2</dd>
-              <hr>
-              <dt>Manage Reports transactions</dt>
-              <dd>Sample transaction 1</dd>
-              <dd>Sample transaction 2</dd>
+            <div class="section">
+              <h2>Delete Records Transactions</h2>
+              <ul class="transaction-list">
+                <li>Sample Transaction 1</li>
+                <li>Sample Transaction 2</li>
+              </ul>
             </div>
-          </dl>
+            <div class="section">
+              <h2>Manage Reports Transactions</h2>
+              <ul class="transaction-list">
+                <li>Sample Transaction 1</li>
+                <li>Sample Transaction 2</li>
+              </ul>
+            </div>
+            <div class="actions">
+              <button class="hide-transactions">Hide Transactions</button>
+              <button class="clear-transactions">Clear Transactions</button>
+            </div>
+          </div>
+        </div>
+        
         </article>
 
       </div>
@@ -133,6 +237,7 @@
 {% endblock content %}
 
 <script>
+
   if (sessionStorage.getItem("activeTabSearch")) {
     sessionStorage.removeItem("activeTabSearch");
   }
