@@ -182,43 +182,42 @@
       -->
 
       <article>
-        <!-- This section is commented out
-        <h1>Sample date</h1>
-        {% for item in transact %}
-        <h1>{{item.dates}}</h1>
         <dl>
-          <div class="box">
-            <dt>{{item.dates}} Reports</dt> 
-            <dd>{{item.title}}</dd>
-          </div>
-        </dl>
-        {% endfor %}
-        -->
-
         <div class="transactions">
+        {% regroup transact by dates as transaction_list %}
+        {% for transaction in transaction_list %}
           <div class="header">
-            <h1>Sample Date</h1>
+            <h1>{{transaction.grouper}}</h1>
           </div>
           <div class="box">
             <div class="section">
               <h2>Update Records Transactions</h2>
               <ul class="transaction-list">
-                <li>Sample Transaction 1</li>
-                <li>Sample Transaction 2</li>
+                {% for item in transaction.list %}
+                {% if item.transact == 'update' %}
+                  <li>{{item.title}}</li>
+                {% endif %}
+                {% endfor %}
               </ul>
             </div>
             <div class="section">
               <h2>Delete Records Transactions</h2>
               <ul class="transaction-list">
-                <li>Sample Transaction 1</li>
-                <li>Sample Transaction 2</li>
+                {% for item in transaction.list %}
+                {% if item.transact == 'delete' %}
+                 <li>{{item.title}}</li>
+                {% endif %}
+                {% endfor %}
               </ul>
             </div>
             <div class="section">
               <h2>Manage Reports Transactions</h2>
               <ul class="transaction-list">
-                <li>Sample Transaction 1</li>
-                <li>Sample Transaction 2</li>
+                {% for item in transaction.list %}
+                {% if item.transact == 'manage' %}
+                  <li>{{item.title}}</li>
+                {% endif %}
+                {% endfor %}
               </ul>
             </div>
             <div class="actions">
@@ -226,7 +225,9 @@
               <button class="clear-transactions">Clear Transactions</button>
             </div>
           </div>
+          {% endfor %}
         </div>
+        
         
         </article>
 
