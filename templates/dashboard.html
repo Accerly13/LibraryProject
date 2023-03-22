@@ -160,31 +160,31 @@
     <h1 class="text-style">Home</h1>
   </header>
 
-  <div class="warpper">
+  <div class="wrapper">
     <div class="container-fluid" style="background-color: #ECF0F1">
       <h3 class="text-center mb-4"></h3>
       <article>
+        {% regroup transact by dates as transaction_list %}
+        <div class="header">
+          <div class="container-header">
+            <div>
+              <label for="date">Select a date:</label>
+              <select name="date" id="date">
+                {% for transaction in transaction_list %}
+                <option value="{{ transaction.grouper }}">{{ transaction.grouper }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="actions">
+            <form id="clear-transactions-by-date" method="post">
+              {% csrf_token %}
+              <button class="clear-transactions" onclick="clearTransaction()">Clear Transactions</button>
+            </form> 
+            </div>
+          </div>
+        </div>
         <dl>
           <div class="box">
-            {% regroup transact by dates as transaction_list %}
-            <div class="header">
-              <div class="container-header">
-                <label for="date">Select a date:</label>
-                <div>
-                  <select name="date" id="date">
-                    {% for transaction in transaction_list %}
-                    <option value="{{ transaction.grouper }}">{{ transaction.grouper }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-                <div class="actions">
-                <form id="clear-transactions-by-date" method="post">
-                  {% csrf_token %}
-                  <button class="clear-transactions" onclick="clearTransaction()">Clear Transactions</button>
-                </form> 
-                </div>
-              </div>
-            </div>
             {% for transaction in transaction_list %}
             <div class="section" id="{{ transaction.grouper }}">
               <span>Update Records Transactions</span>
