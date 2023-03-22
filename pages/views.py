@@ -83,14 +83,14 @@ class SystemAdminProfile(LoginRequiredMixin, TemplateView):
     template_name = 'sysadprofile.html'
 
     def post(self, request):
-        if request.POST['username_admin']:
+        try: 
             admin_user = AdminUser.objects.get(pk=1)
             admin_user.admin_username = request.POST['username_admin']
             admin_user.admin_password = request.POST['password_admin']
             admin_user.save()
             messages.success(request, ("Username and Password Changed!"))  
             return render(request, 'sysadprofile.html')
-        elif request.POST['username1']:
+        except:
             admin_user = AdminUser.objects.get(pk=2)
             admin_user.admin_username = request.POST['username_admin1']
             admin_user.admin_password = request.POST['password_admin1']
