@@ -21,24 +21,28 @@
     <input class="radio" id="four" name="group" type="radio">
     <input class="radio" id="five" name="group" type="radio">
     <!-- <div class="flex-tab"> -->
+
       <div class="tabs flex-tab">
-          <label class="tab" onclick="switchTab('tab1')" data-tab="tab1" id="one-tab" for="one">Import Users</label>
-          <label class="tab" onclick="switchTab('tab2')" data-tab="tab2" id="two-tab" for="two">Update User</label>
-          <label class="tab" onclick="switchTab('tab3')" data-tab="tab3" id="three-tab" for="three">Update College</label>
-          <label class="tab" onclick="switchTab('tab4')" data-tab="tab4" id="four-tab" for="four">Update Department</label>
-          <label class="tab" onclick="switchTab('tab5')" data-tab="tab5" id="five-tab" for="five">Update User Type</label>
-        </div>
+        <label class="tab" onclick="switchTab('tab1')" data-tab="tab1" id="one-tab" for="one">Import Users</label>
+        <label class="tab" onclick="switchTab('tab2')" data-tab="tab2" id="two-tab" for="two">Update User</label>
+        <label class="tab" onclick="switchTab('tab3')" data-tab="tab3" id="three-tab" for="three">Update College</label>
+        <label class="tab" onclick="switchTab('tab4')" data-tab="tab4" id="four-tab" for="four">Update Department</label>
+        <label class="tab" onclick="switchTab('tab5')" data-tab="tab5" id="five-tab" for="five">Update User Type</label>
+      </div>
     <!-- </div> -->
+
+    {% if messages %}
+    <p class="messages">
+        {% for message in messages %}
+        <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+        {% endfor %}
+    </p>
+    {% endif %}
+
     <div class="panels panel-relative mx-auto mb-5">
       <div class="panel" id="tab1">
         <div class="flex justify-between items-center mb-5">
-          {% if messages %}
-          <p class="messages">
-              {% for message in messages %}
-              <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
-              {% endfor %}
-          </p>
-          {% endif %}
+          
           <div class="panel-title">Add New Data</div>
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
