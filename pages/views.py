@@ -53,6 +53,13 @@ class DashBoardAdmin(LoginRequiredMixin, TemplateView):
 
     def get(self, request):
         return render(request, 'dashboard.html', {'transact': self.transactions})
+    
+    def post(self, request):
+        dates_delete = datetime.strptime(request.POST['date-delete'], '%B %d, %Y')
+        transact_delete = Transactions.objects.filter(dates=dates_delete)
+        transact_delete.delete()
+        
+        return render(request, 'dashboard.html')
         
 
 class StudentDashboardOut(LoginRequiredMixin, TemplateView):

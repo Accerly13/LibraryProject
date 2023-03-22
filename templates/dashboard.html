@@ -163,98 +163,113 @@
   <div class="warpper">
     <div class="container-fluid" style="background-color: #ECF0F1">
       <h3 class="text-center mb-4"></h3>
-
-      <!-- This section is commented out
-      <div class="row">
-        {% for item in transact %}
-        <div class="col-md-11 mb-3 ml-5">
-          <p> {{item.dates}} </p>
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title text-center">{{item.title}}</h4>
-            </div>
-            <div class="card-body">
-              
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      -->
-
       <article>
-        <div class="header">
-          <div class="container-header">
-            <!-- <h1>{{transaction.grouper}}</h1> -->
-            <div>
-            <label for="date">Select a date:</label>
-            <select name="date" id="date">
-              <option value="2023-03-22">March 22, 2023</option>
-              <option value="2023-03-23">March 23, 2023</option>
-              <option value="2023-03-24">March 24, 2023</option>
-            </select>
-          </div>
-            <div class="actions">
-              <button class="clear-transactions">Clear Transactions</button>
-            </div>
-          </div>
-        </div>
         <dl>
           <div class="box">
             {% regroup transact by dates as transaction_list %}
+            <div class="header">
+              <div class="container-header">
+                <label for="date">Select a date:</label>
+                <div>
+                  <select name="date" id="date">
+                    {% for transaction in transaction_list %}
+                    <option value="{{ transaction.grouper }}">{{ transaction.grouper }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="actions">
+                <form id="clear-transactions-by-date" method="post">
+                  {% csrf_token %}
+                  <button class="clear-transactions" onclick="clearTransaction()">Clear Transactions</button>
+                </form> 
+                </div>
+              </div>
+            </div>
             {% for transaction in transaction_list %}
-            <!-- <div class="header">
-              <h1>{{transaction.grouper}}</h1>
-            </div> -->
-            <div class="section">
+            <div class="section" id="{{ transaction.grouper }}">
               <span>Update Records Transactions</span>
               <ul class="transaction-list">
                 {% for item in transaction.list %}
                 {% if item.transact == 'update' %}
-                <li>{{item.title}}</li>
+                <li>{{ item.title }}</li>
                 {% endif %}
                 {% endfor %}
               </ul>
             </div>
-            <hr>
-            <div class="section">
+            <hr class="section-divider">
+            <div class="section" id="{{ transaction.grouper }}">
               <span>Delete Records Transactions</span>
               <ul class="transaction-list">
                 {% for item in transaction.list %}
                 {% if item.transact == 'delete' %}
-                <li>{{item.title}}</li>
+                <li>{{ item.title }}</li>
                 {% endif %}
                 {% endfor %}
               </ul>
             </div>
-            <hr>
-            <div class="section">
+            <hr class="section-divider">
+            <div class="section" id="{{ transaction.grouper }}">
               <span>Manage Reports Transactions</span>
               <ul class="transaction-list">
                 {% for item in transaction.list %}
                 {% if item.transact == 'manage' %}
-                <li>{{item.title}}</li>
+                <li>{{ item.title }}</li>
                 {% endif %}
                 {% endfor %}
               </ul>
             </div>
-            <hr>
-
+            <hr class="section-divider">
             {% endfor %}
           </div>
-
         </dl>
       </article>
 
     </div>
   </div>
   <main class="grid-2-column-2 h-[100%]"> </main>
-</div>
-{% endblock content %}
-
+  
 <script>
 
   if (sessionStorage.getItem("activeTabSearch")) {
     sessionStorage.removeItem("activeTabSearch");
   }
+  const dateSelect = document.getElementById('date');
+  const sections = document.querySelectorAll('.section');
+  const sectionDividers = document.querySelectorAll('.section-divider');
+
+  // Hide all sections and dividers initially
+  sections.forEach(section => section.style.display = 'none');
+  sectionDividers.forEach(divider => divider.style.display = 'none');
+
+  // Show sections and dividers for selected date
+  const showSelectedSections = () => {
+    const selectedDate = dateSelect.value;
+    sections.forEach(section => {
+      if (section.id === selectedDate) {
+        section.style.display = 'block';
+        section.nextElementSibling.style.display = 'block'; // show the next <hr> element
+      } else {
+        section.style.display = 'none';
+        section.nextElementSibling.style.display = 'none'; // hide the next <hr> element
+      }
+    });
+  };
+  dateSelect.addEventListener('change', showSelectedSections);
+  window.addEventListener('load', showSelectedSections);
+  function clearTransaction() {
+    event.preventDefault();
+    var myForm = document.querySelector('#clear-transactions-by-date');
+        var formData = new FormData(myForm);
+        formData.append('date-delete', dateSelect.value);
+        fetch('/admin/dashboard/', {
+          method: 'POST',
+          body: formData
+        }).then(response => response.json())
+            .then(data => {
+             location.reload()
+            })
+    
+  }
 </script>
+</div>
+{% endblock content %}
