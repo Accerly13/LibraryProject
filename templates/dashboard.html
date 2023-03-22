@@ -1,6 +1,75 @@
 {% extends "layouts/header.html" %}
-<span></span>
 {% block content %}
+<style>
+      * {
+      box-sizing: border-box;
+    }
+
+    .box {
+      max-width: 70rem;
+    }
+
+    article {
+      max-width: 70rem;
+      margin: 0 auto;
+      border: 0.18rem solid lightgrey;
+      /* padding: clamp(1rem, 2vw, 3rem); */
+      border-radius: 0.5rem;
+    }
+
+    dl {
+      margin: 0;
+    }
+
+    h1 {
+      margin: 0;
+      align-items: center;
+      font-size: 2rem;
+    }
+
+    article > * + * {
+      margin-top: 1rem;
+    }
+
+      /* dl {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+        gap: 1rem;
+      } */
+
+    dl > div {
+      background: white;
+      padding: 1rem;
+      max-width: 70%;
+      border-bottom-right-radius: .5rem;
+      border-bottom-left-radius: .5rem;
+    }
+
+
+    .header {
+      background: #486b8b;
+      color: white;
+      padding: 1rem;
+      max-width: 100%;
+      border-top-right-radius: .5rem;
+      border-top-left-radius: .5rem;
+      border-bottom-right-radius: none;
+      border-bottom-left-radius: none;
+    }
+
+    dt {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #142d47;
+    }
+
+    dd {
+      margin: 0;
+    }
+</style>
+
+<span></span>
+
 <div class="grid-container-1 min-h-screen">
   <header class="w3-container">
     <h1 class="text-style">Home</h1>
@@ -10,7 +79,7 @@
     <div class="container-fluid" style="background-color: #ECF0F1">
         <h3 class="text-center mb-4"></h3>
       
-        <div class="row">
+        <!-- <div class="row">
           {% for item in transact %}
           <div class="col-md-11 mb-3 ml-5">
             <p> {{item.dates}} </p>
@@ -24,7 +93,39 @@
             </div>
           </div>
           {% endfor %}
-        </div>
+        </div> -->
+
+        <article>
+          <!-- <h1>Sample date</h1>
+          {% for item in transact %}
+          <h1>{{item.dates}}</h1>
+          <dl>
+            <div class="box">
+              <dt>{{item.dates}} Reports</dt> 
+              <dd>{{item.title}}</dd>
+            </div>
+          </dl>
+          {% endfor %} -->
+          <dl>
+                      <div class="header">
+                        <h1>Sample date</h1>
+                      </div>
+            <div class="box">
+              <dt>Update Records transactions</dt>
+              <dd>Sample transaction 1</dd>
+              <dd>Sample transaction 2</dd>
+              <hr>
+              <dt>Delete Records transactions</dt>
+              <dd>Sample transaction 1</dd>
+              <dd>Sample transaction 2</dd>
+              <hr>
+              <dt>Manage Reports transactions</dt>
+              <dd>Sample transaction 1</dd>
+              <dd>Sample transaction 2</dd>
+            </div>
+          </dl>
+        </article>
+
       </div>
     </div>
   <main class="grid-2-column-2 h-[100%]"> </main>
