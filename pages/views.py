@@ -110,15 +110,6 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
             messages.success(request, ("Intruder Alert!"))
             return redirect('/dashboard/')	
 
-        # try: 
-        #     college_check = College.objects.get(college_name = college)
-        #     messages.success(request, ("College is Already Registered!"))
-        #     return redirect('/admin/dashboard/updaterecord/')	
-        # except:
-        #     College.objects.create(college_name=college)
-        #     messages.success(request, ("New College is Registered!"))	
-        #     return redirect('/admin/dashboard/updaterecord/')	
-
 class VisitorDashboard(TemplateView):
     template_name = 'visitordashboard.html'
 class VisitorLoginPage(TemplateView):
