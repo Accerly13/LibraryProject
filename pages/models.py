@@ -71,5 +71,18 @@ class Transactions(models.Model):
     class Meta:
         db_table = "transactions"
 
+class Visitors(models.Model):
+    school = models.CharField(max_length=300, verbose_name='school')
+    purpose = models.CharField(max_length=300, verbose_name='purpose')
+    name = models.CharField(max_length=300, verbose_name='name')
+    email = models.CharField(max_length=50, verbose_name='email')
+    phone = models.CharField(max_length=20, verbose_name='phone')
+    student_id = models.CharField(max_length=20, verbose_name='student_id')
+    dates = models.DateField()
+    time = models.TimeField()
+
+    class Meta:
+        db_table = "visitors"
+
 
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College, Department, UserType, DatesLogin, Transactions
+from .models import AdminUser, UserInfo, College, Department, UserType, DatesLogin, Transactions, Visitors
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -112,6 +112,19 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
 
 class VisitorDashboard(TemplateView):
     template_name = 'visitordashboard.html'
+
+    def post(self, request):
+        school = request.POST['nameOfSchool']
+        purpose = request.POST['visitPurpose']
+        name = request.POST['visitorName']
+        email = request.POST['emailAddress']
+        phone = request.POST['phoneNumber']
+        student_id = request.POST['studentId']
+        Visitors.objects.create(dates=now.date(), time=now.time().replace(second=0, microsecond=0), school=school, purpose=purpose,
+                                name=name, email=email, phone=phone, student_id=student_id)
+        messages.success(request, ("Succesfully Recorded!"))
+        return render(request, 'visitordashboard.html')
+
 class VisitorLoginPage(TemplateView):
     template_name = 'stat.html'
     

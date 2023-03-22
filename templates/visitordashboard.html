@@ -21,6 +21,22 @@
         <a class="link" href="/visitor/about/">About</a>
       </nav>
     </header>
+    {% if messages %}
+      <p class="messages">
+          {% for message in messages %}
+              <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+          {% endfor %}
+      </p>
+      <script>
+        function speak() {
+            const message = new SpeechSynthesisUtterance();
+            message.lang = 'en-US';
+            message.text = 'Successfully Recorded';
+            speechSynthesis.speak(message);
+        }
+        speak()
+      </script>
+    {% endif %}
 
     <div style="display: flex; justify-content: center;">
       <div class="wrapper mt-1" style="padding-top:1rem"> 
@@ -30,31 +46,32 @@
           </div>
       
           <div class="d-flex justify-content-center">
-            <form class="text-center">
+            <form class="text-center" method="post">
+              {% csrf_token %}
               <div class="col">
                 <div class="row-md-6 mb-3">
-                  <input style="font-weight: bold;" type="name" class="form-control shadow-textfield" id="inputSchool" placeholder="Name of School" required>
+                  <input style="font-weight: bold;" type="name" class="form-control shadow-textfield" id="inputSchool" placeholder="Name of School" required name="nameOfSchool">
                 </div>
               </div>
               <div class="col">
                 <div class="row-md-6 mb-3">
-                  <input style="font-weight: bold;" type="name" class="form-control shadow-textfield" id="inputSchool" placeholder="Purpose of Visit" required>
+                  <input style="font-weight: bold;" type="name" class="form-control shadow-textfield" id="inputSchool" placeholder="Purpose of Visit" required name="visitPurpose">
                 </div>
               </div>
               <div class="col">
                 <div class="row-md-6 mb-3">
-                  <input style="font-weight: bold;" type="name" class="form-control shadow-textfield" id="inputName" placeholder="Name of Visitor" required>
+                  <input style="font-weight: bold;" type="name" class="form-control shadow-textfield" id="inputName" placeholder="Name of Visitor" required name="visitorName">
                 </div>
                 <div class="row-md-6 mb-3">
-                  <input style="font-weight: bold;" type="email" class="form-control shadow-textfield" id="inputEmail" placeholder="Email Address" required>
+                  <input style="font-weight: bold;" type="email" class="form-control shadow-textfield" id="inputEmail" placeholder="Email Address" required name="emailAddress">
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <input style="font-weight: bold;" type="text" class="form-control shadow-textfield" id="inputPhoneNumber" placeholder="Phone Number" required>
+                  <input style="font-weight: bold;" type="text" class="form-control shadow-textfield" id="inputPhoneNumber" placeholder="Phone Number" required name="phoneNumber">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <input style="font-weight: bold;"  type="text" class="form-control shadow-textfield" id="inputIDnumber" placeholder="Student ID Number" required>
+                  <input style="font-weight: bold;"  type="text" class="form-control shadow-textfield" id="inputIDnumber" placeholder="Student ID Number" required name="studentId">
                 </div>
               </div>
               <div class="text-center">
