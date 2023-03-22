@@ -66,6 +66,7 @@ class DatesLogin(models.Model):
 class Transactions(models.Model):
     dates = models.DateField()
     title = models.CharField(max_length=300, verbose_name='title')
+    transact = models.CharField(max_length=10, verbose_name='transact', default='')
 
     class Meta:
         db_table = "transactions"
