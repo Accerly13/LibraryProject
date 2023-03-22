@@ -264,10 +264,9 @@
         fetch('/admin/dashboard/', {
           method: 'POST',
           body: formData
-        }).then(response => response.json())
-            .then(data => {
+        }).then(
              location.reload()
-            })
+            )
     
   }
 </script>
