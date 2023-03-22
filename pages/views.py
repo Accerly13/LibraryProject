@@ -467,25 +467,22 @@ class ManageReport(LoginRequiredMixin, TemplateView):
             tempObject = []
             check_user_type = UserType.objects.filter(type_name=user_type)
             if check_user_type.exists():
-                if user_type == 'visitor':
-                    print("hey")
-                else:
-                    for item in dates_login:
-                        usertype_query = UserType.objects.get(type_name__iexact=user_type)
-                        user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
-                        if user_query:
-                            data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
-                            tempObject.append(data)
-                    department_counts = {}
-                    for item in tempObject:
-                        department = item['department']
-                        college = item['college']
-                        if department not in department_counts:
-                            department_counts[department] = {}
-                        if college not in department_counts[department]:
-                            department_counts[department][college] = 0
-                        department_counts[department][college] += 1
-                    return department_counts
+                for item in dates_login:
+                    usertype_query = UserType.objects.get(type_name__iexact=user_type)
+                    user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
+                    if user_query:
+                        data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
+                        tempObject.append(data)
+                department_counts = {}
+                for item in tempObject:
+                    department = item['department']
+                    college = item['college']
+                    if department not in department_counts:
+                        department_counts[department] = {}
+                    if college not in department_counts[department]:
+                        department_counts[department][college] = 0
+                    department_counts[department][college] += 1
+                return department_counts
             else:
                 for item in dates_login:
                     user_query = UserInfo.objects.get(user_idno=item.user)
@@ -613,9 +610,15 @@ class ManageReport(LoginRequiredMixin, TemplateView):
             end_time =  datetime.strptime(request.POST['end-time-'+user_type], '%H:%M')
             start_date = datetime.strptime(request.POST['start-date-'+user_type], '%m/%d/%Y')
             end_date = datetime.strptime(request.POST['end-date-'+user_type], '%m/%d/%Y')
-            dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
-            tempObject = report_check(user_type, dates_login)
-            return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':tempObject})
+            if user_type == 'visitor':
+                visitor_login = Visitors.objects.filter(dates__range=[start_date, end_date], time__range=[start_time, end_time])
+
+                user_logins = {'visitor_login': list(visitor_login.values())}
+                return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':user_logins})
+            else:
+                dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date], time_in__range=[start_time, end_time], time_out__range=[start_time, end_time])
+                tempObject = report_check(user_type, dates_login)
+                return JsonResponse ({'start_date': start_date, 'start_time': start_time, 'end_date': end_date, 'end_time':end_time, 'data':tempObject})
 
 
 class TableSample(LoginRequiredMixin, TemplateView):

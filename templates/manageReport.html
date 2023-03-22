@@ -466,23 +466,68 @@
             tableHeader.appendChild(newRowHead);
             var newRow = document.createElement('tr');
             newRow.className = 'text-center'
+            if (type_name == 'visitor') {
+
+              var name = document.createElement('th');
+              name.textContent = "Name"
+              var schoolName = document.createElement('th');
+              schoolName.textContent = "School";
+              var emailContact = document.createElement('th');
+              emailContact.textContent = "Email"
+              var purposeOfVisit = document.createElement('th');
+              purposeOfVisit.textContent = "Purpose"
 
 
-            var colleges = document.createElement('th');
-            colleges.textContent = "Colleges"
-            var department_col = document.createElement('th');
-            department_col.textContent = "Department";
-            var total_col = document.createElement('th');
-            total_col.textContent = "Total Number of visits"
+              // Append the td elements to the tr element
+              newRow.appendChild(name);
+              newRow.appendChild(schoolName);
+              newRow.appendChild(emailContact);
+              newRow.appendChild(purposeOfVisit);
+
+              // Append the tr element to the tbody element
+              tableBody.appendChild(newRow);
+
+              var items = data.data;
+              for (var i = 0; i < items.visitor_login.length; i++) {
+
+                  newRow = document.createElement('tr');
+                  newRow.className = 'text-center'
+                  var visitor_name = document.createElement('th');
+                  visitor_name.textContent = items.visitor_login[i].name;
+                  var school_cell = document.createElement('th');
+                  school_cell.textContent = items.visitor_login[i].school;
+                  var contactEmail = document.createElement('th');
+                  contactEmail.textContent = items.visitor_login[i].email;
+                  var visitorPurpose = document.createElement('th');
+                  visitorPurpose.textContent = items.visitor_login[i].purpose
+
+                  newRow.appendChild(visitor_name);
+                  newRow.appendChild(school_cell);
+                  newRow.appendChild(contactEmail);
+                  newRow.appendChild(visitorPurpose);
+
+                  // Append the tr element to the tbody element
+                  tableBody.appendChild(newRow);
+              }
+
+            }
+
+            else {
+              var colleges = document.createElement('th');
+              colleges.textContent = "Colleges"
+              var department_col = document.createElement('th');
+              department_col.textContent = "Department";
+              var total_col = document.createElement('th');
+              total_col.textContent = "Total Number of visits"
 
 
-            // Append the td elements to the tr element
-            newRow.appendChild(colleges);
-            newRow.appendChild(department_col);
-            newRow.appendChild(total_col);
+              // Append the td elements to the tr element
+              newRow.appendChild(colleges);
+              newRow.appendChild(department_col);
+              newRow.appendChild(total_col);
 
-            // Append the tr element to the tbody element
-            tableBody.appendChild(newRow);
+              // Append the tr element to the tbody element
+              tableBody.appendChild(newRow);
 
             // Append the tr element to the thead element
             // Loop through the data and create a new row for each item
@@ -515,6 +560,7 @@
                   tableBody.appendChild(newRow);
               }
             }
+          }
           })
           .catch(error => console.error(error));
     
