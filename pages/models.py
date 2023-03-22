@@ -49,7 +49,6 @@ class UserInfo(models.Model):
     type = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
     department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
     course = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='images/', default='')
 
     class Meta:
         db_table = "users"
