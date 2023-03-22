@@ -188,7 +188,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 College.objects.create(college_name=college)
                 report_title = f"Add a college named {college}."
             
-                Transactions.objects.create(dates=now.date(), title=report_title)
+                Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 messages.success(request, ("New College is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('new_college_name'):
@@ -200,7 +200,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 college_check.save()
                 report_title = f"Updated a college named {college_name} to {new_college_name}."
             
-                Transactions.objects.create(dates=now.date(), title=report_title)
+                Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 messages.success(request, ("The College Name is Changed!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             else:
@@ -212,7 +212,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             college_check.delete()
             report_title = f"Deleted a college named {college_name}."
             
-            Transactions.objects.create(dates=now.date(), title=report_title)
+            Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
             messages.success(request, ("Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('dept'):
@@ -227,7 +227,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 Department.objects.create(department_name=dept, college=college_check)
                 report_title = f"Add a new department {dept}."
             
-                Transactions.objects.create(dates=now.date(), title=report_title)
+                Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 messages.success(request, ("New Department is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('new_dept_name'):
@@ -239,7 +239,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 dept_check.save()
                 report_title = f"Updated the department {department_name} to {new_department_name}"
             
-                Transactions.objects.create(dates=now.date(), title=report_title)
+                Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 messages.success(request, ("The Department Name is Changed!"))
                 return redirect('/admin/dashboard/updaterecord/')	
             else:
@@ -252,7 +252,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             dept_check.delete()
             report_title = f"Deleted the department {department_name}"
             
-            Transactions.objects.create(dates=now.date(), title=report_title)
+            Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
             messages.success(request, ("Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('usertype'):
@@ -267,7 +267,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
 
                 report_title = f"Add a new usertype, {usertype}"
             
-                Transactions.objects.create(dates=now.date(), title=report_title)
+                Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('idnum'):
             idnum = request.POST['idnum']
@@ -307,7 +307,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 userinfo.save()
                 report_title = f"Import a user data with an ID Number {idnum}"
             
-                Transactions.objects.create(dates=now.date(), title=report_title)
+                Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 messages.success(request, ("New User is Registered!"))	
                 return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('input_user_samp'):
@@ -372,7 +372,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             userinfo.save()
             report_title = f"Updated a user data with an ID Number {idnum}"
             
-            Transactions.objects.create(dates=now.date(), title=report_title)
+            Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
             messages.success(request, ("The data has been updated!"))	
             return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('confirmation1'):
@@ -387,7 +387,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_check_logins.delete()
             report_title = f"Deleted a user with a ID Number {id_delete}"
             
-            Transactions.objects.create(dates=now.date(), title=report_title)
+            Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
             
             messages.success(request, ("Record Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
@@ -422,7 +422,7 @@ class DeleteRecord(LoginRequiredMixin, TemplateView):
             dates_login.delete()
             report_title = f"Deleted a records from {start_date.strftime('%m/%d/%Y')} to {end_date.strftime('%m/%d/%Y')}"
             
-            Transactions.objects.create(dates=now.date(), title=report_title)
+            Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
             messages.success(request, ("Records Deleted!"))
             return redirect('/admin/dashboard/deleterecord/')
         else:
@@ -578,7 +578,7 @@ class ManageReport(LoginRequiredMixin, TemplateView):
                 output = csvfile(final_array, 'second_sem')
             
             if bool(output):
-                Transactions.objects.create(dates=now.date(), title="Generated Report from "+semester+" year "+start_year_report+" to "+end_year_report+".")
+                Transactions.objects.create(dates=now.date(), title="Generated Report from "+semester+" year "+start_year_report+" to "+end_year_report+".", transact="manage")
             return JsonResponse({'final_output':output})
         elif request.POST.get('exportIndividualUsers'):
             
@@ -589,7 +589,7 @@ class ManageReport(LoginRequiredMixin, TemplateView):
 
             report_title = f"Extracted a {request.POST['kind_of_report']} report of {request.POST['report_for_user']} visits from {start_date.strftime('%m/%d/%Y')} to {end_date.strftime('%m/%d/%Y')} from {start_time.strftime('%I:%M %p')} to {end_time.strftime('%I:%M %p')}."
 
-            Transactions.objects.create(dates=now.date(), title=report_title)
+            Transactions.objects.create(dates=now.date(), title=report_title, transact="manage")
             return JsonResponse({'success': True})
         else:
             user_type = request.POST['name']
