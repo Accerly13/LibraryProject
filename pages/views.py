@@ -467,22 +467,25 @@ class ManageReport(LoginRequiredMixin, TemplateView):
             tempObject = []
             check_user_type = UserType.objects.filter(type_name=user_type)
             if check_user_type.exists():
-                for item in dates_login:
-                    usertype_query = UserType.objects.get(type_name__iexact=user_type)
-                    user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
-                    if user_query:
-                        data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
-                        tempObject.append(data)
-                department_counts = {}
-                for item in tempObject:
-                    department = item['department']
-                    college = item['college']
-                    if department not in department_counts:
-                        department_counts[department] = {}
-                    if college not in department_counts[department]:
-                        department_counts[department][college] = 0
-                    department_counts[department][college] += 1
-                return department_counts
+                if user_type == 'visitor':
+                    print("hey")
+                else:
+                    for item in dates_login:
+                        usertype_query = UserType.objects.get(type_name__iexact=user_type)
+                        user_query = UserInfo.objects.get(user_idno=item.user, type_id=usertype_query.type_id)
+                        if user_query:
+                            data = {'department': user_query.department.department_name, 'college': user_query.department.college.college_name}
+                            tempObject.append(data)
+                    department_counts = {}
+                    for item in tempObject:
+                        department = item['department']
+                        college = item['college']
+                        if department not in department_counts:
+                            department_counts[department] = {}
+                        if college not in department_counts[department]:
+                            department_counts[department][college] = 0
+                        department_counts[department][college] += 1
+                    return department_counts
             else:
                 for item in dates_login:
                     user_query = UserInfo.objects.get(user_idno=item.user)
