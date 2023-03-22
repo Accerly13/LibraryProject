@@ -1,38 +1,13 @@
 {% extends "layouts/header.html" %}
 {% block content %}
 <style>
-.section {
-  margin-bottom: 20px;
-}
-
-
-select {
-  font-family: inherit;
-  font-size: 16px;
-  color: #333;
-  border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 5px;
-}
-
   * {
     box-sizing: border-box;
   }
 
   .box {
-  background-color: #f2f2f2;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-
+    max-width: 70rem;
+  }
 
   article {
     max-width: 70rem;
@@ -52,7 +27,7 @@ h2 {
     font-size: 2rem;
   }
 
-  article > * + * {
+  article>*+* {
     margin-top: 1rem;
   }
 
@@ -62,9 +37,10 @@ h2 {
     gap: 1rem;
   } */
 
-  dl > div {
+  dl>div {
     background: white;
     padding: 1rem;
+    max-width: 70%;
     border-bottom-right-radius: .5rem;
     border-bottom-left-radius: .5rem;
   }
@@ -80,88 +56,116 @@ h2 {
     border-bottom-left-radius: none;
   }
 
-  dt {
+  span {
     font-weight: 700;
     font-size: 1.3rem;
     color: #142d47;
+    padding: .3rem;
+    margin-bottom: 2rem;
   }
 
   dd {
     margin: 0;
   }
 
+
+  .container-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   #hide-transactions {
-  display: block;
-  margin-top: 20px;
-  font-size: 16px;
-  border: none;
-  background-color: #0077cc;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #0077cc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-#hide-transactions:hover {
-  background-color: #005ea6;
-}
+  #hide-transactions:hover {
+    background-color: #005ea6;
+  }
 
-.transactions {
-  margin: 20px;
-  border: 1px solid #ccc;
-  padding: 20px;
-}
+  .transactions {
+    margin: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
 
-.header {
-  margin-bottom: 20px;
-}
+  .header {
+    margin-bottom: 20px;
+  }
 
-.section {
-  margin-bottom: 20px;
-}
+  .section {
+    margin-bottom: 20px;
+  }
 
-.actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.transaction-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+  select {
+    font-family: inherit;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+  }
 
-.transaction-list li {
-  margin-bottom: 5px;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
+  .actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.clear-transactions {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #2196f3;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+  .transaction-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
-.clear-transactions:hover {
-  background-color: #1565c0;
-}
+  .transaction-list li {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+  }
 
-.container-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .delete-transaction {
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 50%;
+    border: none;
+    background-color: #f44336;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
 
+  .delete-transaction:hover {
+    background-color: #c62828;
+  }
+
+  .hide-transactions,
+  .clear-transactions {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2196f3;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .hide-transactions:hover,
+  .clear-transactions:hover {
+    background-color: #1565c0;
+  }
 </style>
 
 <span></span>
@@ -170,16 +174,15 @@ h2 {
   <header class="w3-container">
     <h1 class="text-style">Home</h1>
   </header>
-  
-  <div class="warpper">
 
-    <div class="actions">
-      <button class="clear-transactions">Clear Transactions</button>
-    </div>
-    
+  <div class="warpper">
+<div class="actions">
+  <button class="clear-transactions">Clear Transactions</button>
+</div>
+
     <div class="container-fluid" style="background-color: #ECF0F1">
       <h3 class="text-center mb-4"></h3>
-      
+
       <!-- This section is commented out
       <div class="row">
         {% for item in transact %}
@@ -200,62 +203,67 @@ h2 {
 
       <article>
         <dl>
-        <div class="transactions">
-        {% regroup transact by dates as transaction_list %}
-        {% for transaction in transaction_list %}
-        <div class="header">
-          <div class="container-header">
-            <!-- <h1>{{transaction.grouper}}</h1> -->
-            <label for="date">Select a date:</label>
-            <select name="date" id="date">
-              <option value="2023-03-22">March 22, 2023</option>
-              <option value="2023-03-23">March 23, 2023</option>
-              <option value="2023-03-24">March 24, 2023</option>
-            </select>
-          </div>
-        </div>
-        
-        
           <div class="box">
+            {% regroup transact by dates as transaction_list %}
+            {% for transaction in transaction_list %}
+            <!-- <div class="header">
+              <h1>{{transaction.grouper}}</h1>
+            </div> -->
+
+          <div class="header">
+            <div class="container-header">
+              <!-- <h1>{{transaction.grouper}}</h1> -->
+              <label for="date">Select a date:</label>
+              <select name="date" id="date">
+                <option value="2023-03-22">March 22, 2023</option>
+                <option value="2023-03-23">March 23, 2023</option>
+                <option value="2023-03-24">March 24, 2023</option>
+              </select>
+              </div>
+          </div>
+
             <div class="section">
-              <h2>Update Records Transactions</h2>
+              <span>Update Records Transactions</span>
               <ul class="transaction-list">
                 {% for item in transaction.list %}
                 {% if item.transact == 'update' %}
-                  <li>{{item.title}}</li>
+                <li>{{item.title}}</li>
                 {% endif %}
                 {% endfor %}
               </ul>
             </div>
+            <hr>
             <div class="section">
-              <h2>Delete Records Transactions</h2>
+              <span>Delete Records Transactions</span>
               <ul class="transaction-list">
                 {% for item in transaction.list %}
                 {% if item.transact == 'delete' %}
-                 <li>{{item.title}}</li>
+                <li>{{item.title}}</li>
                 {% endif %}
                 {% endfor %}
               </ul>
             </div>
+            <hr>
             <div class="section">
-              <h2>Manage Reports Transactions</h2>
+              <span>Manage Reports Transactions</span>
               <ul class="transaction-list">
                 {% for item in transaction.list %}
                 {% if item.transact == 'manage' %}
-                  <li>{{item.title}}</li>
+                <li>{{item.title}}</li>
                 {% endif %}
                 {% endfor %}
               </ul>
             </div>
-          </div>
-          {% endfor %}
-        </div>
-        
-        
-        </article>
+            <hr>
 
-      </div>
+            {% endfor %}
+          </div>
+
+        </dl>
+      </article>
+
     </div>
+  </div>
   <main class="grid-2-column-2 h-[100%]"> </main>
 </div>
 {% endblock content %}
