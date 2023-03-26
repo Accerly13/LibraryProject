@@ -24,21 +24,22 @@ now = datetime.now()
 @login_required
 def protected_view(request):
     # Your protected view logic here
-    return render(request, 'home.html')
+    return render(request, 'stat.html')
 
 def logout_view(request):
     logout(request)
-    return redirect('http://127.0.0.1:8000/admin/')
+    return redirect('/admin/')
 
 class HomePageView(TemplateView):
     def get(self, request):
+        user = AdminUser.objects.create_superuser(admin_id=1, username="jobladmin", password="jobl123")
         data = AdminUser.objects.all()
         return render(request, 'home.html', {'data': data})
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user is not None and user.admin_id == 1:
             login(request, user)
             return redirect('dashboard/')
         else:
@@ -85,15 +86,15 @@ class SystemAdminProfile(LoginRequiredMixin, TemplateView):
     def post(self, request):
         try: 
             admin_user = AdminUser.objects.get(pk=1)
-            admin_user.admin_username = request.POST['username_admin']
-            admin_user.admin_password = request.POST['password_admin']
+            admin_user.username = request.POST['username_admin']
+            admin_user.password = request.POST['password_admin']
             admin_user.save()
             messages.success(request, ("Username and Password Changed!"))  
             return render(request, 'sysadprofile.html')
         except:
             admin_user = AdminUser.objects.get(pk=2)
-            admin_user.admin_username = request.POST['username_admin1']
-            admin_user.admin_password = request.POST['password_admin1']
+            admin_user.username = request.POST['username_admin1']
+            admin_user.password = request.POST['password_admin1']
             admin_user.save()
             messages.success(request, ("Username and Password Changed!"))  
             return render(request, 'sysadprofile.html')
@@ -136,15 +137,13 @@ class VisitorLoginPage(TemplateView):
     template_name = 'stat.html'
     
     def __init__(self):
-        try:
-            self.adminId = AdminUser.objects.get(admin_id=1)
-        except: 
-            AdminUser.objects.create(admin_id=1, admin_username="jobladmin", admin_password="jobl123")
+        
+        user = AdminUser.objects.create_superuser(admin_id=2, username="user", password="jobl123")
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user is not None and user.admin_id == 2:
             login(request, user)
             return redirect('dashboard/')
         else:
