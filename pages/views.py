@@ -111,7 +111,6 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
         student_id = request.POST['student_id']
         try:
             userinfo = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
-            
             DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
             messages.success(request, ("Succesfully Recorded!"))
             return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo})
@@ -443,7 +442,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 with connection.cursor() as cursor:
                     for row in reader:
                         users = UserInfo(user_idno=row[0], first_name=row[1], middle_name=row[2], last_name=row[3], gender=row[4],
-                                        course=row[5], comment=row[6], type_id=row[7], department_id=row[8])
+                                        course=row[5], comment=row[6], type_id=row[7], department_id=row[8], alternative_id=row[9])
                         users.save()
                 
                 Transactions.objects.create(dates=now.date(), title="Batch Import Users!", transact="update")

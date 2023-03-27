@@ -792,6 +792,7 @@ document.addEventListener("DOMContentLoaded", function() {
               var lastName = document.querySelector('#lname-update');
 
               var comment = document.querySelector('#comments-update');
+              var altid_update = document.querySelector('#alt-id-update');
 
               var select = document.getElementById("department-list");
               for (var i = 0; i < select.options.length; i++) {
@@ -838,6 +839,7 @@ document.addEventListener("DOMContentLoaded", function() {
               img.src = data.image_url
               
               comment.value = data.user_searched.comment
+              altid_update.value = data.user_searched.alternative_id
               userId.value = data.user_searched.user_idno;
               nameInput.value = data.user_searched.first_name;
               middleName.value = data.user_searched.middle_name;

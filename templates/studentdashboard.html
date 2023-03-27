@@ -181,7 +181,7 @@ footer {
                       
                           <div class="col-4 d-flex align-items-center justify-content-center flex-column">
                             <div class="card-body">
-                              {% if userinfo.user_idno == student_id and userinfo.image.url != "" %}
+                              {% if userinfo.user_idno == student_id or userinfo.alternative_id == student_id and userinfo.image.url != "" %}
                               <div class="container-fluid">
                                 <div class="text-center">
                                   <div class="row">
@@ -193,7 +193,7 @@ footer {
                               </div>
                               {% endif %}
                               <p class="card-text mb-2">
-                                {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno %}
+                                {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno or  userinfo.alternative_id == student_id and userinfo.alternative_id is not None and userinfo.alternative_id %}
                                   <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
                                   <div class="info"> {{userinfo.department.department_name}} </div>
                                   <div class="info">{{userinfo.course}}</div>
