@@ -422,59 +422,61 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             
             messages.success(request, ("Record Deleted!"))
             return redirect('/admin/dashboard/updaterecord/')
-        elif request.FILES['csv_file']:
-            csv_file = request.FILES['csv_file']
-            # Read the CSV file
-            csv_data = csv_file.read().decode('utf-8').splitlines()
-            # Create a CSV reader object
-            reader = csv.reader(csv_data)
-            # Skip the header row
-            next(reader)
-            # Insert data into the database
-            with connection.cursor() as cursor:
-                for row in reader:
-                    users = UserInfo(user_idno=row[0], first_name=row[1], middle_name=row[2], last_name=row[3], gender=row[4],
-                                    course=row[5], comment=row[6], type_id=row[7], department_id=row[8])
-                    users.save()
-            
-            Transactions.objects.create(dates=now.date(), title="Batch Import Users!", transact="update")
-            messages.success(request, "Users are Registered!")
-            return redirect('/admin/dashboard/updaterecord/')
-        elif request.FILES['csv_file1']:
-            csv_file = request.FILES['csv_file1']
-            # Read the CSV file
-            csv_data = csv_file.read().decode('utf-8').splitlines()
-            # Create a CSV reader object
-            reader = csv.reader(csv_data)
-            # Skip the header row
-            next(reader)
-            # Insert data into the database
-            with connection.cursor() as cursor:
-                for row in reader:
-                    college = College(college_id=row[0], college_name=row[1])
-                    college.save()
-            
-            Transactions.objects.create(dates=now.date(), title="Batch Add Colleges!", transact="update")
-            messages.success(request, "Colleges are Registered!")
-            return redirect('/admin/dashboard/updaterecord/')
-        elif request.FILES['csv_file2']:
-            csv_file = request.FILES['csv_file2']
-            # Read the CSV file
-            csv_data = csv_file.read().decode('utf-8').splitlines()
-            # Create a CSV reader object
-            reader = csv.reader(csv_data)
-            # Skip the header row
-            next(reader)
-            # Insert data into the database
-            with connection.cursor() as cursor:
-                for row in reader:
-                    department = Department(deparment_id=row[0], department_name=row[1], college_id=row[2])
-                    department.save()
-            
-            Transactions.objects.create(dates=now.date(), title="Batch Add Departments!", transact="update")
-            messages.success(request, "Departments are Registered!")
-            return redirect('/admin/dashboard/updaterecord/')
+        else:
+            try:
+                csv_file = request.FILES['csv_file']
 
+                # Read the CSV file
+                csv_data = csv_file.read().decode('utf-8').splitlines()
+                # Create a CSV reader object
+                reader = csv.reader(csv_data)
+                # Skip the header row
+                next(reader)
+                # Insert data into the database
+                with connection.cursor() as cursor:
+                    for row in reader:
+                        users = UserInfo(user_idno=row[0], first_name=row[1], middle_name=row[2], last_name=row[3], gender=row[4],
+                                        course=row[5], comment=row[6], type_id=row[7], department_id=row[8])
+                        users.save()
+                
+                Transactions.objects.create(dates=now.date(), title="Batch Import Users!", transact="update")
+                messages.success(request, "Users are Registered!")
+                return redirect('/admin/dashboard/updaterecord/')
+            except:
+                try:
+                    csv_file = request.FILES['csv_file1']
+                # Read the CSV file
+                    csv_data = csv_file.read().decode('utf-8').splitlines()
+                    # Create a CSV reader object
+                    reader = csv.reader(csv_data)
+                    # Skip the header row
+                    next(reader)
+                    # Insert data into the database
+                    with connection.cursor() as cursor:
+                        for row in reader:
+                            college = College(college_id=row[0], college_name=row[1])
+                            college.save()
+                    
+                    Transactions.objects.create(dates=now.date(), title="Batch Add Colleges!", transact="update")
+                    messages.success(request, "Colleges are Registered!")
+                    return redirect('/admin/dashboard/updaterecord/')
+                except: 
+                    csv_file = request.FILES['csv_file2']
+                    # Read the CSV file
+                    csv_data = csv_file.read().decode('utf-8').splitlines()
+                    # Create a CSV reader object
+                    reader = csv.reader(csv_data)
+                    # Skip the header row
+                    next(reader)
+                    # Insert data into the database
+                    with connection.cursor() as cursor:
+                        for row in reader:
+                            department = Department(deparment_id=row[0], department_name=row[1], college_id=row[2])
+                            department.save()
+                    
+                    Transactions.objects.create(dates=now.date(), title="Batch Add Departments!", transact="update")
+                    messages.success(request, "Departments are Registered!")
+                    return redirect('/admin/dashboard/updaterecord/')
         
 class DeleteRecord(LoginRequiredMixin, TemplateView):
     template_name = 'deleteRecord.html'
