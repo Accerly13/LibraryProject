@@ -200,38 +200,43 @@
           <div class="box">
             {% for transaction in transaction_list %}
             <div class="section" id="{{ transaction.grouper }}">
-              <span>Update Records Transactions</span>
-              <ul class="transaction-list">
+              <h3 style="text-align: center;  background-color: #f2f2f2; padding: 10px; font-weight: bold;">UPDATE RECORDS TRANSACTIONS</h3>
+              <ul style="font-weight: bold;">
                 {% for item in transaction.list %}
-                {% if item.transact == 'update' %}
-                <li>{{ item.title }}</li>
-                {% endif %}
+                  {% if item.transact == 'update' %}
+                    <li>{{ item.title }}</li>
+                  {% endif %}
                 {% endfor %}
               </ul>
+              
             </div>
             <hr class="section-divider">
             <div class="section" id="{{ transaction.grouper }}">
-              <span>Delete Records Transactions</span>
-              <ul class="transaction-list">
+              <h3 style="text-align: center; background-color: #f2f2f2; padding: 10px; font-weight: bold;">DELETE RECORDS TRANSACTIONS</h3>
+
+              <ul style="font-weight: bold;">
                 {% for item in transaction.list %}
-                {% if item.transact == 'delete' %}
-                <li>{{ item.title }}</li>
-                {% endif %}
+                  {% if item.transact == 'delete' %}
+                    <li style="text-decoration: line-through">{{ item.title }}</li>
+                  {% endif %}
                 {% endfor %}
-              </ul>
+              </ul>              
             </div>
             <hr class="section-divider">
             <div class="section" id="{{ transaction.grouper }}">
-              <span>Manage Reports Transactions</span>
-              <ul class="transaction-list">
-                {% for item in transaction.list %}
-                {% if item.transact == 'manage' %}
-                <li>{{ item.title }}</li>
-                {% endif %}
-                {% endfor %}
-              </ul>
+              <h3 style="text-align: center; background-color: #f2f2f2; padding: 10px; font-weight: bold;">MANAGE REPORTS TRANSACTIONS</h3>
+              {% if transaction.list|length > 0 %}
+                <ul style="font-weight: bold;">
+                  {% for item in transaction.list %}
+                    {% if item.transact == 'manage' %}
+                      <li>{{ item.title }}</li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>No managed transactions found.</p>
+              {% endif %}
             </div>
-            <hr class="section-divider">
             {% endfor %}
           </div>
         </dl>
