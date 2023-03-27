@@ -342,7 +342,7 @@
               <input type="file" class="form-control-file" id="csv_file1" name="csv_file1" onchange="showUploadButton()" accept=".csv">
             </div>
           </div>
-          <div id="upload-button" style="text-align: center; display: none" class="form-group">
+          <div id="upload-button1" style="text-align: center; display: none" class="form-group">
             <button class="btn btn-primary" type="submit">Upload</button>
           </div>
         </form>
@@ -412,7 +412,7 @@
               <input type="file" class="form-control-file" id="csv_file2" name="csv_file2" onchange="showUploadButton()" accept=".csv">
             </div>
           </div>
-          <div id="upload-button" style="text-align: center; display: none" class="form-group">
+          <div id="upload-button2" style="text-align: center; display: none" class="form-group">
             <button class="btn btn-primary" type="submit">Upload</button>
           </div>
         </form>
@@ -677,11 +677,20 @@ sessionStorage?.removeItem("activeTabSearch");
 sessionStorage?.removeItem("activeTabManageReport");
 
 function showUploadButton() {
-  console.log('showUploadButton called');
   var fileInput = document.getElementById('csv_file');
   var uploadButton = document.getElementById('upload-button');
   if (fileInput.files && fileInput.files.length > 0) {
     uploadButton.style.display = 'block';
+  }
+  var fileInput1 = document.getElementById('csv_file1');
+  var uploadButton = document.getElementById('upload-button1');
+  if (fileInput1.files && fileInput1.files.length > 0) {
+    uploadButton1.style.display = 'block';
+  }
+  var fileInput2 = document.getElementById('csv_file2');
+  var uploadButton2 = document.getElementById('upload-button2');
+  if (fileInput2.files && fileInput2.files.length > 0) {
+    uploadButton2.style.display = 'block';
   }
 }
 
