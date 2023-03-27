@@ -15,6 +15,15 @@
   </header>
 
   <div class="wrapper">
+
+    {% if messages %}
+    <p class="messages">
+        {% for message in messages %}
+        <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+        {% endfor %}
+    </p>
+    {% endif %}
+
     <input class="radio" id="one" name="group" type="radio" checked>
     <input class="radio" id="two" name="group" type="radio">
     <input class="radio" id="three" name="group" type="radio">
@@ -30,14 +39,6 @@
         <label class="tab" onclick="switchTab('tab5')" data-tab="tab5" id="five-tab" for="five">Update User Type</label>
       </div>
     <!-- </div> -->
-
-    {% if messages %}
-    <p class="messages">
-        {% for message in messages %}
-        <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
-        {% endfor %}
-    </p>
-    {% endif %}
 
     <div class="panels panel-relative mx-auto mb-5">
       <div class="panel" id="tab1">
@@ -65,7 +66,9 @@
             <div class="col-sm-10">
               <input type="file" class="form-control" id="profile-picture" accept="image/*" required name="picture"/>
             </div>
-            <img id="preview" src="" alt="Preview">
+            <div class="size-image">
+              <img id="preview" src="" alt="Preview">
+            </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="idnum">ID Number:</label>
@@ -228,7 +231,9 @@
               <div class="col-sm-10">
                 <input type="file" class="form-control" id="profile-picture1" accept="image/*" required name="picture1"/>
               </div>
-              <img id="preview1" src="" alt="Preview">
+              <div class="size-image">
+                <img id="preview1" src="" alt="Preview">
+              </div>
             </div>
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="idnum-update">ID Number:</label>
@@ -670,6 +675,12 @@ option:hover,  .active{
   #preview {
     display: none;
   }
+
+  .size-image img {
+  width: 120px;
+  height: 120px;
+}
+
 </style>
 
 <script>
