@@ -380,17 +380,38 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             course = request.POST['courses-update']
             usertype = request.POST['usertype_select-update']
             comments = request.POST['comments-update']
-            picture = request.FILES['picture1']
-    
             user_check = UserInfo.objects.get(user_idno = idnum)
-            file_path_delete = user_check.image.path
+            try:
+                picture = request.FILES['picture1']
+        
+                file_path_delete = user_check.image.path
+                # Delete the file
+                os.remove(file_path_delete)
+                user_check.image = picture
+                userinfo = UserInfo.objects.get(user_idno = idnum)
+                current_filename = userinfo.image.name
 
-            # Delete the file
-            os.remove(file_path_delete)
+                # Define the new filename
+                new_filename = f"{idnum}{current_filename[current_filename.rfind('.'):]}"
+
+                # Get the full path of the current file in the media folder
+                current_path = os.path.join(settings.MEDIA_ROOT, current_filename)
+
+                # Get the full path of the new file in the media folder
+                new_path = os.path.join(settings.MEDIA_ROOT, new_filename)
+
+                # Rename the file
+                os.rename(current_path, new_path)
+                userinfo.image.name = new_filename
+                userinfo.save()
+            except Exception as e:
+                # Print the error message to the console
+                print('An error occurred:', str(e))
+                
+
             dept_check = Department.objects.get(department_name = dept_select)
             usertype = UserType.objects.get(type_id = usertype)
             user_check.user_idno = idnum
-            user_check.image = picture
             user_check.first_name = fname
             user_check.middle_name = mname
             user_check.last_name = lname
@@ -401,22 +422,6 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_check.type = usertype
             user_check.alternative_id = altid
             user_check.save()
-            userinfo = UserInfo.objects.get(user_idno = idnum)
-            current_filename = userinfo.image.name
-
-            # Define the new filename
-            new_filename = f"{idnum}{current_filename[current_filename.rfind('.'):]}"
-
-            # Get the full path of the current file in the media folder
-            current_path = os.path.join(settings.MEDIA_ROOT, current_filename)
-
-            # Get the full path of the new file in the media folder
-            new_path = os.path.join(settings.MEDIA_ROOT, new_filename)
-
-            # Rename the file
-            os.rename(current_path, new_path)
-            userinfo.image.name = new_filename
-            userinfo.save()
             report_title = f"Updated a user data with an ID Number {idnum}"
             
             Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
