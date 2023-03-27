@@ -32,7 +32,10 @@ def logout_view(request):
 
 class HomePageView(TemplateView):
     def get(self, request):
-        user = AdminUser.objects.create_superuser(admin_id=1, username="jobladmin", password="jobl123")
+        try:
+            AdminUser.objects.get(pk=1)
+        except:
+            AdminUser.objects.create_superuser(admin_id=1, username="jobladmin", password="jobl123")
         data = AdminUser.objects.all()
         return render(request, 'home.html', {'data': data})
     def post(self, request):
@@ -87,14 +90,14 @@ class SystemAdminProfile(LoginRequiredMixin, TemplateView):
         try: 
             admin_user = AdminUser.objects.get(pk=1)
             admin_user.username = request.POST['username_admin']
-            admin_user.password = request.POST['password_admin']
+            admin_user.set_password(request.POST['password_admin'])
             admin_user.save()
             messages.success(request, ("Username and Password Changed!"))  
             return render(request, 'sysadprofile.html')
         except:
             admin_user = AdminUser.objects.get(pk=2)
             admin_user.username = request.POST['username_admin1']
-            admin_user.password = request.POST['password_admin1']
+            admin_user.set_password(request.POST['password_admin1'])
             admin_user.save()
             messages.success(request, ("Username and Password Changed!"))  
             return render(request, 'sysadprofile.html')
@@ -137,8 +140,10 @@ class VisitorLoginPage(TemplateView):
     template_name = 'stat.html'
     
     def __init__(self):
-        
-        user = AdminUser.objects.create_superuser(admin_id=2, username="user", password="jobl123")
+        try:
+            AdminUser.objects.get(pk=2)
+        except:
+            AdminUser.objects.create_superuser(admin_id=2, username="user", password="jobl123")
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
