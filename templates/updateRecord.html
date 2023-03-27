@@ -339,7 +339,7 @@
           <div class="form-group">
             <label for="csv_file1">Select a CSV file for college batch upload:</label>
             <div class="input-group">
-              <input type="file" class="form-control-file" id="csv_file1" name="csv_file1" onchange="showUploadButton()" accept=".csv">
+              <input type="file" class="form-control-file" id="csv_file1" name="csv_file1" onchange="showUploadButton1()" accept=".csv">
             </div>
           </div>
           <div id="upload-button1" style="text-align: center; display: none" class="form-group">
@@ -409,7 +409,7 @@
           <div class="form-group">
             <label for="csv_file2">Select a CSV file for department batch upload:</label>
             <div class="input-group">
-              <input type="file" class="form-control-file" id="csv_file2" name="csv_file2" onchange="showUploadButton()" accept=".csv">
+              <input type="file" class="form-control-file" id="csv_file2" name="csv_file2" onchange="showUploadButton2()" accept=".csv">
             </div>
           </div>
           <div id="upload-button2" style="text-align: center; display: none" class="form-group">
@@ -682,15 +682,21 @@ function showUploadButton() {
   if (fileInput.files && fileInput.files.length > 0) {
     uploadButton.style.display = 'block';
   }
-  var fileInput1 = document.getElementById('csv_file1');
+}
+
+function showUploadButton1() {
+  var fileInput = document.getElementById('csv_file1');
   var uploadButton = document.getElementById('upload-button1');
-  if (fileInput1.files && fileInput1.files.length > 0) {
-    uploadButton1.style.display = 'block';
+  if (fileInput.files && fileInput.files.length > 0) {
+    uploadButton.style.display = 'block';
   }
-  var fileInput2 = document.getElementById('csv_file2');
-  var uploadButton2 = document.getElementById('upload-button2');
-  if (fileInput2.files && fileInput2.files.length > 0) {
-    uploadButton2.style.display = 'block';
+}
+
+function showUploadButton2() {
+  var fileInput = document.getElementById('csv_file2');
+  var uploadButton = document.getElementById('upload-button2');
+  if (fileInput.files && fileInput.files.length > 0) {
+    uploadButton.style.display = 'block';
   }
 }
 
