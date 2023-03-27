@@ -383,10 +383,13 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_check = UserInfo.objects.get(user_idno = idnum)
             try:
                 picture = request.FILES['picture1']
-        
-                file_path_delete = user_check.image.path
-                # Delete the file
-                os.remove(file_path_delete)
+                try:
+                    file_path_delete = user_check.image.path
+                    # Delete the file
+                    os.remove(file_path_delete)
+                except Exception as e:
+                    # Print the error message to the console
+                    print('An error occurred:', str(e))
                 user_check.image = picture
                 userinfo = UserInfo.objects.get(user_idno = idnum)
                 current_filename = userinfo.image.name
