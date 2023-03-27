@@ -196,6 +196,13 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         self.colleges = College.objects.all()
         self.dept = Department.objects.all()
         self.usertype = UserType.objects.all()
+        if self.usertype.count() == 0:
+            UserType.objects.create(type_id=1, type_name='FACULTY')
+            UserType.objects.create(type_id=2, type_name='PERSONNEL')
+            UserType.objects.create(type_id=3, type_name='STUDENT')
+            UserType.objects.create(type_id=4, type_name='VISITOR')
+        
+        self.usertype = UserType.objects.all()
         self.users = UserInfo.objects.all().annotate(firstname=Lower('first_name')).order_by('last_name')
         self.course = UserInfo.objects.values_list('course', flat=True).distinct()
     def get(self, request):
