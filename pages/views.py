@@ -15,10 +15,15 @@ from django.db.models import Q
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import csv
+from django.templatetags.static import static
 from django.db import connection
-# from flask import Flask, request, render_template
 
-# app = Flask(__name__)
+media_root = settings.MEDIA_ROOT
+static_root = settings.STATIC_ROOT
+media_url = settings.MEDIA_URL
+
+
+file_list = os.listdir(media_root)
 now = datetime.now()
 @login_required
 def protected_view(request):
@@ -332,7 +337,6 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 UserInfo.objects.create(user_idno=idnum, alternative_id=altid, image=picture, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
                 userinfo = UserInfo.objects.get(user_idno = idnum)
                 current_filename = userinfo.image.name
-                print(current_filename)
 
                 # Define the new filename
                 new_filename = f"{idnum}{current_filename[current_filename.rfind('.'):]}"
@@ -358,7 +362,14 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             try:
                 image_url = user_searched_details.image.url
             except:
-                image_url = ""
+                filename = user_searched+".png"
+                print(filename)
+                if os.path.isfile(os.path.join(media_root, filename)):
+                    print("hey")
+                    if filename.endswith('.jpg') or filename.endswith('.png'):
+                        file_path = os.path.join(media_url, filename)
+                        image_url = file_path
+
 
             user_details = model_to_dict(user_searched_details)
             user_details.pop('image', None)
