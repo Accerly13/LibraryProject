@@ -216,7 +216,7 @@ h2 {
   border:#9f9f9f solid 1px; /* Remove borders */
   color: white; /* White text */
   cursor: pointer; /* Mouse pointer on hover */
-  border-radius: 1em;
+  border-radius: .2em;
   /* width: 50%; */
   /* float: right; */
 }

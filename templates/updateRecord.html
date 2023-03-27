@@ -6,6 +6,23 @@
   background: #fffffff6;
   color: #336699;
   border-top: 3px solid #336699;
+  
+}
+
+.btn-cancel {
+  background-color: #9f9f9f; /* Blue background */
+  border:#9f9f9f solid 1px; /* Remove borders */
+  color: white; /* White text */
+  cursor: pointer; /* Mouse pointer on hover */
+  border-radius: .2em;
+  /* width: 50%; */
+  /* float: right; */
+}
+
+.btn-cancel:hover,
+.btn-cancel:focus {
+  background-color: #afafaf;
+  color: white;
 }
 </style>
 
@@ -160,7 +177,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="d-grid col-4 mx-auto">
+                <div class="d-grid col-3 mx-auto">
                   <button class="btn btn-primary" type="submit">Save</button>
                 </div>
         </form>
@@ -326,10 +343,10 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="d-grid col-4 mx-auto">
+                    <div class="d-grid col-3 mx-auto">
                       <button class="btn-cancel">Cancel</button>
                     </div>
-                    <div class="d-grid col-4 mx-auto">
+                    <div class="d-grid col-3 mx-auto">
                       <button class="btn btn-primary" type="submit">Save</button>
                     </div>
                   </div>
@@ -339,22 +356,23 @@
       </div>
       <div class="panel" id="tab3">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="csv_file1">Select a CSV file for college batch upload:</label>
-            <div class="input-group">
-              <input type="file" class="form-control-file" id="csv_file1" name="csv_file1" onchange="showUploadButton1()" accept=".csv">
+        <div class="flex justify-between items-center mb-5">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="csv_file1">Select a CSV file for college batch upload:</label>
+              <div class="input-group">
+                <input type="file" class="form-control-file" id="csv_file1" name="csv_file1" onchange="showUploadButton1()" accept=".csv">
+              </div>
             </div>
-          </div>
-          <div id="upload-button1" style="text-align: center; display: none" class="form-group">
-            <button class="btn btn-primary" type="submit">Upload</button>
-          </div>
-        </form>
-
+            <div id="upload-button1" style="text-align: center; display: none" class="form-group">
+              <button class="btn btn-primary" type="submit">Upload</button>
+            </div>
+          </form>
+        </div>
         <hr>
 
-        <div class="row mb-3">
+        <div class="row mb-3" style="margin: 3rem">
           <form action="/admin/dashboard/updaterecord/" method="post" name="add_college_form">
             {% csrf_token %}
           <div class="input-group">
