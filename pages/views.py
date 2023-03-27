@@ -301,6 +301,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         elif request.POST.get('idnum'):
             idnum = request.POST['idnum']
             fname = request.POST['fname']
+            if request.POST['altid']:
+                altid = request.POST['altid']
+            else:
+                altid = ''
             mname = request.POST['mname']
             lname = request.POST['lname']
             gender = request.POST['gender']
@@ -316,7 +320,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             except:
                 dept_check = Department.objects.get(department_name = dept_select)
                 usertype = UserType.objects.get(type_id = usertype)
-                UserInfo.objects.create(user_idno=idnum, image=picture, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
+                UserInfo.objects.create(user_idno=idnum, alternative_id=altid, image=picture, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
                 userinfo = UserInfo.objects.get(user_idno = idnum)
                 current_filename = userinfo.image.name
                 print(current_filename)
@@ -359,6 +363,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             mname = request.POST['mname-update']
             lname = request.POST['lname-update']
             gender = request.POST['gender-update']
+            if request.POST['alt-id-update']:
+                altid = request.POST['alt-id-update']
+            else:
+                altid = ''
             dept_select = request.POST['data_list1']
             course = request.POST['courses-update']
             usertype = request.POST['usertype_select-update']
@@ -382,6 +390,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_check.course = course
             user_check.department = dept_check
             user_check.type = usertype
+            user_check.alternative_id = altid
             user_check.save()
             userinfo = UserInfo.objects.get(user_idno = idnum)
             current_filename = userinfo.image.name
