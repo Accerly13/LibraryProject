@@ -446,6 +446,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 # Insert data into the database
                 with connection.cursor() as cursor:
                     for row in reader:
+                        print(row)
                         if row[0] in existing_user_idnos:
                             continue
                          
@@ -469,8 +470,11 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     # Skip the header row
                     next(reader)
                     # Insert data into the database
+                    existing_college = [colleges.college_id for colleges in College.objects.all()]
                     with connection.cursor() as cursor:
                         for row in reader:
+                            if row[0] in existing_college:
+                                continue
                             college = College(college_id=row[0], college_name=row[1])
                             college.save()
                     
@@ -485,9 +489,11 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     reader = csv.reader(csv_data)
                     # Skip the header row
                     next(reader)
-                    # Insert data into the database
+                    existing_departments = [departments.department_id for departments in College.objects.all()]
                     with connection.cursor() as cursor:
                         for row in reader:
+                            if row[0] in existing_departments:
+                                continue
                             department = Department(department_id=row[0], department_name=row[1], college_id=row[2])
                             department.save()
                     
