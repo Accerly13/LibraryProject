@@ -47,7 +47,7 @@
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-              <label for="csv_file">Select a CSV file for batch upload:</label>
+              <label for="csv_file">Select a CSV file for user batch upload:</label>
               <div class="input-group">
                 <input type="file" class="form-control-file" id="csv_file" name="csv_file" onchange="showUploadButton()" accept=".csv">
               </div>
@@ -334,6 +334,21 @@
       </div>
       <div class="panel" id="tab3">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="csv_file">Select a CSV file for college batch upload:</label>
+            <div class="input-group">
+              <input type="file" class="form-control-file" id="csv_file" name="csv_file" onchange="showUploadButton()" accept=".csv">
+            </div>
+          </div>
+          <div id="upload-button" style="text-align: center; display: none" class="form-group">
+            <button class="btn btn-primary" type="submit">Upload</button>
+          </div>
+        </form>
+
+        <hr>
+
         <div class="row mb-3">
           <form action="/admin/dashboard/updaterecord/" method="post" name="add_college_form">
             {% csrf_token %}
@@ -388,6 +403,22 @@
    
       <div class="panel" id="tab4">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="csv_file">Select a CSV file for department batch upload:</label>
+            <div class="input-group">
+              <input type="file" class="form-control-file" id="csv_file" name="csv_file" onchange="showUploadButton()" accept=".csv">
+            </div>
+          </div>
+          <div id="upload-button" style="text-align: center; display: none" class="form-group">
+            <button class="btn btn-primary" type="submit">Upload</button>
+          </div>
+        </form>
+
+        <hr>
+
         <form method="post">
           {% csrf_token %}
           <div class="row mb-3">
