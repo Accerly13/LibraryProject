@@ -364,7 +364,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             user_details.pop('image', None)
             return JsonResponse({'user_searched': user_details, 
                                 'department':user_searched_details.department.department_name,
-                                'usertype': user_searched_details.type.type_name,
+                                'usertype': user_searched_details.type.type_id,
                                 'image_url': image_url})
         elif request.POST.get('idnum-update'):
             idnum = request.POST['idnum-update']
