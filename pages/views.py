@@ -475,7 +475,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                                         course=row[5], comment=row[6], type_id=row[7], department_id=row[8], alternative_id=row[9])
                         users.save()
                 
-                Transactions.objects.create(dates=now.date(), title="Batch Import Users!", transact="update")
+                Transactions.objects.create(dates=now.date(), title="Uploaded a CSV file for User batch upload.", transact="update")
                 messages.success(request, "Users are Registered!")
                 return redirect('/admin/dashboard/updaterecord/')
             except:
@@ -496,7 +496,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                             college = College(college_id=row[0], college_name=row[1])
                             college.save()
                     
-                    Transactions.objects.create(dates=now.date(), title="Batch Add Colleges!", transact="update")
+                    Transactions.objects.create(dates=now.date(), title="Uploaded a CSV file for College batch upload.", transact="update")
                     messages.success(request, "Colleges are Registered!")
                     return redirect('/admin/dashboard/updaterecord/')
                 except: 
@@ -507,7 +507,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     reader = csv.reader(csv_data)
                     # Skip the header row
                     next(reader)
-                    existing_departments = [departments.department_id for departments in College.objects.all()]
+                    existing_departments = [departments.department_id for departments in Department.objects.all()]
                     with connection.cursor() as cursor:
                         for row in reader:
                             if row[0] in existing_departments:
@@ -515,7 +515,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                             department = Department(department_id=row[0], department_name=row[1], college_id=row[2])
                             department.save()
                     
-                    Transactions.objects.create(dates=now.date(), title="Batch Add Departments!", transact="update")
+                    Transactions.objects.create(dates=now.date(), title="Uploaded a CSV file for Department batch upload.", transact="update")
                     messages.success(request, "Departments are Registered!")
                     return redirect('/admin/dashboard/updaterecord/')
         
@@ -528,7 +528,7 @@ class DeleteRecord(LoginRequiredMixin, TemplateView):
             end_date = datetime.strptime(request.POST['end_date1'], '%m/%d/%Y')
             dates_login = DatesLogin.objects.filter(dates__range=[start_date, end_date])
             dates_login.delete()
-            report_title = f"Deleted a records from {start_date.strftime('%m/%d/%Y')} to {end_date.strftime('%m/%d/%Y')}"
+            report_title = f"Deleted records from {start_date.strftime('%m/%d/%Y')} to {end_date.strftime('%m/%d/%Y')}"
             
             Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
             messages.success(request, ("Records Deleted!"))
