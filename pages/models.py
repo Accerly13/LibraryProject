@@ -38,7 +38,7 @@ class AdminUser(AbstractBaseUser, PermissionsMixin):
     
 class College(models.Model):
     college_id = models.AutoField(primary_key=True, unique=True)
-    college_name = models.CharField(max_length=50, verbose_name='college_name')
+    college_name = models.CharField(max_length=150, verbose_name='college_name')
 
     class Meta:
         db_table = "college"
@@ -61,6 +61,7 @@ class UserType(models.Model):
 
 class UserInfo(models.Model):
     user_idno = models.CharField(primary_key=True, max_length=20, unique=True, default='')
+    alternative_id = models.CharField(max_length=50, unique=True, default='')
     first_name = models.CharField(max_length=50, verbose_name='f_name')
     middle_name = models.CharField(max_length=50, verbose_name='m_name')
     last_name = models.CharField(max_length=50, verbose_name='l_name')

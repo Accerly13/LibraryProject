@@ -1,18 +1,17 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
 from django.views.generic import TemplateView
 from .models import AdminUser, UserInfo, College, Department, UserType, DatesLogin, Transactions, Visitors
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from datetime import datetime
-from django.http import JsonResponse
 from django.db.models.functions import Lower, Upper, Substr
 from django.forms.models import model_to_dict
 import os
 import base64
+from django.db.models import Q
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import csv
@@ -72,8 +71,7 @@ class StudentDashboardOut(LoginRequiredMixin, TemplateView):
     def post(self, request):
         student_id = request.POST['student_id']
         try:
-            userinfo = DatesLogin.objects.get(user = student_id, time_out=None)
-            
+            userinfo = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id), time_out=None)
             userinfo.time_out = now.time().replace(second=0, microsecond=0) 
             userinfo.save()
             messages.success(request, ("You have successfully been logged out. Thank you for using our service."))
@@ -112,7 +110,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
     def post(self, request):
         student_id = request.POST['student_id']
         try:
-            userinfo = UserInfo.objects.get(user_idno = student_id)
+            userinfo = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
             
             DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
             messages.success(request, ("Succesfully Recorded!"))
