@@ -236,7 +236,6 @@
             <form id="clear-transactions-by-date" method="post">
               {% csrf_token %}
               <button class="clear-transactions" onclick="openModal()" > 
-                <!-- onclick="clearTransaction()" -->
                 <i class="fas fa-trash"></i> Clear Transactions
               </button>
             </form> 
@@ -311,6 +310,7 @@ var cancelButton = document.getElementById("cancel-clear");
 
 // When the user clicks on the button, open the modal
 function openModal() {
+  event.preventDefault();
   modal.style.display = "block";
 }
 
@@ -360,10 +360,8 @@ window.onclick = function(event) {
         fetch('/admin/dashboard/', {
           method: 'POST',
           body: formData
-        }).then(
-             location.reload()
-            )
-    
+        })
+    location.reload()
   }
 </script>
 </div>
