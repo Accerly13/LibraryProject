@@ -71,9 +71,10 @@ class StudentDashboardOut(LoginRequiredMixin, TemplateView):
     def post(self, request):
         student_id = request.POST['student_id']
         try:
-            userinfo = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id), time_out=None)
-            userinfo.time_out = now.time().replace(second=0, microsecond=0) 
-            userinfo.save()
+            userinfo_check = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
+            dates_check = DatesLogin.objects.get(user=userinfo_check.user_idno, time_out=None)
+            dates_check.time_out = now.time().replace(second=0, microsecond=0) 
+            dates_check.save()
             messages.success(request, ("You have successfully been logged out. Thank you for using our service."))
             return redirect('/dashboardout/')	
         except:
@@ -110,11 +111,20 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
     def post(self, request):
         student_id = request.POST['student_id']
         try:
-            userinfo = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
-            DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo.user_idno)
-            messages.success(request, ("Succesfully Recorded!"))
-            return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo})
-        except:
+            try:
+                userinfo_check = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
+                dates_check = DatesLogin.objects.get(user=userinfo_check.user_idno, time_out=None)
+                dates_check.time_out = datetime.strptime('17:00:00', '%H:%M:%S')
+                dates_check.save()
+                DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
+                messages.success(request, ("Succesfully Recorded!"))
+                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo_check})
+            except:
+                userinfo_check = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
+                DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
+                messages.success(request, ("Succesfully Recorded!"))
+                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo_check})
+        except Exception as e:
             messages.success(request, ("Intruder Alert!"))
             return redirect('/dashboard/')	
 
