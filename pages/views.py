@@ -471,7 +471,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     # Insert data into the database
                     with connection.cursor() as cursor:
                         for row in reader:
-                            department = Department(deparment_id=row[0], department_name=row[1], college_id=row[2])
+                            department = Department(department_id=row[0], department_name=row[1], college_id=row[2])
                             department.save()
                     
                     Transactions.objects.create(dates=now.date(), title="Batch Add Departments!", transact="update")
