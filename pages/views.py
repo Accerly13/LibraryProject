@@ -434,13 +434,25 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
 
                 # Read the CSV file
                 csv_data = csv_file.read().decode('utf-8').splitlines()
+
                 # Create a CSV reader object
                 reader = csv.reader(csv_data)
                 # Skip the header row
                 next(reader)
+
+                existing_user_idnos = [user.user_idno for user in UserInfo.objects.all()]
+
+                existing_alternative_id = [user.alternative_id for user in UserInfo.objects.all()]
                 # Insert data into the database
                 with connection.cursor() as cursor:
                     for row in reader:
+                        print(row)
+                        if row[0] in existing_user_idnos:
+                            continue
+                         
+                        if row[9] in existing_alternative_id:
+                            continue
+
                         users = UserInfo(user_idno=row[0], first_name=row[1], middle_name=row[2], last_name=row[3], gender=row[4],
                                         course=row[5], comment=row[6], type_id=row[7], department_id=row[8], alternative_id=row[9])
                         users.save()
@@ -458,8 +470,11 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     # Skip the header row
                     next(reader)
                     # Insert data into the database
+                    existing_college = [colleges.college_id for colleges in College.objects.all()]
                     with connection.cursor() as cursor:
                         for row in reader:
+                            if row[0] in existing_college:
+                                continue
                             college = College(college_id=row[0], college_name=row[1])
                             college.save()
                     
@@ -474,9 +489,11 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     reader = csv.reader(csv_data)
                     # Skip the header row
                     next(reader)
-                    # Insert data into the database
+                    existing_departments = [departments.department_id for departments in College.objects.all()]
                     with connection.cursor() as cursor:
                         for row in reader:
+                            if row[0] in existing_departments:
+                                continue
                             department = Department(department_id=row[0], department_name=row[1], college_id=row[2])
                             department.save()
                     
