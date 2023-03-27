@@ -15,6 +15,15 @@
   </header>
 
   <div class="wrapper">
+
+    {% if messages %}
+    <p class="messages">
+        {% for message in messages %}
+        <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
+        {% endfor %}
+    </p>
+    {% endif %}
+
     <input class="radio" id="one" name="group" type="radio" checked>
     <input class="radio" id="two" name="group" type="radio">
     <input class="radio" id="three" name="group" type="radio">
@@ -30,14 +39,6 @@
         <label class="tab" onclick="switchTab('tab5')" data-tab="tab5" id="five-tab" for="five">Update User Type</label>
       </div>
     <!-- </div> -->
-
-    {% if messages %}
-    <p class="messages">
-        {% for message in messages %}
-        <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
-        {% endfor %}
-    </p>
-    {% endif %}
 
     <div class="panels panel-relative mx-auto mb-5">
       <div class="panel" id="tab1">
