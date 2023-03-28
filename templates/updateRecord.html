@@ -370,9 +370,9 @@
             </div>
           </form>
         </div>
-        <hr>
+        <hr  style="margin-bottom: 3rem">
 
-        <div class="row mb-3" style="margin: 3rem">
+        <div class="row mb-3">
           <form action="/admin/dashboard/updaterecord/" method="post" name="add_college_form">
             {% csrf_token %}
           <div class="input-group">
@@ -427,7 +427,7 @@
       <div class="panel" id="tab4">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
 
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" style="margin-bottom: 3rem">
           {% csrf_token %}
           <div class="form-group">
             <label for="csv_file2">Select a CSV file for department batch upload:</label>
@@ -440,7 +440,7 @@
           </div>
         </form>
 
-        <hr>
+        <hr style="margin-bottom: 3rem">
 
         <form method="post">
           {% csrf_token %}

@@ -122,8 +122,8 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
                 dates_check.time_out = datetime.strptime('17:00:00', '%H:%M:%S')
                 dates_check.save()
                 DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
-                messages.success(request, ("Succesfully Recorded!"))
-                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo_check})
+                messages.success(request, ("Potang ina mo maglogout ka sa sunod! Succesfully Recorded!"))
+                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo_check, 'notLogout': True})
             except:
                 userinfo_check = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
                 DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
@@ -143,6 +143,7 @@ class VisitorDashboard(TemplateView):
         email = request.POST['emailAddress']
         phone = request.POST['phoneNumber']
         student_id = request.POST['studentId']
+        print(now.time().replace(second=0, microsecond=0))
         Visitors.objects.create(dates=now.date(), time=now.time().replace(second=0, microsecond=0), school=school, purpose=purpose,
                                 name=name, email=email, phone=phone, student_id=student_id)
         messages.success(request, ("Succesfully Recorded!"))
@@ -363,7 +364,6 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 image_url = user_searched_details.image.url
             except:
                 filename = user_searched+".png"
-                print(filename)
                 if os.path.isfile(os.path.join(media_root, filename)):
                     print("hey")
                     if filename.endswith('.jpg') or filename.endswith('.png'):
