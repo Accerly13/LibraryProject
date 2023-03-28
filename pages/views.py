@@ -383,6 +383,8 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     if filename.endswith('.jpg') or filename.endswith('.png'):
                         file_path = os.path.join(media_url, filename)
                         image_url = file_path
+                else:
+                    image_url = "/avatar.svg"
 
 
             user_details = model_to_dict(user_searched_details)
