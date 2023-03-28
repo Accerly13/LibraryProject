@@ -377,14 +377,23 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             try:
                 image_url = user_searched_details.image.url
             except:
-                filename = user_searched+".png"
-                if os.path.isfile(os.path.join(media_root, filename)):
-                    print("hey")
-                    if filename.endswith('.jpg') or filename.endswith('.png'):
-                        file_path = os.path.join(media_url, filename)
-                        image_url = file_path
-                else:
-                    image_url = "/avatar.svg"
+                try:
+                    filename = user_searched+".png"
+                    if os.path.isfile(os.path.join(media_root, filename)):
+                        if filename.endswith('.jpg') or filename.endswith('.png'):
+                            file_path = os.path.join(media_url, filename)
+                            image_url = file_path
+                    else:
+                        image_url = "/avatar.svg"
+                except:
+                    filename = user_searched+".jpg"
+                    if os.path.isfile(os.path.join(media_root, filename)):
+                        if filename.endswith('.jpg') or filename.endswith('.png'):
+                            file_path = os.path.join(media_url, filename)
+                            image_url = file_path
+                    else:
+                        image_url = "/avatar.svg"
+
 
 
             user_details = model_to_dict(user_searched_details)
@@ -460,12 +469,23 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         elif request.POST.get('confirmation1'):
             id_delete = request.POST['idnum-delete']
             user_check = UserInfo.objects.get(user_idno=id_delete)
-            file_path_delete = user_check.image.path
+            try:
+                file_path_delete = user_check.image.path
+                os.remove(file_path_delete)
+            except:
+                try:
+                    file_path_delete =  media_root+"\/"+id_delete+".png"
+                    os.remove(file_path_delete)
+                except:
+                    try:
+                        file_path_delete =  media_root+"\/"+id_delete+".jpg"
+                        os.remove(file_path_delete)
+                    except:
+                        print("Deleted!")
 
             # Delete the file
-            os.remove(file_path_delete)
             user_check.delete()
-            user_check_logins = DatesLogin.objects.get(user=id_delete)
+            user_check_logins = DatesLogin.objects.filter(user=id_delete)
             user_check_logins.delete()
             report_title = f"Deleted a user with a ID Number {id_delete}"
             
