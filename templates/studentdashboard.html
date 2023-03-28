@@ -193,20 +193,38 @@ footer {
                               </div>
                               {% endif %}
                               <p class="card-text mb-2">
-                                {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno or  userinfo.alternative_id == student_id and userinfo.alternative_id is not None and userinfo.alternative_id %}
-                                  <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
-                                  <div class="info"> {{userinfo.department.department_name}} </div>
-                                  <div class="info">{{userinfo.course}}</div>
-                                  <div class="info">{{userinfo.comment}}</div>
-                                  <script>
-                                    function speak() {
-                                        const message = new SpeechSynthesisUtterance();
-                                        message.lang = 'en-US';
-                                        message.text = 'Successfully Recorded';
-                                        speechSynthesis.speak(message);
-                                    }
-                                    speak()
-                                  </script>
+                                {% if notLogout %}
+                                  {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno or  userinfo.alternative_id == student_id and userinfo.alternative_id is not None and userinfo.alternative_id %}
+                                    <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
+                                    <div class="info"> {{userinfo.department.department_name}} </div>
+                                    <div class="info">{{userinfo.course}}</div>
+                                    <div class="info">{{userinfo.comment}}</div>
+                                    <script>
+                                      function speak() {
+                                          const message = new SpeechSynthesisUtterance();
+                                          message.lang = 'en-US';
+                                          message.text = 'Log out next time bullshit! Successfully Recorded';
+                                          speechSynthesis.speak(message);
+                                      }
+                                      speak()
+                                    </script>
+                                  {% endif %}
+                                  {% else %}
+                                  {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno or  userinfo.alternative_id == student_id and userinfo.alternative_id is not None and userinfo.alternative_id %}
+                                    <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
+                                    <div class="info"> {{userinfo.department.department_name}} </div>
+                                    <div class="info">{{userinfo.course}}</div>
+                                    <div class="info">{{userinfo.comment}}</div>
+                                    <script>
+                                      function speak() {
+                                          const message = new SpeechSynthesisUtterance();
+                                          message.lang = 'en-US';
+                                          message.text = 'Successfully Recorded';
+                                          speechSynthesis.speak(message);
+                                      }
+                                      speak()
+                                    </script>
+                                  {% endif %}
                                 {% endif %}
                               </p>
                             </div>
@@ -216,7 +234,7 @@ footer {
                                     <p style="color: red; text-align: center; font-weight: bold;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</p>
                                 {% endfor %}
                             </p>
-                        {% endif %}
+                            {% endif %}
                         
                         <div class="card">
                             <form method="post" >
