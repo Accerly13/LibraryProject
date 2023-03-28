@@ -131,7 +131,6 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
             user_details = model_to_dict(userinfo_check)
             user_details.pop('image', None)
             try:
-                print(userinfo_check.user_idno)
                 dates_check = DatesLogin.objects.get(user=userinfo_check.user_idno, time_out=None)
                 dates_check.time_out = datetime.strptime('17:00:00', '%H:%M:%S')
                 dates_check.save()
@@ -157,7 +156,6 @@ class VisitorDashboard(TemplateView):
         email = request.POST['emailAddress']
         phone = request.POST['phoneNumber']
         student_id = request.POST['studentId']
-        print(now.time().replace(second=0, microsecond=0))
         Visitors.objects.create(dates=now.date(), time=now.time().replace(second=0, microsecond=0), school=school, purpose=purpose,
                                 name=name, email=email, phone=phone, student_id=student_id)
         messages.success(request, ("Succesfully Recorded!"))
@@ -511,7 +509,6 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 # Insert data into the database
                 with connection.cursor() as cursor:
                     for row in reader:
-                        print(row)
                         if row[0] in existing_user_idnos:
                             continue
                          
