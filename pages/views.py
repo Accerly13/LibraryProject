@@ -136,7 +136,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
                 dates_check.time_out = datetime.strptime('17:00:00', '%H:%M:%S')
                 dates_check.save()
                 DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
-                messages.success(request, ("Potang ina mo maglogout ka sa sunod! Succesfully Recorded!"))
+                messages.success(request, ("Kindly Logout Next Time! Succesfully Recorded!"))
                 return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':user_details, 'notLogout': True, 'img_url':image_url})
             except:
                 DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
