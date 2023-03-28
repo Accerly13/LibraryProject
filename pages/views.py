@@ -143,6 +143,7 @@ class VisitorDashboard(TemplateView):
         email = request.POST['emailAddress']
         phone = request.POST['phoneNumber']
         student_id = request.POST['studentId']
+        print(now.time().replace(second=0, microsecond=0))
         Visitors.objects.create(dates=now.date(), time=now.time().replace(second=0, microsecond=0), school=school, purpose=purpose,
                                 name=name, email=email, phone=phone, student_id=student_id)
         messages.success(request, ("Succesfully Recorded!"))
@@ -363,7 +364,6 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 image_url = user_searched_details.image.url
             except:
                 filename = user_searched+".png"
-                print(filename)
                 if os.path.isfile(os.path.join(media_root, filename)):
                     print("hey")
                     if filename.endswith('.jpg') or filename.endswith('.png'):
