@@ -33,9 +33,22 @@
 }
 
 /* Modal Buttons */
-#confirm-clear,
+#confirm-clear {
+  background-color: #ba0000;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 150px;
+}
+
 #cancel-clear {
-  background-color: #008CBA;
+  background-color: #0082ba;
   color: white;
   border: none;
   padding: 4px 8px;
@@ -56,7 +69,10 @@
   font-size: xx-large;
 }
 
-#confirm-clear:hover,
+#confirm-clear:hover {
+  background-color: #8f0000;
+}
+
 #cancel-clear:hover {
   background-color: #006F8F;
 }
@@ -259,7 +275,7 @@
           <div class="box">
             {% for transaction in transaction_list %}
             <div class="section" id="{{ transaction.grouper }}">
-              <h3 style="text-align: center;  background-color: #f2f2f2; padding: 10px; font-weight: bold; font-size: large; color: rgb(61, 61, 145)">UPDATE RECORDS TRANSACTIONS</h3>
+              <h3 style="text-align: center;  background-color: #f2f2f2; padding: 10px; font-weight: bold; font-size: large; color: #224d79">UPDATE RECORDS TRANSACTIONS</h3>
               <ul style="font-weight: bold;">
                 {% for item in transaction.list %}
                   {% if item.transact == 'update' %}
@@ -271,7 +287,7 @@
             </div>
             <hr class="section-divider">
             <div class="section" id="{{ transaction.grouper }}">
-              <h3 style="text-align: center; background-color: #f2f2f2; padding: 10px; font-weight: bold; font-size: large; color: rgb(61, 61, 145)">DELETE RECORDS TRANSACTIONS</h3>
+              <h3 style="text-align: center; background-color: #f2f2f2; padding: 10px; font-weight: bold; font-size: large; color: #224d79">DELETE RECORDS TRANSACTIONS</h3>
 
               <ul style="font-weight: bold;">
                 {% for item in transaction.list %}
@@ -283,7 +299,7 @@
             </div>
             <hr class="section-divider">
             <div class="section" id="{{ transaction.grouper }}">
-              <h3 style="text-align: center; background-color: #f2f2f2; padding: 10px; font-weight: bold; font-size: large; color: rgb(61, 61, 145)">MANAGE REPORTS TRANSACTIONS</h3>
+              <h3 style="text-align: center; background-color: #f2f2f2; padding: 10px; font-weight: bold; font-size: large; color: #224d79">MANAGE REPORTS TRANSACTIONS</h3>
               {% if transaction.list|length > 0 %}
                 <ul style="font-weight: bold;">
                   {% for item in transaction.list %}
