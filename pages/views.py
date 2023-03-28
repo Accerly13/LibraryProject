@@ -116,20 +116,34 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
     def post(self, request):
         student_id = request.POST['student_id']
         try:
+            userinfo_check = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
             try:
-                userinfo_check = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
+                image_url = userinfo_check.image.url
+            except:
+                filename = userinfo_check.user_idno+".png"
+                if os.path.isfile(os.path.join(media_root, filename)):
+                    if filename.endswith('.jpg') or filename.endswith('.png'):
+                        file_path = os.path.join(media_url, filename)
+                        image_url = file_path
+                else:
+                    image_url = "/avatar.svg"
+                
+            user_details = model_to_dict(userinfo_check)
+            user_details.pop('image', None)
+            try:
+                print(userinfo_check.user_idno)
                 dates_check = DatesLogin.objects.get(user=userinfo_check.user_idno, time_out=None)
                 dates_check.time_out = datetime.strptime('17:00:00', '%H:%M:%S')
                 dates_check.save()
                 DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
                 messages.success(request, ("Potang ina mo maglogout ka sa sunod! Succesfully Recorded!"))
-                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo_check, 'notLogout': True})
+                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':user_details, 'notLogout': True, 'img_url':image_url})
             except:
-                userinfo_check = UserInfo.objects.get(Q(user_idno=student_id) | Q(alternative_id=student_id))
                 DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
                 messages.success(request, ("Succesfully Recorded!"))
-                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':userinfo_check})
+                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':user_details, 'img_url':image_url})
         except Exception as e:
+            print(str(e))
             messages.success(request, ("Intruder Alert!"))
             return redirect('/dashboard/')	
 
