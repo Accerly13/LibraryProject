@@ -65,7 +65,7 @@
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-              <label for="csv_file">Select a CSV file for user batch upload:</label>
+              <label for="csv_file">Import Users from Previous System:</label>
               <div class="input-group">
                 <input type="file" class="form-control-file" id="csv_file" name="csv_file" onchange="showUploadButton()" accept=".csv">
               </div>
@@ -374,7 +374,7 @@
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-              <label for="csv_file1">Select a CSV file for college batch upload:</label>
+              <label for="csv_file1">Import Colleges from Previous System:</label>
               <div class="input-group">
                 <input type="file" class="form-control-file" id="csv_file1" name="csv_file1" onchange="showUploadButton1()" accept=".csv">
               </div>
@@ -459,7 +459,7 @@
         <form method="POST" enctype="multipart/form-data" style="margin-bottom: 3rem">
           {% csrf_token %}
           <div class="form-group">
-            <label for="csv_file2">Select a CSV file for department batch upload:</label>
+            <label for="csv_file2">Import Departments Data from Previous System:</label>
             <div class="input-group">
               <input type="file" class="form-control-file" id="csv_file2" name="csv_file2" onchange="showUploadButton2()" accept=".csv">
             </div>
