@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from .models import AdminUser, UserInfo, College, Department, UserType, DatesLogin, Transactions, Visitors
+from .models import AdminUser, UserInfo, College, Department, UserType, DatesLogin, Transactions, Visitors, Course
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -229,7 +229,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         
         self.usertype = UserType.objects.all()
         self.users = UserInfo.objects.all().annotate(firstname=Lower('first_name')).order_by('last_name')
-        self.course = UserInfo.objects.values_list('course', flat=True).distinct()
+        self.course = Course.objects.all()
     def get(self, request):
         return render(request, 'updateRecord.html', { 'data': self.colleges, 'dept': self.dept, 'usertype': self.usertype, 'users': self.users, 'course': self.course})
 
@@ -358,8 +358,14 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
                 dept_check = Department.objects.get(department_name = dept_select)
+                try:
+                    course_check = Course.objects.get(course_name = course)
+                except:
+                    course_check = Course.objects.create(course_name = course, department = dept_check)
+                    course_check.save()
+                
                 usertype = UserType.objects.get(type_id = usertype)
-                UserInfo.objects.create(user_idno=idnum, alternative_id=altid, image=picture, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course=course, department=dept_check, type=usertype)
+                UserInfo.objects.create(user_idno=idnum, alternative_id=altid, image=picture, first_name=fname, middle_name=mname, last_name=lname, gender=gender, comment=comments, course_id=course_check.course_id, department=dept_check, type=usertype)
                 userinfo = UserInfo.objects.get(user_idno = idnum)
                 current_filename = userinfo.image.name
 
@@ -460,13 +466,18 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
 
             dept_check = Department.objects.get(department_name = dept_select)
             usertype = UserType.objects.get(type_id = usertype)
+            try: 
+                course_check = Course.objects.get(course_name = course)
+            except:
+                course_check = Course.objects.create(course_name = course, department=dept_check)
+                course_check.save()
             user_check.user_idno = idnum
             user_check.first_name = fname
             user_check.middle_name = mname
             user_check.last_name = lname
             user_check.gender = gender
             user_check.comment = comments
-            user_check.course = course
+            user_check.course = course_check
             user_check.department = dept_check
             user_check.type = usertype
             user_check.alternative_id = altid
@@ -514,23 +525,32 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 reader = csv.reader(csv_data)
                 # Skip the header row
                 next(reader)
-
-                existing_user_idnos = [user.user_idno for user in UserInfo.objects.all()]
-
-                existing_alternative_id = [user.alternative_id for user in UserInfo.objects.all()]
                 # Insert data into the database
                 with connection.cursor() as cursor:
+                  
                     for row in reader:
+                          
+                        existing_user_idnos = [user.user_idno for user in UserInfo.objects.all()]
+
+                        existing_alternative_id = [user.alternative_id for user in UserInfo.objects.all()]
                         if row[0] in existing_user_idnos:
                             continue
                          
                         if row[9] in existing_alternative_id:
                             continue
 
-                        users = UserInfo(user_idno=row[0], first_name=row[1], middle_name=row[2], last_name=row[3], gender=row[4],
-                                        course=row[5], comment=row[6], type_id=row[7], department_id=row[8], alternative_id=row[9])
+                        try:
+                            course_create = Course.objects.get(course_name=row[5])
+                           
+                        except:
+                            course_create = Course.objects.create(course_name=row[5], department_id=row[8])
+                            course_create.save()
+    
+                        users = UserInfo.objects.create(user_idno=row[0], first_name=row[1], middle_name=row[2], last_name=row[3], gender=row[4],
+                                    course_id=course_create.course_id, comment=row[6], type_id=row[7], department_id=row[8], alternative_id=row[9])
                         users.save()
-                
+                            
+
                 Transactions.objects.create(dates=now.date(), title="Uploaded a CSV file for User batch upload.", transact="update")
                 messages.success(request, "Users are Registered!")
                 return redirect('/admin/dashboard/updaterecord/')
@@ -544,9 +564,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     # Skip the header row
                     next(reader)
                     # Insert data into the database
-                    existing_college = [colleges.college_id for colleges in College.objects.all()]
+                    
                     with connection.cursor() as cursor:
                         for row in reader:
+                            existing_college = [colleges.college_id for colleges in College.objects.all()]
                             if row[0] in existing_college:
                                 continue
                             college = College(college_id=row[0], college_name=row[1])
@@ -563,9 +584,10 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                     reader = csv.reader(csv_data)
                     # Skip the header row
                     next(reader)
-                    existing_departments = [departments.department_id for departments in Department.objects.all()]
+                   
                     with connection.cursor() as cursor:
                         for row in reader:
+                            existing_departments = [departments.department_id for departments in Department.objects.all()]
                             if row[0] in existing_departments:
                                 continue
                             department = Department(department_id=row[0], department_name=row[1], college_id=row[2])

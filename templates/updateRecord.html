@@ -1156,7 +1156,7 @@ function addActive(x) {
         var jsResponse = data.departments_of_this_college;
         var confirmMessageElement = document.querySelector('.confirm-message-college');
         if (jsResponse.departments.length > 0) {
-          confirmMessageElement.innerHTML = 'Note that this college has:<ul>';
+          confirmMessageElement.innerHTML = 'Note that this college has departments:<ul>';
           for (let i = 0; i < jsResponse.departments.length; i++) {
             confirmMessageElement.innerHTML += '<li style="font-size:14px; color:black; text-align:left">' + jsResponse.departments[i].department_name + '</li>'
           }

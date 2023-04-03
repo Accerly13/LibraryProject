@@ -59,18 +59,32 @@ class UserType(models.Model):
     class Meta:
         db_table = "usertype"
 
+class Course(models.Model):
+    course_id = models.IntegerField(primary_key=True, unique=True)
+    course_name = models.CharField(max_length=50, verbose_name='course_name')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    def save(self, *args, **kwargs):
+        if not self.course_id:
+            # get the highest existing ID and add 1
+            last_id = Course.objects.order_by('-course_id').first()
+            self.course_id = 1 if last_id is None else last_id.course_id + 1
+        super().save(*args, **kwargs)
+
+    class Meta:
+        db_table = "course"
+
 class UserInfo(models.Model):
-    user_idno = models.CharField(primary_key=True, max_length=20, unique=True, default='')
-    alternative_id = models.CharField(max_length=50, unique=True, default='')
+    user_idno = models.CharField(primary_key=True, max_length=20, unique=True)
+    alternative_id = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=50, verbose_name='f_name')
     middle_name = models.CharField(max_length=50, verbose_name='m_name')
     last_name = models.CharField(max_length=50, verbose_name='l_name')
     gender = models.CharField(max_length=1, verbose_name='gender')
     comment = models.CharField(max_length=50, verbose_name='comment')
-    type = models.ForeignKey(UserType, on_delete=models.CASCADE, default='')
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, default='')
-    course = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='images/', default='')
+    type = models.ForeignKey(UserType, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')
 
     class Meta:
         db_table = "users"
