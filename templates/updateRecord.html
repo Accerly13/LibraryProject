@@ -229,7 +229,7 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <button id="close-modal" type="button" class="btn-close" id="close-modal" aria-label="Close"></button>
+                  <button id="close-modal" type="button" class="btn-close" aria-label="Close"></button>
                 </div>
               <div class="confirm-message">Are you sure you want to delete the USER?</div>
               <div class="confirm-actions">
@@ -351,11 +351,25 @@
                     </div>
                   </div>
           </form>
-        </div>
-        
+        </div>     
       </div>
       <div class="panel" id="tab3">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
+        <div id="myModalCollege" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button id="close-modal" type="button" class="btn-close" aria-label="Close" onclick="noButtonCollege()"></button>
+              </div>
+            <div class="confirm-message-college">
+            </div>
+            <div class="confirm-actions">
+              <button class="btn-delete mr-2 btn-primary" onclick="DeleteCollege()">Yes</button>
+      
+              <button class="btn btn-primary" id="close-modal" onclick="noButtonCollege()">No</button>
+            </div>
+          </div>
+        </div>
         <div class="flex justify-between items-center mb-5">
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -406,27 +420,42 @@
             </div>     
           </div>
         </form>
+        <form method="post" id="delete-college">
+          {% csrf_token %}
         <div class="row mb-3">
-          <form method="post">
-            {% csrf_token %}
             <div class="input-group">
+              <input type="text" id="confirmation-college" name="confirmation-college" value="" hidden>
               <label class="col-sm-2 col-form-label" for="delete_college">Delete a College:</label>
-              <select class="custom-select" name="delete_college">
+              <select class="custom-select" id="delete_college" name="delete_college">
                 {% for item in data %}
                   <option value="{{item.college_name}}"> {{ item.college_name }} </option>
                 {% endfor %}
               </select>
               <div class="input-group-button">
-                <button class="btn-delete btn-outline-secondary" type="submit">Delete</button>
+                <button class="btn-delete btn-primary me-md-2" id="myBtnCollege" type="button">Delete</button>
               </div>
-            </div>
-          </form>
           </div>
+        </div>
+        </form>
         </div>
    
       <div class="panel" id="tab4">
         <!-- <div class="panel-title">Note on Prerequisites</div> -->
-
+        <div id="myModalDepartment" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button id="close-modal" type="button" class="btn-close" aria-label="Close" onclick="noButtonDepartment()"></button>
+              </div>
+            <div class="confirm-message-department">
+            </div>
+            <div class="confirm-actions">
+              <button class="btn-delete mr-2 btn-primary" onclick="DeleteDepartment()">Yes</button>
+      
+              <button class="btn btn-primary" id="close-modal" onclick="noButtonDepartment()">No</button>
+            </div>
+          </div>
+        </div>
         <form method="POST" enctype="multipart/form-data" style="margin-bottom: 3rem">
           {% csrf_token %}
           <div class="form-group">
@@ -486,10 +515,11 @@
           </div>     
         </div>
       </form>
-      <form method="post">
+      <form method="post" id="delete-department">
         {% csrf_token %}
         <div class="row mb-3">
           <div class="input-group">
+            <input type="text" id="confirmation-department" name="confirmation-department" value="" hidden>
             <label class="col-sm-2 col-form-label" for="delete_dept">Delete a Department:</label>
             <select class="custom-select" id="inputGroupSelect04" name="delete_dept">
               {% for item in dept %}
@@ -497,7 +527,7 @@
               {% endfor %}
             </select>
             <div class="input-group-button">
-              <button class="btn-delete btn-outline-secondary" type="submit">Delete</button>
+              <button class="btn-delete btn-outline-secondary" id="myBtnDepartment" type="button">Delete</button>
             </div>
           </div>
           </div>
@@ -569,6 +599,21 @@
   font-weight: bold;
   }
 
+  .confirm-message-college {
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: red;
+  }
+
+  .confirm-message-department {
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: red;
+  }
   .confirm-actions {
   display: flex;
   justify-content: center;
@@ -918,7 +963,6 @@ var activeTab = sessionStorage.getItem("activeTab");
       var modalContainer = document.querySelector(".modal");
       modalContainer.style.display = "none";
   });
-
 document.getElementById("user_input").addEventListener("input", searchTable);
 if (document.getElementById("user_input").value === "") {
       document.getElementById("table-data").style.display = "none"
@@ -1058,7 +1102,6 @@ function addActive(x) {
   var btn = document.getElementById("myBtn");
   
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
   
   // When the user clicks the button, open the modal 
   btn.onclick = function() {
@@ -1067,9 +1110,7 @@ function addActive(x) {
   }
   
   // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
+
   
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
@@ -1077,6 +1118,11 @@ function addActive(x) {
       modal.style.display = "none";
     }
   }
+  function noButton() {
+    modal.style.display = "none";
+    event.preventDefault()
+  }
+
   function DeleteRecords() {
     document.getElementById("confirmation1").value = "Yes"
     event.preventDefault();
@@ -1089,9 +1135,111 @@ function addActive(x) {
         window.location.reload()
       )
   }
-  function noButton() {
-    modal.style.display = "none";
+  var modalCollege = document.getElementById("myModalCollege");
+  
+  // Get the button that opens the modal
+  var btnCollege = document.getElementById("myBtnCollege");
+  
+  // Get the <span> element that closes the modal
+  
+  // When the user clicks the button, open the modal 
+  btnCollege.onclick = function() {
+    event.preventDefault();
+    var myForm = document.querySelector('#delete-college');
+    var formData = new FormData(myForm);
+    fetch('/admin/dashboard/updaterecord/', {
+      method: 'POST',
+      body: formData
+    }).then(response => response.json())
+      .then(data => {
+        var ulElement = document.createElement('ul');
+        var jsResponse = data.departments_of_this_college;
+        var confirmMessageElement = document.querySelector('.confirm-message-college');
+        if (jsResponse.departments.length > 0) {
+          confirmMessageElement.innerHTML = 'Note that this college has:<ul>';
+          for (let i = 0; i < jsResponse.departments.length; i++) {
+            confirmMessageElement.innerHTML += '<li style="font-size:14px; color:black; text-align:left">' + jsResponse.departments[i].department_name + '</li>'
+          }
+          confirmMessageElement.innerHTML += '</ul>Deleting this college will also delete these departments in the database as well as the users in these departments.';
+        }
+        else {
+          confirmMessageElement.innerHTML = 'Delete ' + data.college_delete + '?'
+        }
+        modalCollege.style.display = "block";
+      });
+  }
+
+
+  // When the user clicks on <span> (x), close the modal
+
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modalCollege) {
+      modalCollege.style.display = "none";
+    }
+  }
+  function noButtonCollege() {
+    modalCollege.style.display = "none";
     event.preventDefault()
+  }
+  function DeleteCollege() {
+    document.getElementById("confirmation-college").value = "Yes"
+    event.preventDefault();
+      var myForm = document.querySelector('#delete-college');
+      var formData = new FormData(myForm);
+      fetch('/admin/dashboard/updaterecord/', {
+        method: 'POST',
+        body: formData
+      }).then(
+        window.location.reload()
+      )
+  }
+
+  var modalDepartment = document.getElementById("myModalDepartment");
+  
+  // Get the button that opens the modal
+  var btnDepartment = document.getElementById("myBtnDepartment");
+  
+  // Get the <span> element that closes the modal
+  
+  // When the user clicks the button, open the modal 
+  btnDepartment.onclick = function() {
+    event.preventDefault();
+      var myForm = document.querySelector('#delete-department');
+      var formData = new FormData(myForm);
+      fetch('/admin/dashboard/updaterecord/', {
+        method: 'POST',
+        body: formData
+      }).then(response => response.json())
+            .then(data => {
+              var jsResponse = data.users_in_this_department
+              var confirmMessageElement = document.querySelector('.confirm-message-department');
+              if (jsResponse.users.length > 0) {
+                confirmMessageElement.textContent = 'Note that this department has ' + jsResponse.users.length + ' users. Deleting this department will also delete the users in these department.';
+              }
+              else {
+                confirmMessageElement.innerHTML = 'Delete ' + data.department_delete + '?'
+              }
+              modalDepartment.style.display = "block";
+      })
+      
+  }
+  function noButtonDepartment() {
+    modalDepartment.style.display = "none";
+    event.preventDefault()
+  }
+  function DeleteDepartment() {
+    document.getElementById("confirmation-department").value = "Yes"
+    event.preventDefault();
+      var myForm = document.querySelector('#delete-department');
+      var formData = new FormData(myForm);
+      fetch('/admin/dashboard/updaterecord/', {
+        method: 'POST',
+        body: formData
+      }).then(
+        window.location.reload()
+      )
   }
 </script>
 </div>

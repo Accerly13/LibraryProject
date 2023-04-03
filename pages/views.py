@@ -265,12 +265,18 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         elif request.POST.get('delete_college'):
             college_name = request.POST['delete_college']
             college_check = College.objects.get(college_name = college_name)
-            college_check.delete()
-            report_title = f"Deleted a college named {college_name}."
+            if request.POST['confirmation-college'] == "Yes":
+                college_check.delete()
+                report_title = f"Deleted a college named {college_name}."
+                
+                Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
+                messages.success(request, ("Deleted!"))
+                return redirect('/admin/dashboard/updaterecord/')	
+            else:
+                dept_check = Department.objects.filter(college_id=college_check.college_id)
             
-            Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
-            messages.success(request, ("Deleted!"))
-            return redirect('/admin/dashboard/updaterecord/')
+                departments_of_this_college = {'departments': list(dept_check.values())}
+                return JsonResponse({'departments_of_this_college': departments_of_this_college, 'college_delete': college_name })
         elif request.POST.get('dept'):
             dept = request.POST['dept']
             college_name = request.POST['from_college']
@@ -305,12 +311,18 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         elif request.POST.get('delete_dept'):
             department_name = request.POST['delete_dept']
             dept_check = Department.objects.get(department_name = department_name)
-            dept_check.delete()
-            report_title = f"Deleted the department {department_name}"
-            
-            Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
-            messages.success(request, ("Deleted!"))
-            return redirect('/admin/dashboard/updaterecord/')
+            if request.POST['confirmation-department'] == "Yes":
+                dept_check.delete()
+                report_title = f"Deleted the department {department_name}"
+                
+                Transactions.objects.create(dates=now.date(), title=report_title, transact="delete")
+                messages.success(request, ("Deleted!"))
+                return redirect('/admin/dashboard/updaterecord/')
+            else:
+                users = UserInfo.objects.filter(department_id=dept_check.department_id)
+        
+                users_in_this_department = {'users': list(users.values())}
+                return JsonResponse({'users_in_this_department': users_in_this_department, 'department_delete': department_name })
         elif request.POST.get('usertype'):
             usertype = request.POST['usertype']
             try: 
