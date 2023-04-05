@@ -60,7 +60,6 @@
     <div class="panels panel-relative mx-auto mb-5">
       <div class="panel" id="tab1">
         <div class="flex justify-between items-center mb-5">
-          
           <div class="panel-title">Add New Data</div>
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -147,7 +146,7 @@
                 {% if course %}
                 <select class="form-select" aria-label="Default select example" name="courses" onchange="handleSelectChange(this)"> 
                   {% for item in course %}
-                    <option value="{{item}}"> {{ item }} </option>
+                    <option value="{{item.course_name}}"> {{ item.course_name }} </option>
                   {% endfor %}
                   <option value="add-new-course">Add New </option>
                 </select>
@@ -312,7 +311,7 @@
                   {% if course %}
                   <select class="form-select" aria-label="Default select example" name="courses-update" id="course-select" onchange="handleSelectChange(this)"> 
                     {% for item in course %}
-                      <option value="{{item}}"> {{ item }} </option>
+                      <option value="{{item.course_name}}"> {{ item.course_name }} </option>
                     {% endfor %}
                     <option value="add-new-course">Add New </option>
                   </select>
@@ -370,6 +369,20 @@
             </div>
           </div>
         </div>
+        <div id="myModalCollegeManual" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button id="close-modal" type="button" class="btn-close" aria-label="Close" onclick="noButtonCollegeManual()"></button>
+              </div>
+              <form method="POST">
+                {% csrf_token %}
+                <label for="text-input">Enter Colleges you want to add:</label>
+                <textarea id="text-input" name="colleges-inputs"></textarea>         
+                <button> Submit </button>     
+              </form>
+          </div>
+        </div>
         <div class="flex justify-between items-center mb-5">
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -383,6 +396,12 @@
               <button class="btn btn-primary" type="submit">Upload</button>
             </div>
           </form>
+        </div>
+        <div class="flex justify-between items-center mb-5">
+            <div class="form-group">
+              <label>Batch Add Colleges Manually:</label>
+            </div>
+            <button id="myBtnCollegeManual"> Add </button>
         </div>
         <hr  style="margin-bottom: 3rem">
 
@@ -456,6 +475,30 @@
             </div>
           </div>
         </div>
+        <div id="myModalDepartmentManual" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button id="close-modal" type="button" class="btn-close" aria-label="Close" onclick="noButtonDepartmentManual()"></button>
+              </div>
+              <form method="POST">
+                {% csrf_token %}
+                <div class="row mb-3">
+                  <div class="input-group">
+                  <label class="col-sm-2 col-form-label" for="department">From College of:</label>
+                      <select class="form-select" aria-label="Default select example" name="from_college_batch">
+                      {% for item in data %}
+                        <option value="{{item.college_name}}"> {{ item.college_name }} </option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                </div>
+                <label for="text-input">Enter Departments you want to add:</label>
+                <textarea id="text-input" name="department-inputs"></textarea>         
+                <button> Submit </button>     
+              </form>
+          </div>
+        </div>
         <form method="POST" enctype="multipart/form-data" style="margin-bottom: 3rem">
           {% csrf_token %}
           <div class="form-group">
@@ -468,6 +511,12 @@
             <button class="btn btn-primary" type="submit">Upload</button>
           </div>
         </form>
+        <div class="flex justify-between items-center mb-5">
+            <div class="form-group">
+              <label>Batch Add Departments Manually:</label>
+            </div>
+            <button id="myBtnDepartmentManual"> Add </button>
+        </div>
 
         <hr style="margin-bottom: 3rem">
 
@@ -1169,16 +1218,6 @@ function addActive(x) {
       });
   }
 
-
-  // When the user clicks on <span> (x), close the modal
-
-  
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modalCollege) {
-      modalCollege.style.display = "none";
-    }
-  }
   function noButtonCollege() {
     modalCollege.style.display = "none";
     event.preventDefault()
@@ -1194,6 +1233,21 @@ function addActive(x) {
       }).then(
         window.location.reload()
       )
+  }
+
+  var modalCollegeManual = document.getElementById("myModalCollegeManual");
+  
+  // Get the button that opens the modal
+  var btnCollegeManual = document.getElementById("myBtnCollegeManual");
+
+  btnCollegeManual.onclick = function() {
+    event.preventDefault();
+    modalCollegeManual.style.display = "block";
+    
+  }
+  function noButtonCollegeManual() {
+    modalCollegeManual.style.display = "none";
+    event.preventDefault()
   }
 
   var modalDepartment = document.getElementById("myModalDepartment");
@@ -1241,6 +1295,23 @@ function addActive(x) {
         window.location.reload()
       )
   }
+
+    var modalDepartmentManual = document.getElementById("myModalDepartmentManual");
+    
+    // Get the button that opens the modal
+    var btnDepartmentManual = document.getElementById("myBtnDepartmentManual");
+    
+    // Get the <span> element that closes the modal
+    
+    // When the user clicks the button, open the modal 
+    btnDepartmentManual.onclick = function() {
+      event.preventDefault();
+      modalDepartmentManual.style.display = "block";  
+    }
+    function noButtonDepartmentManual() {
+      modalDepartmentManual.style.display = "none";
+      event.preventDefault()
+    }
 </script>
 </div>
 {% endblock content %}

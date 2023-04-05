@@ -381,8 +381,9 @@ window.onclick = function(event) {
         fetch('/admin/dashboard/', {
           method: 'POST',
           body: formData
-        })
-    location.reload()
+        }).then(
+          location.reload()
+        )
   }
 </script>
 </div>

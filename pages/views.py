@@ -264,6 +264,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 return redirect('/admin/dashboard/updaterecord/')	
         elif request.POST.get('delete_college'):
             college_name = request.POST['delete_college']
+            print(college_name)
             college_check = College.objects.get(college_name = college_name)
             if request.POST['confirmation-college'] == "Yes":
                 college_check.delete()
@@ -277,6 +278,28 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             
                 departments_of_this_college = {'departments': list(dept_check.values())}
                 return JsonResponse({'departments_of_this_college': departments_of_this_college, 'college_delete': college_name })
+        elif request.POST.get('colleges-inputs'):
+            return_message = False
+            colleges = request.POST.get('colleges-inputs').split("\n")
+            if colleges[-1] == "":
+                colleges.pop()
+            # Remove newlines from college names
+            colleges = [college.rstrip() for college in colleges]
+            for college in colleges:
+                existing_college_names = [college.college_name for college in College.objects.all()]
+                if college in existing_college_names:
+                    return_message = True
+                else:
+                    College.objects.create(college_name=college)
+            if return_message == False:
+                messages.success(request, ("New Colleges are Registered!"))
+            else:
+                messages.success(request, ("Other colleges are already registered but those who were not registered yet we've been register thru it."))
+            report_title = f"Batch Add Colleges Manually."
+            Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
+            return redirect('/admin/dashboard/updaterecord/')
+
+
         elif request.POST.get('dept'):
             dept = request.POST['dept']
             college_name = request.POST['from_college']
@@ -323,6 +346,28 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
         
                 users_in_this_department = {'users': list(users.values())}
                 return JsonResponse({'users_in_this_department': users_in_this_department, 'department_delete': department_name })
+        elif request.POST.get('department-inputs'):
+            return_message = False
+            departments = request.POST.get('department-inputs').split("\n")
+            if departments[-1] == "":
+                departments.pop()
+            # Remove newlines from college names
+            departments = [department.rstrip() for department in departments]
+            
+            college_check = College.objects.get(college_name=request.POST['from_college_batch'])
+            for department in departments:
+                existing_department_names = [department.department_name for department in Department.objects.all()]
+                if department in existing_department_names:
+                    return_message = True
+                else:
+                    Department.objects.create(department_name=department, college=college_check)
+            if return_message == False:
+                messages.success(request, ("New Departments are Registered!"))
+            else:
+                messages.success(request, ("Other departments are already registered but those who were not registered yet we've been register thru it."))
+            report_title = f"Batch Add Departments Manually."
+            Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
+            return redirect('/admin/dashboard/updaterecord/')
         elif request.POST.get('usertype'):
             usertype = request.POST['usertype']
             try: 
