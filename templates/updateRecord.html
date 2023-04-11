@@ -522,6 +522,25 @@
 
         <form method="post">
           {% csrf_token %}
+
+          <div class="row mb-3">
+              <label class="col-sm-2 col-form-label" for="dept">Batch Add Departments Manually:</label>
+              <div class="col-sm-10">
+                <select class="form-select" aria-label="Default select example" name="from_college" onchange="showInputField()">
+                  {% for item in data %}
+                    <option value="{{item.college_name}}" data-college="{{item.college_name}}">{{ item.college_name }}</option>
+                  {% endfor %}
+                </select>
+                
+                <div id="college-department" style="display: none;">
+                    <input placeholder="Enter Department or Departments you want to add:" class="form-control" id="text-input" name="department-inputs">
+                  <div class="input-group-button">
+                    <button class="btn-update btn-outline-secondary text-center">Submit</button>
+                  </div>    
+                </div>
+              </div>   
+          </div>
+
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="dept">Add a Department:</label>
@@ -798,6 +817,19 @@ option:hover,  .active{
 <script>
 sessionStorage?.removeItem("activeTabSearch");
 sessionStorage?.removeItem("activeTabManageReport");
+
+function showInputField() {
+  var select = document.querySelector('select[name="from_college"]');
+  var collegeName = select.options[select.selectedIndex].getAttribute('data-college');
+  var collegeDepartment = document.querySelector('#college-department');
+  
+  if (collegeName) {
+    collegeDepartment.style.display = "block";
+    collegeDepartment.querySelector('label').innerText = collegeName + " Department:";
+  } else {
+    collegeDepartment.style.display = "none";
+  }
+}
 
 function showUploadButton() {
   var fileInput = document.getElementById('csv_file');
