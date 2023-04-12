@@ -354,7 +354,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             # Remove newlines from college names
             departments = [department.rstrip() for department in departments]
             
-            college_check = College.objects.get(college_name=request.POST['from_college_batch'])
+            college_check = College.objects.get(college_name=request.POST['from_college'])
             for department in departments:
                 existing_department_names = [department.department_name for department in Department.objects.all()]
                 if department in existing_department_names:
