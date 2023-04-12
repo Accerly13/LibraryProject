@@ -48,7 +48,7 @@ class HomePageView(TemplateView):
         user = authenticate(request, username=username, password=password)
         if user is not None and user.admin_id == 1:
             login(request, user)
-            return redirect('dashboard/')
+            return redirect('/admin/dashboard/')
         else:
             messages.success(request, ("Invalid Username or Password!"))	
             return redirect('/admin/')	
@@ -144,7 +144,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
         except Exception as e:
             print(str(e))
             messages.success(request, ("We're sorry, but we couldn't find your account in our database"))
-            return redirect('/dashboard/')	
+            return render(request, 'studentdashboard.html', {'student_id': student_id})
 
 class VisitorDashboard(TemplateView):
     template_name = 'visitordashboard.html'

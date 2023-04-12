@@ -209,7 +209,7 @@ footer {
                                       speak()
                                     </script>
                                   {% endif %}
-                                  {% else %}
+                                {% else %}
                                   {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno or  userinfo.alternative_id == student_id and userinfo.alternative_id is not None and userinfo.alternative_id %}
                                   <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
                                   <div class="info"> {{userinfo.department.department_name}} </div>
@@ -224,7 +224,7 @@ footer {
                                     }
                                     speak()
                                   </script>
-                              {% else %}
+                              {% elif student_id %}
                                   <script>
                                     function speak() {
                                         const message = new SpeechSynthesisUtterance();
@@ -236,7 +236,7 @@ footer {
                                   </script>
                               {% endif %}
                               
-                                {% endif %}
+                            {% endif %}
                               </p>
                             </div>
                             {% if messages %}
