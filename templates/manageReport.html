@@ -1,5 +1,6 @@
 {% extends "layouts/header.html" %}
 {% block content %}
+{% load static %}
 <div class="grid-container-1 min-h-screen">
   <header class="w3-container">
     <h1 class="text-style">Manage Reports</h1>  
@@ -199,22 +200,37 @@
       event.preventDefault();
       var exportType = document.querySelector('input[name="'+name+'"]:checked').value;
       var kindOfReport = ""
+      const months = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      const today = new Date();
+      const monthName = months[today.getMonth()];
+      const day = today.getDate();
+      const year = today.getFullYear();
+      const formattedDate = `${monthName} ${day} ${year}`;
       if (exportType === 'pdfone') {
-        kindOfReport = "PDF File"
-      
-        exportType_temp = name.replace('exportype', '')
+        kindOfReport = "PDF File";
+        exportType_temp = name.replace('exportype', '');
+
         // Select the table to export
         var table = document.querySelector(`#rendered-data-${exportType_temp}`);
         // Create a new jsPDF instance
         var doc = new jsPDF();
-        
+
+        // Define header content
+        var headerText = "Ateneo de Naga University\nLibrary Users Login System\nStudents Summary Report\nAs of "+formattedDate;
+        var imgData = "{% static 'img/Ateneo_de_Naga_University_logo.png' %}"; // Replace with your image path
+        // Add the image to the PDF
+   
+        doc.addImage(imgData, 'PNG', 10, 10, 30, 30); // Replace with appropriate x,y,width,height values
+
         // Set the column headers
         var headers = [];
         var headerCells = table.querySelectorAll('thead th');
         for (var i = 0; i < headerCells.length; i++) {
           headers.push(headerCells[i].textContent.trim());
         }
-        
+
         // Get the table rows
         var rows = [];
         var dataCells = table.querySelectorAll('tbody tr');
@@ -226,14 +242,36 @@
             rowData = [];
           }
         }
-        
+        var tableStyles = {
+          fontStyle: 'normal',
+          fontSize: 12,
+          cellPadding: 5,
+          valign: 'middle',
+          halign: 'center'
+        };
+
         // Add the table to the PDF
         doc.autoTable({
           html: `#rendered-data-${exportType_temp}`,
-          startY: 20
+          startY: 50, // Increase startY value to avoid overlapping with header image and text
+          styles: tableStyles
         });
-        doc.save(`${exportType_temp}.pdf`);
+
+        // Add the header text
+        doc.setFontSize(16);
+        doc.text(headerText, 85, 15);
+        doc.setLineWidth(0.3);
+        doc.setDrawColor(0, 0, 0);
+        var pageWidth = doc.internal.pageSize.width;
+
+        // Draw the line
+        doc.line(10, 45, pageWidth-10, 45);
+
+        // Save the PDF document
+        doc.save(`${exportType_temp}report${formattedDate}.pdf`);
+
       } else if (exportType === 'csvone') {
+
         kindOfReport = "CSV File"
         exportType_temp = name.replace('exportype', '')
         // Export the table as CSV
@@ -242,11 +280,16 @@
         var table = document.getElementById(`rendered-data-${exportType_temp}`);
         var rows = table.querySelectorAll("tbody tr");
 
+        headers.push(",Ateneo de Naga University\n")
+        headers.push("Library Users Login System\n")
+        headers.push("Students Summary Report\n")
+        headers.push("As of "+formattedDate+"\n")
         // Get the header cells and add them to the headers array
         var headerCells = table.querySelectorAll("thead th");
         headerCells.forEach(function(cell) {
           headers.push(cell.textContent);
         });
+
 
         // Loop through the rows of the table and add each row's data to the data array
         rows.forEach(function(row) {
@@ -269,7 +312,7 @@
         var encodedUri = encodeURI(csvContent);
         var link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `${exportType_temp}.csv`);
+        link.setAttribute("download", `${exportType_temp}report${formattedDate}.csv`);
         document.body.appendChild(link); // Required for FF
         link.click();
         document.body.removeChild(link);
