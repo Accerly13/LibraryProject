@@ -223,38 +223,34 @@
         // Add the image to the PDF
    
         doc.addImage(imgData, 'PNG', 10, 10, 30, 30); // Replace with appropriate x,y,width,height values
-
-        // Set the column headers
-        var headers = [];
-        var headerCells = table.querySelectorAll('thead th');
-        for (var i = 0; i < headerCells.length; i++) {
-          headers.push(headerCells[i].textContent.trim());
-        }
-
-        // Get the table rows
-        var rows = [];
-        var dataCells = table.querySelectorAll('tbody tr');
-        var rowData = [];
-        for (var i = 0; i < dataCells.length; i++) {
-          rowData.push(dataCells[i].textContent.trim());
-          if ((i + 1) % headers.length === 0) {
-            rows.push(rowData);
-            rowData = [];
-          }
-        }
-        var tableStyles = {
-          fontStyle: 'normal',
-          fontSize: 12,
-          cellPadding: 5,
-          valign: 'middle',
-          halign: 'center'
+        var headerStyles = {
+          fontStyle: 'bold',
+          // fillColor: [255, 255, 255], // Use a different background color for the header
+          halign: 'center',
+          fontSize: 11,
         };
 
+        // var tableStyles = {
+        //   fontStyle: 'normal',
+        //   fontSize: 9,
+        //   cellPadding: 2,
+        //   valign: 'middle',
+        //   halign: 'center',
+        // };
+        
+        var columnStyles = {
+          0: {  halign: 'center' }, // First column
+          1: {  halign: 'center' }, // Second column
+          2: {  halign: 'center' } // Third column
+        };
+        
         // Add the table to the PDF
         doc.autoTable({
           html: `#rendered-data-${exportType_temp}`,
           startY: 50, // Increase startY value to avoid overlapping with header image and text
-          styles: tableStyles
+          // styles: tableStyles,
+          headStyles: headerStyles,
+          columnStyles: columnStyles
         });
 
         // Add the header text
