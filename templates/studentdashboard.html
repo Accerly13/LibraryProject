@@ -196,9 +196,9 @@ footer {
                                 {% if notLogout %}
                                   {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno or  userinfo.alternative_id == student_id and userinfo.alternative_id is not None and userinfo.alternative_id %}
                                     <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
-                                    <div class="info"> {{userinfo.department.department_name}} </div>
-                                    <div class="info">{{userinfo.course}}</div>
-                                    <div class="info">{{userinfo.comment}}</div>
+                                    <div class="info"> {{department}} </div>
+                                    <div class="info">{{course}}</div>
+                                    <div class="info">{{comment}}</div>
                                     <script>
                                       function speak() {
                                           const message = new SpeechSynthesisUtterance();
@@ -212,9 +212,9 @@ footer {
                                 {% else %}
                                   {% if userinfo.user_idno == student_id and userinfo.user_idno is not None and userinfo.user_idno or  userinfo.alternative_id == student_id and userinfo.alternative_id is not None and userinfo.alternative_id %}
                                   <div class="infoName">{{ userinfo.first_name }} {{userinfo.middle_name }} {{ userinfo.last_name }}</div>
-                                  <div class="info"> {{userinfo.department.department_name}} </div>
-                                  <div class="info">{{userinfo.course}}</div>
-                                  <div class="info">{{userinfo.comment}}</div>
+                                  <div class="info"> {{department}} </div>
+                                  <div class="info">{{course}}</div>
+                                  <div class="info">{{comment}}</div>
                                   <script>
                                     function speak() {
                                         const message = new SpeechSynthesisUtterance();

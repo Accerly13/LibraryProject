@@ -136,11 +136,15 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
                 dates_check.save()
                 DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
                 messages.success(request, ("Successfully recorded! Please log out next time"))
-                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':user_details, 'notLogout': True, 'img_url':image_url})
+                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':user_details, 'notLogout': True, 'img_url':image_url,
+                                                                'department': userinfo_check.department.department_name, 'course':userinfo_check.course.course_name,
+                                                                'comment':userinfo_check.comment})
             except:
                 DatesLogin.objects.create(dates=now.date(), time_in=now.time().replace(second=0, microsecond=0), time_out=None, user=userinfo_check.user_idno)
                 messages.success(request, ("Succesfully Recorded!"))
-                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':user_details, 'img_url':image_url})
+                return render(request, 'studentdashboard.html', {'student_id': student_id, 'userinfo':user_details, 'img_url':image_url,
+                                                                 'department': userinfo_check.department.department_name, 'course':userinfo_check.course.course_name,
+                                                                 'comment':userinfo_check.comment})
         except Exception as e:
             print(str(e))
             messages.success(request, ("We're sorry, but we couldn't find your account in our database"))

@@ -968,6 +968,9 @@ var activeTab = sessionStorage.getItem("activeTab");
 
     // Function to switch tabs
     function switchTab(tabId) {
+      var collegeDepartment = document.querySelector('#college-department');
+      collegeDepartment.style.display = "none";
+
       document.getElementById(activeTab).style.display = "none";
       document.getElementById(tabId).style.display = "block";
       activeTab = tabId;
