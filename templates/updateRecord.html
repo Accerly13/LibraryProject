@@ -480,44 +480,52 @@
           <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="dept">Add departments manually:</label>
-              <div class="col-sm-10">
+              <!-- <div class="col-sm-10"> -->
                 <select class="form-select" aria-label="Default select example" name="from_college" onchange="showInputField()">
                   {% for item in data %}
                     <option value="{{item.college_name}}" data-college="{{item.college_name}}">{{ item.college_name }}</option>
                   {% endfor %}
                 </select>
                 
-                <div id="college-department" style="display: none;">
-                    <textarea placeholder="Enter Department or Departments you want to add:" class="form-control" id="text-input" id="text-input" name="department-inputs"></textarea>         
-                  <div class="input-group-button">
-                    <button class="btn-update btn-outline-secondary text-center">Submit</button>
-                  </div>    
-                </div>
-                </div>
+                <!-- </div> -->
               </div>   
+          </div>
+          <div class="row mb-3">
+            <div class="col"></div>
+              <div class="col-sm-10">
+                <div id="college-department" style="display: none;">
+                  <textarea placeholder="Enter the department or departments you want to add:" class="form-control" id="text-input"
+                  id="text-input" name="department-inputs"></textarea>
+                <div class="input-group-button pt-2 float-end">
+                  <button class="btn-update btn-outline-secondary text-center" style="width: 80px">Add</button>
+                </div>
+              </div>
+          </div>
           </div>
         </form>
         <form method="post"> 
           {% csrf_token %}
         <div class="row mb-3">
           <div class="input-group">
-          <label class="col-sm-2 col-form-label" for="department">Update a Department:</label>
-              <select class="form-select" aria-label="Default select example" name="update_dept_form">
+            <label class="col-sm-2 col-form-label" for="department">Update a Department:</label>
+              <select class="form-select" aria-label="Default select example" name="update_dept_form" onchange="updateDepartmentName()">
                 {% for item in dept %}
-                  <option value="{{item.department_name}}"> {{ item.department_name }} </option>
+                  <option value="{{item.department_name}}" data-department="{{item.department_name}}"> {{ item.department_name }} </option>
                 {% endfor %}
               </select>
           </div>
         </div>
         <div class="row mb-3">
-          <div class="input-group">
-            <label class="col-sm-2 col-form-label" for="fname">New department Name:</label>
-            <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="new_dept_name" required>
-            <div class="input-group-button">
-              <button class="btn-update btn-outline-secondary" type="submit">Update</button>
-            </div>
-          </div>     
-        </div>
+          <div class="col"></div>
+            <div class="col-sm-10">
+              <div class="input-group" id="new-department" style="display: none;">
+                <input type="text" class="form-control" value="Department of " aria-label="Department of" aria-describedby="basic-addon2" name="new_dept_name" style="width: 80%"required>
+                  <div class="input-group-button float-end">
+                    <button class="btn-update btn-outline-secondary" type="submit">Update</button>
+                  </div>
+              </div>   
+            </div>  
+          </div>
       </form>
       <form method="post" id="delete-department">
         {% csrf_token %}
@@ -767,6 +775,19 @@ function showInputField() {
   }
 }
 
+  function updateDepartmentName() {
+    var select = document.querySelector('select[name="update_dept_form"]');
+    var departmentName = select.options[select.selectedIndex].getAttribute('data-department');
+    var newDepartmentName = document.querySelector('#new-department');
+
+    if (departmentName) {
+      newDepartmentName.style.display = "block";
+      newDepartmentName.querySelector('label').innerText = departmentName + " Department:";
+    } else {
+      newDepartmentName.style.display = "none";
+    }
+  }
+
 function showUploadButton() {
   var fileInput = document.getElementById('csv_file');
   var uploadButton = document.getElementById('upload-button');
@@ -970,6 +991,9 @@ var activeTab = sessionStorage.getItem("activeTab");
     function switchTab(tabId) {
       var collegeDepartment = document.querySelector('#college-department');
       collegeDepartment.style.display = "none";
+
+      var newDepartmentName = document.querySelector('#new-department');
+      newDepartmentName.style.display = "none";
 
       document.getElementById(activeTab).style.display = "none";
       document.getElementById(tabId).style.display = "block";
