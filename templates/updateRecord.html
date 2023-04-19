@@ -409,7 +409,7 @@
             <label class="col-sm-2 col-form-label" for="department">Update a College:</label>
               <select class="form-select" aria-label="Default select example" name="college_name" onchange="updateCollegeName()">
                 {% for item in data %}
-                  <option value="{{item.college_name}}" data-college="{{item.college_name}}"> {{ item.college_name }} </option>
+                  <option value="{{item.college_name}}" new-college-name="{{item.college_name}}"> {{ item.college_name }} </option>
                 {% endfor %}
               </select>
             </div>
@@ -802,12 +802,12 @@ function showInputField() {
 
   function updateCollegeName() {
       var select = document.querySelector('select[name="college_name"]');
-      var collegeName = select.options[select.selectedIndex].getAttribute('data-college');
-      var newCollegeName = document.querySelector('#new-department');
+      var updateCollege = select.options[select.selectedIndex].getAttribute('new-college-name');
+      var newCollegeName = document.querySelector('#new-college');
 
-      if (collegeName) {
+      if (updateCollege) {
         newCollegeName.style.display = "block";
-        newCollegeName.querySelector('label').innerText = collegeName + " Department:";
+        newCollegeName.querySelector('label').innerText = updateCollege + " Department:";
       } else {
         newCollegeName.style.display = "none";
       }
