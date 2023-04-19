@@ -407,14 +407,14 @@
           <div class="row mb-3">
             <div class="input-group">
             <label class="col-sm-2 col-form-label" for="department">Update a College:</label>
-              <select class="form-select" aria-label="Default select example" name="college_name">
+              <select class="form-select" aria-label="Default select example" name="college_name" onchange="updateCollegeName()">
                 {% for item in data %}
-                  <option value="{{item.college_name}}"> {{ item.college_name }} </option>
+                  <option value="{{item.college_name}}" data-college="{{item.college_name}}"> {{ item.college_name }} </option>
                 {% endfor %}
               </select>
             </div>
           </div>
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="fname">New College Name:</label>
               <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="new_college_name" required>
@@ -422,6 +422,18 @@
                 <button class="btn-update btn-outline-secondary" type="submit">Update</button>
               </div>
             </div>     
+          </div> -->
+          <div class="row mb-3">
+            <div class="col"></div>
+            <div class="col-sm-10">
+              <div class="input-group" id="new-college" style="display: none;">
+                <input type="text" class="form-control" value="College of " aria-label="College of"
+                  aria-describedby="basic-addon2" name="new_college_name" style="width: 80%" required>
+                <div class="input-group-button float-end">
+                  <button class="btn-update btn-outline-secondary" type="submit">Update</button>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
         <form method="post" id="delete-college">
@@ -788,6 +800,20 @@ function showInputField() {
     }
   }
 
+  function updateCollegeName() {
+      var select = document.querySelector('select[name="college_name"]');
+      var collegeName = select.options[select.selectedIndex].getAttribute('data-college');
+      var newCollegeName = document.querySelector('#new-department');
+
+      if (collegeName) {
+        newCollegeName.style.display = "block";
+        newCollegeName.querySelector('label').innerText = collegeName + " Department:";
+      } else {
+        newCollegeName.style.display = "none";
+      }
+    }
+
+
 function showUploadButton() {
   var fileInput = document.getElementById('csv_file');
   var uploadButton = document.getElementById('upload-button');
@@ -994,6 +1020,9 @@ var activeTab = sessionStorage.getItem("activeTab");
 
       var newDepartmentName = document.querySelector('#new-department');
       newDepartmentName.style.display = "none";
+
+      var newCollegeName = document.querySelector('#new-college');
+      newCollegeName.style.display = "none";
 
       document.getElementById(activeTab).style.display = "none";
       document.getElementById(tabId).style.display = "block";
