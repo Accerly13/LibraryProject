@@ -404,7 +404,7 @@ textarea {
               <label class="col-sm-2 col-form-label" for="college">Add a College/s:</label>
               <form method="POST">
                 {% csrf_token %}
-                <textarea id="text-input" name="colleges-inputs" placeholder="Enter Colleges you want to add" required class="form-control" style="z-index:0"></textarea>
+                <textarea id="text-input" name="colleges-inputs" placeholder="Enter the college/s you want to add:" required class="form-control" style="z-index:0"></textarea>
                 <button class="btn-update btn-outline-secondary" type="submit">Add</button>
               </form>
             </div>
