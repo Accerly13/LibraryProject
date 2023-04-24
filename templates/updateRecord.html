@@ -66,7 +66,6 @@ textarea {
         <label class="tab" onclick="switchTab('tab5')" data-tab="tab5" id="five-tab" for="five">Update User Type</label>
       </div>
     <!-- </div> -->
-
     <div class="panels panel-relative mx-auto mb-5">
       <div class="panel" id="tab1">
         <div class="flex justify-between items-center mb-5">
@@ -141,7 +140,7 @@ textarea {
           <div class="row mb-3">
           <label class="col-sm-2 col-form-label" for="department">Department:</label>
             <div class="col-sm-10">
-                <input class="form-select" autocomplete="off" role="combobox" list="" id="searchinput" name="data_list" placeholder="Search department" required>
+                <input class="form-select" autocomplete="off" role="combobox" list="" id="searchinput" name="data_list" placeholder="Search department" required >
                   <datalist id="data_list" role="listbox" style="z-index: 9999; width: 95.5%;">
                     {% for item in dept %}
                       <option value="{{item.department_name}}"> {{ item.department_name }} </option>  
@@ -152,21 +151,24 @@ textarea {
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="department">Course:</label>
-              <div class="col-sm-10">
+            <div class="col-sm-10">
+              <select class="form-select" aria-label="Default select example" name="courses" onchange="handleSelectChange(this)"> 
                 {% if course %}
-                <select class="form-select" aria-label="Default select example" name="courses" onchange="handleSelectChange(this)"> 
                   {% for item in course %}
-                    <option value="{{item.course_name}}"> {{ item.course_name }} </option>
+                    {% if item.department.department_name == selected_department %}
+                      <option value="{{item.course_name}}"> {{ item.course_name }} </option>
+                    {% endif %}
                   {% endfor %}
                   <option value="add-new-course">Add New </option>
-                </select>
                 {% else %}
                   <div>
                     <input class="form-control" type="text" id="course" name="courses" required>
                   </div> 
                 {% endif %}
-              </div>
+              </select>
             </div>
+          </div>
+          
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="department">User Type:</label>
                 <div class="col-sm-10">
@@ -398,6 +400,7 @@ textarea {
         <div class="row mb-3">
           <form action="/admin/dashboard/updaterecord/" method="post" name="add_college_form">
             {% csrf_token %}
+<<<<<<< HEAD
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="college">Add a College/s:</label>
               <form method="POST">
@@ -407,6 +410,20 @@ textarea {
               </form>
             </div>
              
+=======
+          <div class="input-group">
+            <label class="col-sm-2 col-form-label" for="college">Add a College/s:</label>
+                          <form method="POST">
+                            {% csrf_token %}
+                            <textarea id="text-input" name="colleges-inputs" placeholder="Enter Colleges you want to add" required></textarea>
+                            <button class="btn-update btn-outline-secondary" type="submit">Add</button>
+                          </form>
+            <!-- <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="college" required> -->
+            <!-- <div class="input-group-button">
+              <button class="btn-update btn-outline-secondary" type="submit">Add</button>
+            </div> -->
+          </div>   
+>>>>>>> e4ac1f3dcc223cf3a64531f8e68a349d7866e798
           </form>  
         </div>
         <form method="post" name="update_college_form"> 
@@ -514,7 +531,7 @@ textarea {
               <div class="col-sm-10">
                 <div id="college-department" style="display: none;">
                   <textarea placeholder="Enter the department or departments you want to add:" class="form-control" id="text-input"
-                  id="text-input" name="department-inputs"></textarea>
+                  id="text-input" name="department-inputs" required></textarea>
                 <div class="input-group-button pt-2 float-end">
                   <button class="btn-update btn-outline-secondary text-center" style="width: 80px">Add</button>
                 </div>
