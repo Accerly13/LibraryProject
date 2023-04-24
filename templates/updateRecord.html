@@ -400,30 +400,15 @@ textarea {
         <div class="row mb-3">
           <form action="/admin/dashboard/updaterecord/" method="post" name="add_college_form">
             {% csrf_token %}
-<<<<<<< HEAD
             <div class="input-group">
               <label class="col-sm-2 col-form-label" for="college">Add a College/s:</label>
               <form method="POST">
                 {% csrf_token %}
-                <textarea id="text-input" name="colleges-inputs" placeholder="Enter Colleges you want to add" class="form-control"></textarea>
+                <textarea id="text-input" name="colleges-inputs" placeholder="Enter Colleges you want to add" required class="form-control"></textarea>
                 <button class="btn-update btn-outline-secondary" type="submit">Add</button>
               </form>
             </div>
-             
-=======
-          <div class="input-group">
-            <label class="col-sm-2 col-form-label" for="college">Add a College/s:</label>
-                          <form method="POST">
-                            {% csrf_token %}
-                            <textarea id="text-input" name="colleges-inputs" placeholder="Enter Colleges you want to add" required></textarea>
-                            <button class="btn-update btn-outline-secondary" type="submit">Add</button>
-                          </form>
-            <!-- <input type="text" class="form-control" value="College of " aria-label="College of" aria-describedby="basic-addon2" name="college" required> -->
-            <!-- <div class="input-group-button">
-              <button class="btn-update btn-outline-secondary" type="submit">Add</button>
-            </div> -->
-          </div>   
->>>>>>> e4ac1f3dcc223cf3a64531f8e68a349d7866e798
+            
           </form>  
         </div>
         <form method="post" name="update_college_form"> 
