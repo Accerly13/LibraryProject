@@ -155,17 +155,16 @@ textarea {
               <select class="form-select" aria-label="Default select example" name="courses" onchange="handleSelectChange(this)"> 
                 {% if course %}
                   {% for item in course %}
-                    {% if item.department.department_name == selected_department %}
                       <option value="{{item.course_name}}"> {{ item.course_name }} </option>
-                    {% endif %}
                   {% endfor %}
                   <option value="add-new-course">Add New </option>
+                </select>
                 {% else %}
                   <div>
                     <input class="form-control" type="text" id="course" name="courses" required>
                   </div> 
                 {% endif %}
-              </select>
+              
             </div>
           </div>
           
