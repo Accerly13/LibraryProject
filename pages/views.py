@@ -246,7 +246,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 return redirect('/admin/dashboard/updaterecord/')	
             except:
                 College.objects.create(college_name=college)
-                report_title = f"Add a college named {college}."
+                report_title = f"Added a new college, '{college}'."
             
                 Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 messages.success(request, ("New College is Registered!"))	
@@ -314,7 +314,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
             except:
                 college_check = College.objects.get(college_name = college_name)
                 Department.objects.create(department_name=dept, college=college_check)
-                report_title = f"Add a new department {dept}."
+                report_title = f"Added a new department, '{dept}'."
             
                 Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 messages.success(request, ("New Department is Registered!"))	
@@ -382,7 +382,7 @@ class UpdateRecord(LoginRequiredMixin, TemplateView):
                 UserType.objects.create(type_id=self.usertype.count()+1, type_name=usertype)
                 messages.success(request, ("New Usertype is Registered!"))	
 
-                report_title = f"Add a new usertype, {usertype}"
+                report_title = f"Added a new usertype, '{usertype}'."
             
                 Transactions.objects.create(dates=now.date(), title=report_title, transact="update")
                 return redirect('/admin/dashboard/updaterecord/')	
