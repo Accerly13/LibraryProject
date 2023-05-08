@@ -218,7 +218,7 @@
         var doc = new jsPDF();
 
         // Define header content
-        var headerText = "Ateneo de Naga University\nLibrary Users Login System\nStudents Summary Report\nAs of "+formattedDate;
+        var headerText = "Ateneo de Naga University\nLibrary Users Login System\n"+exportType_temp.charAt(0).toUpperCase() + exportType_temp.slice(1) +" Summary Report\nAs of "+formattedDate;
         var imgData = "{% static 'img/Ateneo_de_Naga_University_logo.png' %}"; // Replace with your image path
         // Add the image to the PDF
    
@@ -278,7 +278,7 @@
 
         headers.push(",Ateneo de Naga University\n")
         headers.push("Library Users Login System\n")
-        headers.push("Students Summary Report\n")
+        headers.push(exportType_temp.charAt(0).toUpperCase() + exportType_temp.slice(1) +" Summary Report\n")
         headers.push("As of "+formattedDate+"\n")
         // Get the header cells and add them to the headers array
         var headerCells = table.querySelectorAll("thead th");

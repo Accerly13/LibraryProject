@@ -56,12 +56,16 @@ footer {
 }
 
 .box-wrapper {
-            height: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-        }
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
 
 .display-date {
   text-align: center;
@@ -139,12 +143,15 @@ footer {
 }
 </style>
 {% block content %}
-<body>  
-    <div class="text-center mb-3">
+<body  style="display: flex; flex-direction: column; min-height: 100vh;"> 
+
+    <div style="flex: 1;" class="text-center">
             <div style="display:flex; justify-content:center">
               <div class="box-wrapper">
+                <header class="bg-dark text-white text-center py-3">
+                  <h2 style="font-size: 2rem; display: flex; justify-content: center; font-weight: bold;" class="h4">STUDENT LOG IN</h2>
+              </header>
                 <div class="card">
-                  <div style="font-size: 2rem; display: flex; justify-content: center; font-weight: bold;" class="card-header">USERS LOG IN</div>
                   <div class="card-body">
                     <div class="container-fluid justify-content-center ">
                         <div class="row">
@@ -186,7 +193,7 @@ footer {
                                 <div class="text-center">
                                   <div class="row">
                                       <div class="row-sm-6">
-                                          <img src="{{ img_url }}" class="img-fluid profile img-thumbnail rounded-circle my-3 hover-shadow">
+                                          <img src="{{ img_url }}" class="img-fluid rounded-circle my-3 hover-shadow" width="100">
                                       </div>
                                   </div>
                                 </div>
@@ -270,6 +277,9 @@ footer {
               <p>&copy; 2023 MyWebsite.com. All rights reserved.</p>
             </footer> -->
     </div>
+    <footer class="bg-dark text-white text-center py-2">
+      <p style="font-weight: bold;">&copy; 2023 Ateneo de Naga Library. All rights reserved. Developed by Regina Mae Bulawan, Reine Mario Javal, and Kurt Anjelo Sereno</p>
+  </footer> 
 </body>
 <script>
   if (sessionStorage.getItem("activeTabSearch")) {
