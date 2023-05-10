@@ -3,123 +3,133 @@
 {% load static %}
 <div class="grid-container-1 min-h-screen">
   <header class="w3-container">
-    <h1 class="text-style">Manage Reports</h1>  
+    <h1 class="text-style">Manage Reports</h1>
   </header>
   <div class="wrapper" style="background-color: #ECF0F1">
     <input class="radio" id="tab-num-radio0" name="group" type="radio">
     {% for item in usertype %}
-      <input class="radio" id="tab-num-radio{{forloop.counter}}" name="group" type="radio">
+    <input class="radio" id="tab-num-radio{{forloop.counter}}" name="group" type="radio">
     {% endfor %}
     <div class="flex-tab">
       <div class="tabs flex-tab">
-        <label class="tab" onclick="switchTab('tab0')" data-tab="tab5" id="tab-num0" for="tab-num0" >Overall</label>
+        <label class="tab" onclick="switchTab('tab0')" data-tab="tab5" id="tab-num0" for="tab-num0">Overall</label>
         {% for item in usertype %}
-          <label class="tab" onclick="switchTab('tab{{forloop.counter}}')" data-tab="tab{{forloop.counter}}" id="tab-num{{forloop.counter}}" for="tab-num{{forloop.counter}}">{{item.type_name|title}}</label>
+        <label class="tab" onclick="switchTab('tab{{forloop.counter}}')" data-tab="tab{{forloop.counter}}"
+          id="tab-num{{forloop.counter}}" for="tab-num{{forloop.counter}}">{{item.type_name|title}}</label>
         {% endfor %}
-        </div>
+      </div>
     </div>
     <div class="panels panel-relative mx-auto mb-5">
       {% for item in usertype %}
-        <div class="panel" id="tab{{forloop.counter}}">
-          <form id="generate-list-{{item.type_name|lower}}" method="post">
-            {% csrf_token %}
+      <div class="panel" id="tab{{forloop.counter}}">
+        <form id="generate-list-{{item.type_name|lower}}" method="post">
+          {% csrf_token %}
           <div class="row">
-              <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                  <label for="start-date{{forloop.counter}}">Start Date:</label>
-                  <input type="text" class="form-control" id="start-date{{forloop.counter}}" placeholder="mm/dd/yyyy" required name="start-date-{{item.type_name|lower}}">
-                </div>
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-date{{forloop.counter}}">Start Date:</label>
+                <input type="text" class="form-control" id="start-date{{forloop.counter}}" placeholder="mm/dd/yyyy"
+                  required name="start-date-{{item.type_name|lower}}">
               </div>
             </div>
-            
-            <div class="row">
-              <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                  <label for="end-date{{forloop.counter}}">End Date:</label>
-                  <input type="text" class="form-control" id="end-date{{forloop.counter}}" placeholder="mm/dd/yyyy" required name="end-date-{{item.type_name|lower}}">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                  <label for="start-time{{forloop.counter}}">Start Time:</label>
-                  <input type="time" class="form-control" id="start-time{{forloop.counter}}" placeholder="hh:mm" required name="start-time-{{item.type_name|lower}}">
-                </div>
-              </div>
-            </div>
-            
-            <div class="row">
-              <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                  <label for="end-time{{forloop.counter}}">End Time:</label>
-                  <input type="time" class="form-control" id="end-time{{forloop.counter}}" placeholder="hh:mm" required name="end-time-{{item.type_name|lower}}">
-                </div>
-              </div>
-            </div>
-            <div class="d-flex justify-content-center"style="padding-bottom: 1rem;">
-              <button class="btn btn-primary" onclick="generateButton('{{item.type_name|lower}}')">Generate</button>
-            </div>
-            </form>
-            <div class="d-flex justify-content-center">
-              <table id="rendered-data-{{item.type_name|lower}}" class="table table-striped table-bordered table-hover">
-                <thead class="thead-dark">
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
+          </div>
 
-            <div id="exportPdf{{item.type_name|lower}}" class="row" style="display: none; justify-content: space-evenly;">
-              Choose where to export:
-              <div class="col-md-6 offset-md-1">
-              <form id="exportIndividualUsers">
-                {% csrf_token %}
-                <div class="form-group">
-                  <input type="text" class="form-control" name="exportIndividualUsers" value="1" hidden>
-                  <input type="radio" name="exportype{{item.type_name|lower}}" value="pdfone" checked> PDF &nbsp&nbsp
-                  <input type="radio" name="exportype{{item.type_name|lower}}" value="csvone"> CSV &nbsp&nbsp
-                  <button class="btn btn-primary" onclick="exportToPdf('exportype{{item.type_name|lower}}')">Export report</button>
-                </div>
-              </form>
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-date{{forloop.counter}}">End Date:</label>
+                <input type="text" class="form-control" id="end-date{{forloop.counter}}" placeholder="mm/dd/yyyy"
+                  required name="end-date-{{item.type_name|lower}}">
               </div>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="start-time{{forloop.counter}}">Start Time:</label>
+                <input type="time" class="form-control" id="start-time{{forloop.counter}}" placeholder="hh:mm" required
+                  name="start-time-{{item.type_name|lower}}">
+              </div>
+            </div>
+          </div>
 
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <label for="end-time{{forloop.counter}}">End Time:</label>
+                <input type="time" class="form-control" id="end-time{{forloop.counter}}" placeholder="hh:mm" required
+                  name="end-time-{{item.type_name|lower}}">
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center" style="padding-bottom: 1rem;">
+            <button class="btn btn-primary" onclick="generateButton('{{item.type_name|lower}}')">Generate</button>
+          </div>
+        </form>
+        <div class="d-flex justify-content-center">
+          <table id="rendered-data-{{item.type_name|lower}}" class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
+
+        <div id="exportPdf{{item.type_name|lower}}" class="row" style="display: none; justify-content: space-evenly;">
+          Choose where to export:
+          <div class="col-md-6 offset-md-1">
+            <form id="exportIndividualUsers">
+              {% csrf_token %}
+              <div class="form-group">
+                <input type="text" class="form-control" name="exportIndividualUsers" value="1" hidden>
+                <input type="radio" name="exportype{{item.type_name|lower}}" value="pdfone" checked> PDF &nbsp&nbsp
+                <input type="radio" name="exportype{{item.type_name|lower}}" value="csvone"> CSV &nbsp&nbsp
+                <button class="btn btn-primary" onclick="exportToPdf('exportype{{item.type_name|lower}}')">Export
+                  report</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
       {% endfor %}
-         
+
       <div class="panel" id="tab0">
 
-        <header style="font-size: 20px; font-weight: bold; color: rgb(41, 41, 41); margin: 1rem;">Semestral Report</header>
+        <header style="font-size: 20px; font-weight: bold; color: rgb(41, 41, 41); margin: 1rem;">Semestral Report
+        </header>
         <form id="export-report" method="post">
           {% csrf_token %}
-        <div class="row">
-          <div class="col-md-6 offset-md-3">
-          <div class="form-group">
-            <input type="radio" name="schoolyear" value="intersession" required> Intersession &nbsp&nbsp
-            <input type="radio" name="schoolyear" value="firstsem" required> First semester &nbsp&nbsp
-            <input type="radio" name="schoolyear" value="secondsem" required> Second semester &nbsp&nbsp
-          </div>
-        </div>
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="form-group">
+                <input type="radio" name="schoolyear" value="intersession" required> Intersession &nbsp&nbsp
+                <input type="radio" name="schoolyear" value="firstsem" required> First semester &nbsp&nbsp
+                <input type="radio" name="schoolyear" value="secondsem" required> Second semester &nbsp&nbsp
+              </div>
+            </div>
           </div>
 
-          <div style="text-align:center; font-size:  15px; font-weight: bold; color: rgb(41, 41, 41); margin: 1rem;">School Year
+          <div style="text-align:center; font-size:  15px; font-weight: bold; color: rgb(41, 41, 41); margin: 1rem;">
+            School Year
           </div>
 
           <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="start-date4">Start Year:</label>
-                <input type="text" class="form-control" id="startyear" placeholder="Enter start year" name="start-year-report" required>
+                <input type="text" class="form-control" id="startyear" placeholder="Enter start year"
+                  name="start-year-report" required>
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
                 <label for="end-date3">End Year:</label>
-                <input type="text" class="form-control" id="endyear" placeholder="Enter end year" name="end-year-report" required>
+                <input type="text" class="form-control" id="endyear" placeholder="Enter end year" name="end-year-report"
+                  required>
               </div>
             </div>
           </div>
@@ -129,483 +139,486 @@
           </div>
         </form>
       </div>
-      </div>
-
-      <style>
-        .tab:hover {
-          background: #fffffff6;
-          color: #336699;
-          border-top: 3px solid #336699;
-        }
-
-        .tab.active {
-          background: #fffffff6 !important;
-          color: #336699 !important;
-          border-top: 3px solid #336699 !important;
-        }
-        
-      </style>
-     
-      <script>
-        var startdateTemp = ""
-        var starttimeTemp = ""
-        var enddateTemp = ""
-        var endtimeTemp = ""
-        var activeTab = sessionStorage.getItem("activeTabManageReport");
-
-        // If there is no active tab, set the first tab as the active tab
-        var radios = document.getElementsByName("group");
-        for (var i = 0; i < radios.length; i++) {
-          var element = document.getElementById("tab-num"+i);
-          if (!activeTab) {
-            activeTab = "tab0";
-            document.getElementById("tab-num-radio0").checked = true;
-            sessionStorage.setItem("activeTabManageReport", activeTab);
-            element.classList.add("active");
-          }
-          if (activeTab == "tab"+i) {
-            document.getElementById("tab-num-radio"+i).checked = true; 
-            element.classList.add("active");
-          }       
-        }
-
-        // Show the active tab and hide the other tabs
-        document.getElementById(activeTab).style.display = "block";
-        for (var i = 1; i < radios.length; i++) {
-          if ("tab" + i != activeTab) {
-            document.getElementById("tab" + i).style.display = "none";
-          }   
-        }
-
-
-      const tabs = document.querySelectorAll('.tab');
-
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // Remove the active class from all tabs
-          tabs.forEach(tab => tab.classList.remove('active'));
-
-          // Add the active class to the clicked tab
-          tab.classList.add('active');
-        });
-      });
-      window.jsPDF = window.jspdf.jsPDF;
-    
-    
-    if (sessionStorage.getItem("activeTabSearch")) {
-      sessionStorage.removeItem("activeTabSearch");
-    }
-
-    function exportToPdf(name) {
-      event.preventDefault();
-      var exportType = document.querySelector('input[name="'+name+'"]:checked').value;
-      var kindOfReport = ""
-      const months = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ];
-      const today = new Date();
-      const monthName = months[today.getMonth()];
-      const day = today.getDate();
-      const year = today.getFullYear();
-      const formattedDate = `${monthName} ${day} ${year}`;
-      if (exportType === 'pdfone') {
-        kindOfReport = "PDF File";
-        exportType_temp = name.replace('exportype', '');
-
-        // Select the table to export
-        var table = document.querySelector(`#rendered-data-${exportType_temp}`);
-        // Create a new jsPDF instance
-        var doc = new jsPDF();
-
-        // Define header content
-        var headerText = "Ateneo de Naga University\nLibrary Users Login System\n"+exportType_temp.charAt(0).toUpperCase() + exportType_temp.slice(1) +" Summary Report\nAs of "+formattedDate;
-        var imgData = "{% static 'img/Ateneo_de_Naga_University_logo.png' %}"; // Replace with your image path
-        // Add the image to the PDF
-   
-        doc.addImage(imgData, 'PNG', 10, 10, 30, 30); // Replace with appropriate x,y,width,height values
-        var headerStyles = {
-          fontStyle: 'bold',
-          // fillColor: [255, 255, 255], // Use a different background color for the header
-          halign: 'center',
-          fontSize: 11,
-        };
-
-        // var tableStyles = {
-        //   fontStyle: 'normal',
-        //   fontSize: 9,
-        //   cellPadding: 2,
-        //   valign: 'middle',
-        //   halign: 'center',
-        // };
-        
-        var columnStyles = {
-          0: {  halign: 'center' }, // First column
-          1: {  halign: 'center' }, // Second column
-          2: {  halign: 'center' } // Third column
-        };
-        
-        // Add the table to the PDF
-        doc.autoTable({
-          html: `#rendered-data-${exportType_temp}`,
-          startY: 50, // Increase startY value to avoid overlapping with header image and text
-          // styles: tableStyles,
-          headStyles: headerStyles,
-          columnStyles: columnStyles
-        });
-
-        // Add the header text
-        doc.setFontSize(16);
-        doc.text(headerText, 85, 15);
-        doc.setLineWidth(0.3);
-        doc.setDrawColor(0, 0, 0);
-        var pageWidth = doc.internal.pageSize.width;
-
-        // Draw the line
-        doc.line(10, 45, pageWidth-10, 45);
-
-        // Save the PDF document
-        doc.save(`${exportType_temp}report${formattedDate}.pdf`);
-
-      } else if (exportType === 'csvone') {
-
-        kindOfReport = "CSV File"
-        exportType_temp = name.replace('exportype', '')
-        // Export the table as CSV
-        var data = [];
-        var headers = [];
-        var table = document.getElementById(`rendered-data-${exportType_temp}`);
-        var rows = table.querySelectorAll("tbody tr");
-
-        headers.push(",Ateneo de Naga University\n")
-        headers.push("Library Users Login System\n")
-        headers.push(exportType_temp.charAt(0).toUpperCase() + exportType_temp.slice(1) +" Summary Report\n")
-        headers.push("As of "+formattedDate+"\n")
-        // Get the header cells and add them to the headers array
-        var headerCells = table.querySelectorAll("thead th");
-        headerCells.forEach(function(cell) {
-          headers.push(cell.textContent);
-        });
-
-
-        // Loop through the rows of the table and add each row's data to the data array
-        rows.forEach(function(row) {
-          var rowData = [];
-          var cells = row.querySelectorAll("th, td");
-          cells.forEach(function(cell) {
-            rowData.push(cell.textContent.trim());
-          });
-          data.push(rowData);
-        });
-
-        // Create the CSV content
-        var csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += headers.join(",") + "\n";
-        data.forEach(function(row) {
-          csvContent += row.join(",") + "\n";
-        });
-
-        // Create a link element and download the CSV file
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `${exportType_temp}report${formattedDate}.csv`);
-        document.body.appendChild(link); // Required for FF
-        link.click();
-        document.body.removeChild(link);
-      }
-      var myForm = document.querySelector('#exportIndividualUsers');
-            var formData = new FormData(myForm);
-            formData.append('report_for_user', exportType_temp);
-            formData.append('kind_of_report', kindOfReport)
-            formData.append('start_time_report', starttimeTemp)
-            formData.append('end_time_report', endtimeTemp)
-            formData.append('start_date_report', startdateTemp)
-            formData.append('end_date_report', enddateTemp)
-            fetch('/admin/dashboard/managereport/', {
-              method: 'POST',
-              body: formData
-            }).then(response => response.json())
-            .then(data => {
-              console.log(data)
-            })
-    }
-
-
-    // Function to switch tabs
-    function switchTab(tabId) {
-      document.getElementById(activeTab).classList.remove('active');
-      document.getElementById(tabId).classList.add('active');
-      document.getElementById(activeTab).style.display = "none";
-      document.getElementById(tabId).style.display = "block";
-      document.getElementById(tabId).checked = true;
-      activeTab = tabId;
-      sessionStorage.setItem("activeTabManageReport", activeTab);
-    }
-      
-
-      $(document).ready(function() {
-        var dataLength = "{{ usertype|length }}";
-        
-        for (var i = 1; i <= dataLength; i++) {
-          $('#start-date'+i).datepicker({
-          autoclose: true,
-          format: 'mm/dd/yyyy',
-          startDate: null,
-          endDate: new Date().toLocaleDateString('en-US', {
-              month: '2-digit',
-              day: '2-digit',
-              year: 'numeric'
-          })
-        });
-
-          $('#end-date'+i).datepicker({
-          autoclose: true,
-          format: 'mm/dd/yyyy',
-          startDate: null,
-          endDate: new Date().toLocaleDateString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
-            year: 'numeric'
-        })
-        });
-
-        }
-      });
-
-        $(document).ready(function() {
-          var dataLength = "{{ usertype|length }}";
-          
-          for (var i = 1; i <= dataLength; i++) {
-           
-        $('#start-time'+i).timepicker({
-            timeFormat: 'HH:mm',
-            interval: 60,
-            minTime: '00:00',
-            maxTime: '23:59',
-            startTime: '00:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
-        $('#end-time'+i).timepicker({
-            timeFormat: 'HH:mm',
-            interval: 60,
-            minTime: '00:00',
-            maxTime: '23:59',
-            startTime: '00:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
-
-          }
-        });
-      
-      function exportPdf() {
-        event.preventDefault();
-        var myForm = document.querySelector('#export-report');
-        var formData = new FormData(myForm);
-        fetch('/admin/dashboard/managereport/', {
-          method: 'POST',
-          body: formData
-        }).then(response => response.json())
-        .then(data => {
-          if (document.getElementsByName("schoolyear")[0].checked) {
-            exportToCSV(data.final_output, "Intersession", document.getElementById("startyear").value, document.getElementById("endyear").value)
-          }
-          else if (document.getElementsByName("schoolyear")[1].checked) {
-            exportToCSV(data.final_output, "First Semester", document.getElementById("startyear").value, document.getElementById("endyear").value)
-          }
-          else if (document.getElementsByName("schoolyear")[2].checked){
-            exportToCSV(data.final_output, "Second Semester", document.getElementById("startyear").value, document.getElementById("endyear").value)
-          }
-
-        })
-      }
-
-      function exportToCSV(data_dict, semester, start_year, end_year) {
-        const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-        final_output = semester + " " +start_year+"-"+end_year
-        var data = [];
-        Object.values(data_dict).forEach(function(row) {
-          var rowArray = Object.values(row);
-          data.push(rowArray);
-        });
-
-        // Create the CSV content
-        var csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += ",Ateneo de Naga University\r\n,Library Users Login System\r\n,Overall Summary Report\r\n,As of "+today.replace(',', '')+"\r\n\n"
-
-        csvContent += ",USERS OVERALL SUMMARY REPORTS\r\n,For "+semester+" "+start_year+"-"+end_year+"\r\n\r\n";
-        csvContent += Object.keys(data_dict[Object.keys(data_dict)[0]]).join(",") + "\n";
-        data.forEach(function(row) {
-          csvContent += row.join(",") + "\n";
-        });
-
-        // Create a link element and download the CSV file
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `${final_output}.csv`);
-        document.body.appendChild(link); // Required for FF
-        link.click();
-        document.body.removeChild(link);
-      }
-
-      function generateButton(type_name) {
-        document.querySelector("#exportPdf"+type_name).style.display = "flex"
-        $(`#rendered-data-${type_name} tbody tr`).remove(); 
-        $(`#rendered-data-${type_name} thead tr`).remove();
-        event.preventDefault();
-        var myForm = document.querySelector('#generate-list-'+type_name);
-        var formData = new FormData(myForm);
-        formData.append('name', type_name);
-        fetch('/admin/dashboard/managereport/', {
-          method: 'POST',
-          body: formData
-        }).then(response => response.json())
-        .then(data => {
-          // Get the tbody element
-            var tableBody = document.querySelector(`#rendered-data-${type_name} tbody`);
-            var tableHeader = document.querySelector(`#rendered-data-${type_name} thead`);
-            var newRowHead = document.createElement('tr');
-            var start_time = new Date(data.start_time)
-            var end_time = new Date(data.end_time)
-            startdateTemp = new Date(data.start_date).toLocaleDateString('en-US', {
-                month: '2-digit',
-                day: '2-digit',
-                year: 'numeric'
-            })
-            enddateTemp = new Date(data.end_date).toLocaleDateString('en-US', {
-                month: '2-digit',
-                day: '2-digit',
-                year: 'numeric'
-            })
-            starttimeTemp = start_time.toLocaleTimeString('en-US', {hour: '2-digit',
-                  minute: '2-digit'
-            });
-            endtimeTemp = end_time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-            var formattedTimeStart = start_time.toLocaleTimeString('en-US', {hour: '2-digit',
-                  minute: '2-digit'
-            });
-            var formattedTimeEnd = end_time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-            newRowHead.className = 'text-center'
-            var title_cell = document.createElement('th');
-            title_cell.colSpan = '5'
-            title_cell.textContent = 'Generated report from ' + new Date(data.start_date).toLocaleDateString('en-US', {
-                month: '2-digit',
-                day: '2-digit',
-                year: 'numeric'
-            }) + ' to ' + new Date(data.end_date).toLocaleDateString('en-US', {
-                month: '2-digit',
-                day: '2-digit',
-                year: 'numeric'
-            }) + ' from ' + formattedTimeStart + ' to ' + formattedTimeEnd
-            newRowHead.appendChild(title_cell);
-            tableHeader.appendChild(newRowHead);
-            var newRow = document.createElement('tr');
-            newRow.className = 'text-center'
-            if (type_name == 'visitor') {
-
-              var name = document.createElement('th');
-              name.textContent = "Name"
-              var schoolName = document.createElement('th');
-              schoolName.textContent = "School";
-              var emailContact = document.createElement('th');
-              emailContact.textContent = "Email"
-              var purposeOfVisit = document.createElement('th');
-              purposeOfVisit.textContent = "Purpose"
-
-
-              // Append the td elements to the tr element
-              newRow.appendChild(name);
-              newRow.appendChild(schoolName);
-              newRow.appendChild(emailContact);
-              newRow.appendChild(purposeOfVisit);
-
-              // Append the tr element to the tbody element
-              tableBody.appendChild(newRow);
-
-              var items = data.data;
-              for (var i = 0; i < items.visitor_login.length; i++) {
-
-                  newRow = document.createElement('tr');
-                  newRow.className = 'text-center'
-                  var visitor_name = document.createElement('th');
-                  visitor_name.textContent = items.visitor_login[i].name;
-                  var school_cell = document.createElement('th');
-                  school_cell.textContent = items.visitor_login[i].school;
-                  var contactEmail = document.createElement('th');
-                  contactEmail.textContent = items.visitor_login[i].email;
-                  var visitorPurpose = document.createElement('th');
-                  visitorPurpose.textContent = items.visitor_login[i].purpose
-
-                  newRow.appendChild(visitor_name);
-                  newRow.appendChild(school_cell);
-                  newRow.appendChild(contactEmail);
-                  newRow.appendChild(visitorPurpose);
-
-                  // Append the tr element to the tbody element
-                  tableBody.appendChild(newRow);
-              }
-
-            }
-
-            else {
-              var colleges = document.createElement('th');
-              colleges.textContent = "Colleges"
-              var department_col = document.createElement('th');
-              department_col.textContent = "Department";
-              var total_col = document.createElement('th');
-              total_col.textContent = "Total Number of visits"
-
-
-              // Append the td elements to the tr element
-              newRow.appendChild(colleges);
-              newRow.appendChild(department_col);
-              newRow.appendChild(total_col);
-
-              // Append the tr element to the tbody element
-              tableBody.appendChild(newRow);
-
-            // Append the tr element to the thead element
-            // Loop through the data and create a new row for each item
-            var data_user = data.data;
-            
-            var html = ""
-            for (var department in data_user) {
-                var college_counts = data_user[department];
-                for (var college in college_counts) {
-                  var count = college_counts[college];
-
-                  // Create a new tr element  
-                  newRow = document.createElement('tr');
-                  newRow.className = 'text-center'
-
-                  // Create td elements for each column and set their text content
-                  var college_cell = document.createElement('th');
-                  college_cell.textContent =  college
-                  var deptCell = document.createElement('th');
-                  deptCell.textContent =  department;
-                  var total_user_cell = document.createElement('th');
-                  total_user_cell.textContent =  count;
-            
-                  // Append the td elements to the tr element
-                  newRow.appendChild(college_cell);
-                  newRow.appendChild(deptCell);
-                  newRow.appendChild(total_user_cell);
-
-                  // Append the tr element to the tbody element
-                  tableBody.appendChild(newRow);
-              }
-            }
-          }
-          })
-          .catch(error => console.error(error));
-    
-      }
-      </script>
     </div>
+  </div>
+</div>
+
+
+<style>
+  .tab:hover {
+    background: #fffffff6;
+    color: #336699;
+    border-top: 3px solid #336699;
+  }
+
+  .tab.active {
+    background: #fffffff6 !important;
+    color: #336699 !important;
+    border-top: 3px solid #336699 !important;
+  }
+</style>
+
+<script>
+  var startdateTemp = ""
+  var starttimeTemp = ""
+  var enddateTemp = ""
+  var endtimeTemp = ""
+  var activeTab = sessionStorage.getItem("activeTabManageReport");
+
+  // If there is no active tab, set the first tab as the active tab
+  var radios = document.getElementsByName("group");
+  for (var i = 0; i < radios.length; i++) {
+    var element = document.getElementById("tab-num" + i);
+    if (!activeTab) {
+      activeTab = "tab0";
+      document.getElementById("tab-num-radio0").checked = true;
+      sessionStorage.setItem("activeTabManageReport", activeTab);
+      element.classList.add("active");
+    }
+    if (activeTab == "tab" + i) {
+      document.getElementById("tab-num-radio" + i).checked = true;
+      element.classList.add("active");
+    }
+  }
+
+  // Show the active tab and hide the other tabs
+  document.getElementById(activeTab).style.display = "block";
+  for (var i = 1; i < radios.length; i++) {
+    if ("tab" + i != activeTab) {
+      document.getElementById("tab" + i).style.display = "none";
+    }
+  }
+
+
+  const tabs = document.querySelectorAll('.tab');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove the active class from all tabs
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      // Add the active class to the clicked tab
+      tab.classList.add('active');
+    });
+  });
+  window.jsPDF = window.jspdf.jsPDF;
+
+
+  if (sessionStorage.getItem("activeTabSearch")) {
+    sessionStorage.removeItem("activeTabSearch");
+  }
+
+  function exportToPdf(name) {
+    event.preventDefault();
+    var exportType = document.querySelector('input[name="' + name + '"]:checked').value;
+    var kindOfReport = ""
+    const months = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const today = new Date();
+    const monthName = months[today.getMonth()];
+    const day = today.getDate();
+    const year = today.getFullYear();
+    const formattedDate = `${monthName} ${day} ${year}`;
+    if (exportType === 'pdfone') {
+      kindOfReport = "PDF File";
+      exportType_temp = name.replace('exportype', '');
+
+      // Select the table to export
+      var table = document.querySelector(`#rendered-data-${exportType_temp}`);
+      // Create a new jsPDF instance
+      var doc = new jsPDF();
+
+      // Define header content
+      var headerText = "Ateneo de Naga University\nLibrary Users Login System\n" + exportType_temp.charAt(0).toUpperCase() + exportType_temp.slice(1) + " Summary Report\nAs of " + formattedDate;
+      var imgData = "{% static 'img/Ateneo_de_Naga_University_logo.png' %}"; // Replace with your image path
+      // Add the image to the PDF
+
+      doc.addImage(imgData, 'PNG', 10, 10, 30, 30); // Replace with appropriate x,y,width,height values
+      var headerStyles = {
+        fontStyle: 'bold',
+        // fillColor: [255, 255, 255], // Use a different background color for the header
+        halign: 'center',
+        fontSize: 11,
+      };
+
+      // var tableStyles = {
+      //   fontStyle: 'normal',
+      //   fontSize: 9,
+      //   cellPadding: 2,
+      //   valign: 'middle',
+      //   halign: 'center',
+      // };
+
+      var columnStyles = {
+        0: { halign: 'center' }, // First column
+        1: { halign: 'center' }, // Second column
+        2: { halign: 'center' } // Third column
+      };
+
+      // Add the table to the PDF
+      doc.autoTable({
+        html: `#rendered-data-${exportType_temp}`,
+        startY: 50, // Increase startY value to avoid overlapping with header image and text
+        // styles: tableStyles,
+        headStyles: headerStyles,
+        columnStyles: columnStyles
+      });
+
+      // Add the header text
+      doc.setFontSize(16);
+      doc.text(headerText, 85, 15);
+      doc.setLineWidth(0.3);
+      doc.setDrawColor(0, 0, 0);
+      var pageWidth = doc.internal.pageSize.width;
+
+      // Draw the line
+      doc.line(10, 45, pageWidth - 10, 45);
+
+      // Save the PDF document
+      doc.save(`${exportType_temp}report${formattedDate}.pdf`);
+
+    } else if (exportType === 'csvone') {
+
+      kindOfReport = "CSV File"
+      exportType_temp = name.replace('exportype', '')
+      // Export the table as CSV
+      var data = [];
+      var headers = [];
+      var table = document.getElementById(`rendered-data-${exportType_temp}`);
+      var rows = table.querySelectorAll("tbody tr");
+
+      headers.push(",Ateneo de Naga University\n")
+      headers.push("Library Users Login System\n")
+      headers.push(exportType_temp.charAt(0).toUpperCase() + exportType_temp.slice(1) + " Summary Report\n")
+      headers.push("As of " + formattedDate + "\n")
+      // Get the header cells and add them to the headers array
+      var headerCells = table.querySelectorAll("thead th");
+      headerCells.forEach(function (cell) {
+        headers.push(cell.textContent);
+      });
+
+
+      // Loop through the rows of the table and add each row's data to the data array
+      rows.forEach(function (row) {
+        var rowData = [];
+        var cells = row.querySelectorAll("th, td");
+        cells.forEach(function (cell) {
+          rowData.push(cell.textContent.trim());
+        });
+        data.push(rowData);
+      });
+
+      // Create the CSV content
+      var csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += headers.join(",") + "\n";
+      data.forEach(function (row) {
+        csvContent += row.join(",") + "\n";
+      });
+
+      // Create a link element and download the CSV file
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `${exportType_temp}report${formattedDate}.csv`);
+      document.body.appendChild(link); // Required for FF
+      link.click();
+      document.body.removeChild(link);
+    }
+    var myForm = document.querySelector('#exportIndividualUsers');
+    var formData = new FormData(myForm);
+    formData.append('report_for_user', exportType_temp);
+    formData.append('kind_of_report', kindOfReport)
+    formData.append('start_time_report', starttimeTemp)
+    formData.append('end_time_report', endtimeTemp)
+    formData.append('start_date_report', startdateTemp)
+    formData.append('end_date_report', enddateTemp)
+    fetch('/admin/dashboard/managereport/', {
+      method: 'POST',
+      body: formData
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data)
+      })
+  }
+
+
+  // Function to switch tabs
+  function switchTab(tabId) {
+    document.getElementById(activeTab).classList.remove('active');
+    document.getElementById(tabId).classList.add('active');
+    document.getElementById(activeTab).style.display = "none";
+    document.getElementById(tabId).style.display = "block";
+    document.getElementById(tabId).checked = true;
+    activeTab = tabId;
+    sessionStorage.setItem("activeTabManageReport", activeTab);
+  }
+
+
+  $(document).ready(function () {
+    var dataLength = "{{ usertype|length }}";
+
+    for (var i = 1; i <= dataLength; i++) {
+      $('#start-date' + i).datepicker({
+        autoclose: true,
+        format: 'mm/dd/yyyy',
+        startDate: null,
+        endDate: new Date().toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        })
+      });
+
+      $('#end-date' + i).datepicker({
+        autoclose: true,
+        format: 'mm/dd/yyyy',
+        startDate: null,
+        endDate: new Date().toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        })
+      });
+
+    }
+  });
+
+  $(document).ready(function () {
+    var dataLength = "{{ usertype|length }}";
+
+    for (var i = 1; i <= dataLength; i++) {
+
+      $('#start-time' + i).timepicker({
+        timeFormat: 'HH:mm',
+        interval: 60,
+        minTime: '00:00',
+        maxTime: '23:59',
+        startTime: '00:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+      });
+      $('#end-time' + i).timepicker({
+        timeFormat: 'HH:mm',
+        interval: 60,
+        minTime: '00:00',
+        maxTime: '23:59',
+        startTime: '00:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+      });
+
+    }
+  });
+
+  function exportPdf() {
+    event.preventDefault();
+    var myForm = document.querySelector('#export-report');
+    var formData = new FormData(myForm);
+    fetch('/admin/dashboard/managereport/', {
+      method: 'POST',
+      body: formData
+    }).then(response => response.json())
+      .then(data => {
+        if (document.getElementsByName("schoolyear")[0].checked) {
+          exportToCSV(data.final_output, "Intersession", document.getElementById("startyear").value, document.getElementById("endyear").value)
+        }
+        else if (document.getElementsByName("schoolyear")[1].checked) {
+          exportToCSV(data.final_output, "First Semester", document.getElementById("startyear").value, document.getElementById("endyear").value)
+        }
+        else if (document.getElementsByName("schoolyear")[2].checked) {
+          exportToCSV(data.final_output, "Second Semester", document.getElementById("startyear").value, document.getElementById("endyear").value)
+        }
+
+      })
+  }
+
+  function exportToCSV(data_dict, semester, start_year, end_year) {
+    const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    final_output = semester + " " + start_year + "-" + end_year
+    var data = [];
+    Object.values(data_dict).forEach(function (row) {
+      var rowArray = Object.values(row);
+      data.push(rowArray);
+    });
+
+    // Create the CSV content
+    var csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += ",Ateneo de Naga University\r\n,Library Users Login System\r\n,Overall Summary Report\r\n,As of " + today.replace(',', '') + "\r\n\n"
+
+    csvContent += ",USERS OVERALL SUMMARY REPORTS\r\n,For " + semester + " " + start_year + "-" + end_year + "\r\n\r\n";
+    csvContent += Object.keys(data_dict[Object.keys(data_dict)[0]]).join(",") + "\n";
+    data.forEach(function (row) {
+      csvContent += row.join(",") + "\n";
+    });
+
+    // Create a link element and download the CSV file
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `${final_output}.csv`);
+    document.body.appendChild(link); // Required for FF
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function generateButton(type_name) {
+    document.querySelector("#exportPdf" + type_name).style.display = "flex"
+    $(`#rendered-data-${type_name} tbody tr`).remove();
+    $(`#rendered-data-${type_name} thead tr`).remove();
+    event.preventDefault();
+    var myForm = document.querySelector('#generate-list-' + type_name);
+    var formData = new FormData(myForm);
+    formData.append('name', type_name);
+    fetch('/admin/dashboard/managereport/', {
+      method: 'POST',
+      body: formData
+    }).then(response => response.json())
+      .then(data => {
+        // Get the tbody element
+        var tableBody = document.querySelector(`#rendered-data-${type_name} tbody`);
+        var tableHeader = document.querySelector(`#rendered-data-${type_name} thead`);
+        var newRowHead = document.createElement('tr');
+        var start_time = new Date(data.start_time)
+        var end_time = new Date(data.end_time)
+        startdateTemp = new Date(data.start_date).toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        })
+        enddateTemp = new Date(data.end_date).toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        })
+        starttimeTemp = start_time.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        endtimeTemp = end_time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        var formattedTimeStart = start_time.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        var formattedTimeEnd = end_time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        newRowHead.className = 'text-center'
+        var title_cell = document.createElement('th');
+        title_cell.colSpan = '5'
+        title_cell.textContent = 'Generated report from ' + new Date(data.start_date).toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        }) + ' to ' + new Date(data.end_date).toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        }) + ' from ' + formattedTimeStart + ' to ' + formattedTimeEnd
+        newRowHead.appendChild(title_cell);
+        tableHeader.appendChild(newRowHead);
+        var newRow = document.createElement('tr');
+        newRow.className = 'text-center'
+        if (type_name == 'visitor') {
+
+          var name = document.createElement('th');
+          name.textContent = "Name"
+          var schoolName = document.createElement('th');
+          schoolName.textContent = "School";
+          var emailContact = document.createElement('th');
+          emailContact.textContent = "Email"
+          var purposeOfVisit = document.createElement('th');
+          purposeOfVisit.textContent = "Purpose"
+
+
+          // Append the td elements to the tr element
+          newRow.appendChild(name);
+          newRow.appendChild(schoolName);
+          newRow.appendChild(emailContact);
+          newRow.appendChild(purposeOfVisit);
+
+          // Append the tr element to the tbody element
+          tableBody.appendChild(newRow);
+
+          var items = data.data;
+          for (var i = 0; i < items.visitor_login.length; i++) {
+
+            newRow = document.createElement('tr');
+            newRow.className = 'text-center'
+            var visitor_name = document.createElement('th');
+            visitor_name.textContent = items.visitor_login[i].name;
+            var school_cell = document.createElement('th');
+            school_cell.textContent = items.visitor_login[i].school;
+            var contactEmail = document.createElement('th');
+            contactEmail.textContent = items.visitor_login[i].email;
+            var visitorPurpose = document.createElement('th');
+            visitorPurpose.textContent = items.visitor_login[i].purpose
+
+            newRow.appendChild(visitor_name);
+            newRow.appendChild(school_cell);
+            newRow.appendChild(contactEmail);
+            newRow.appendChild(visitorPurpose);
+
+            // Append the tr element to the tbody element
+            tableBody.appendChild(newRow);
+          }
+
+        }
+
+        else {
+          var colleges = document.createElement('th');
+          colleges.textContent = "Colleges"
+          var department_col = document.createElement('th');
+          department_col.textContent = "Department";
+          var total_col = document.createElement('th');
+          total_col.textContent = "Total Number of visits"
+
+
+          // Append the td elements to the tr element
+          newRow.appendChild(colleges);
+          newRow.appendChild(department_col);
+          newRow.appendChild(total_col);
+
+          // Append the tr element to the tbody element
+          tableBody.appendChild(newRow);
+
+          // Append the tr element to the thead element
+          // Loop through the data and create a new row for each item
+          var data_user = data.data;
+
+          var html = ""
+          for (var department in data_user) {
+            var college_counts = data_user[department];
+            for (var college in college_counts) {
+              var count = college_counts[college];
+
+              // Create a new tr element  
+              newRow = document.createElement('tr');
+              newRow.className = 'text-center'
+
+              // Create td elements for each column and set their text content
+              var college_cell = document.createElement('th');
+              college_cell.textContent = college
+              var deptCell = document.createElement('th');
+              deptCell.textContent = department;
+              var total_user_cell = document.createElement('th');
+              total_user_cell.textContent = count;
+
+              // Append the td elements to the tr element
+              newRow.appendChild(college_cell);
+              newRow.appendChild(deptCell);
+              newRow.appendChild(total_user_cell);
+
+              // Append the tr element to the tbody element
+              tableBody.appendChild(newRow);
+            }
+          }
+        }
+      })
+      .catch(error => console.error(error));
+
+  }
+</script>
+</div>
 </div>
 {% endblock content %}
-        
