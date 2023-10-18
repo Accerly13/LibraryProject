@@ -198,6 +198,11 @@
   </footer> 
 </body>
   <script>
+
+window.onload = function() {
+        document.getElementById("studentID").focus();
+    };  
+
   if (sessionStorage.getItem("activeTabSearch")) {
     sessionStorage.removeItem("activeTabSearch");
   }
