@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 
 import os
+import pymysql 
+
+pymysql.install_as_MySQLdb()
+
 # ...
 AUTH_USER_MODEL = 'pages.AdminUser'
 
