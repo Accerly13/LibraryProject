@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'library_rfid.wsgi.application'
 DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'library_database',  
+        'NAME': 'col_database',  
         'USER': 'root',  
         'PASSWORD': '',  
         'HOST': '127.0.0.1',  

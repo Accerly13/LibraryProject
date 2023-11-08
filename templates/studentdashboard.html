@@ -35,7 +35,7 @@
     {% load static %}
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
     <link rel="stylesheet" href="{% static 'img/style.css' %}" type="text/css" />
-    <title>JOBL Userstat</title>
+    <title>College of Law Library</title>
 <script src="https://fonts.googleapis.com/css2?family=Lato&display=swap"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
@@ -141,6 +141,26 @@ footer {
   font-weight: bold;
   font-size: 1.5em;
 }
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Set it to 1fr for full width */
+    grid-gap: 20px;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 90%; /* Added to ensure full width */
+}
+
 </style>
 {% block content %}
 <body  style="display: flex; flex-direction: column; min-height: 100vh;"> 
@@ -149,25 +169,15 @@ footer {
             <div style="display:flex; justify-content:center">
               <div class="box-wrapper">
                 <header class="bg-dark text-white text-center py-3">
-                  <h2 style="font-size: 2rem; display: flex; justify-content: center; font-weight: bold;" class="h4">STUDENT LOG IN</h2>
+                  <h2 style="font-size: 2rem; display: flex; justify-content: center; font-weight: bold;" class="h4">COLLEGE OF LAW STUDENT LOG IN</h2>
               </header>
-                <div class="card">
-                  <div class="card-body">
+                <div class="center-container">
+                  <div class="grid-container">
                     <div class="container-fluid justify-content-center ">
                         <div class="row">
                           <div class="col-8">
                             <div class="card ml-2">
-                              <!-- <div class="card-header">
-                                Video Ads
-                                <!-- <video width="320" height="240" controls>
-                                    <source src="movie.mp4" type="video/mp4">
-                                    <source src="movie.ogg" type="video/ogg">
-                                    Your browser does not support the video tag.
-                                  </video>
-                                  
-                              </div> -->
                               <div class="card-body">
-                                <!-- Add the video code here -->
                                 <div class="card-body">
                                     <div class="display-date">
                                         <span id="day">day</span>,
@@ -236,7 +246,7 @@ footer {
                                     function speak() {
                                         const message = new SpeechSynthesisUtterance();
                                         message.lang = 'en-US';
-                                        message.text = 'Sorry, the student is not in the database. Please proceed to 2nd Floor for Registration';
+                                        message.text = 'sorry, but the student is not in the database. To register, please reach out to Ms. Alma Kay Reyes.';
                                         speechSynthesis.speak(message);
                                     }
                                     speak()

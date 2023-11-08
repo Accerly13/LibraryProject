@@ -50,7 +50,7 @@ class HomePageView(TemplateView):
             login(request, user)
             return redirect('/admin/dashboard/')
         else:
-            messages.success(request, ("Invalid Username or Password!"))	
+            messages.success(request, ("Invalid username or password, please check your credentials."))	
             return redirect('/admin/')	
 
 class DashBoardAdmin(LoginRequiredMixin, TemplateView):
@@ -147,7 +147,7 @@ class StudentDashboard(LoginRequiredMixin, TemplateView):
                                                                  'comment':userinfo_check.comment})
         except Exception as e:
             print(str(e))
-            messages.success(request, ("We're sorry, but we couldn't find your account in our database"))
+            messages.success(request, ("Apologies, but we couldn't locate your College of Law student account in our records."))
             return render(request, 'studentdashboard.html', {'student_id': student_id})
 
 class VisitorDashboard(TemplateView):
@@ -181,7 +181,7 @@ class VisitorLoginPage(TemplateView):
             login(request, user)
             return redirect('dashboard/')
         else:
-            messages.success(request, ("Invalid Username or Password!"))	
+            messages.success(request, ("Invalid username or password, please check your credentials."))	
             return redirect('/')
 
 class Sidebar(TemplateView):
